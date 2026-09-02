@@ -278,6 +278,28 @@ details.expired>summary{font-size:15px}
   details.wine[open]{break-inside:auto}
 }
 
+/* 全店滿額活動 */
+.promo{margin:20px 0 4px;background:var(--surface);border:1px solid var(--line-strong);
+  border-left:4px solid var(--swap);border-radius:4px;padding:16px 18px;box-shadow:var(--shadow)}
+.promo h2{font-family:"Noto Serif TC",serif;font-size:17px;margin:0 0 12px;letter-spacing:.02em}
+.promo .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:10px}
+.promo .tier{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;
+  border:1px solid var(--line);border-radius:3px;padding:10px 14px;background:var(--surface-2)}
+.promo .tier.hi{border-color:var(--swap);background:var(--swap-bg)}
+.promo .amt{font-family:"IBM Plex Mono",monospace;font-size:19px;font-weight:500;
+  font-variant-numeric:tabular-nums;color:var(--ink)}
+.promo .or{font-size:15px;font-weight:700;display:inline-flex;align-items:baseline;gap:8px}
+.promo .or i{font-style:normal;font-weight:400;font-size:12px;color:var(--ink-3)}
+.promo .tier.hi .or b{color:var(--swap)}
+.promo .pick{margin-left:auto;font-size:10.5px;letter-spacing:.1em;color:var(--ink-3);
+  font-family:"IBM Plex Mono",monospace;border:1px solid var(--line-strong);border-radius:2px;padding:1px 6px}
+.promo .warn{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:7px}
+.promo .warn li{font-size:13px;line-height:1.55;color:var(--ink-2);
+  padding-left:22px;position:relative}
+.promo .warn li::before{content:"⚠";position:absolute;left:0;top:0;color:var(--drop);font-size:13px}
+.promo .warn b{color:var(--drop)}
+@media print{.promo{break-inside:avoid}}
+
 </style>
 </head>
 <body>
@@ -302,6 +324,25 @@ details.expired>summary{font-size:15px}
 
 <div class="wrap">
   <section id="view-sheet" class="sheet">
+    <section class="promo">
+      <h2>全店酒類滿額活動</h2>
+      <div class="tiers">
+        <div class="tier">
+          <span class="amt">滿 $8,000</span>
+          <span class="or"><b>送行李袋</b><i>或</i><b>折 $200</b></span>
+          <span class="pick">二擇一</span>
+        </div>
+        <div class="tier hi">
+          <span class="amt">滿 $18,800</span>
+          <span class="or"><b>送行李箱</b><i>或</i><b>折 $600</b></span>
+          <span class="pick">二擇一</span>
+        </div>
+      </div>
+      <ul class="warn">
+        <li><b>要折現金必須輸入活動代碼 A7</b>，沒輸入不會折。</li>
+        <li><b>單瓶售價滿 $20,000 現抵 $1,000 者，不可再參加滿 $18,800 的現金折抵</b>，這種情況只能選「送行李箱」。</li>
+      </ul>
+    </section>
     <div class="sheet-lead">
       <label class="cmp"><input type="checkbox" id="cmp-disc"> 顯示與 7 月的異動對照</label>
       <div class="legend">
@@ -323,6 +364,25 @@ details.expired>summary{font-size:15px}
   </section>
 
   <section id="view-gift" hidden>
+    <section class="promo">
+      <h2>全店酒類滿額活動</h2>
+      <div class="tiers">
+        <div class="tier">
+          <span class="amt">滿 $8,000</span>
+          <span class="or"><b>送行李袋</b><i>或</i><b>折 $200</b></span>
+          <span class="pick">二擇一</span>
+        </div>
+        <div class="tier hi">
+          <span class="amt">滿 $18,800</span>
+          <span class="or"><b>送行李箱</b><i>或</i><b>折 $600</b></span>
+          <span class="pick">二擇一</span>
+        </div>
+      </div>
+      <ul class="warn">
+        <li><b>要折現金必須輸入活動代碼 A7</b>，沒輸入不會折。</li>
+        <li><b>單瓶售價滿 $20,000 現抵 $1,000 者，不可再參加滿 $18,800 的現金折抵</b>，這種情況只能選「送行李箱」。</li>
+      </ul>
+    </section>
     <h2 class="grp" style="margin-top:22px">9 月滿額贈<small id="gift-n"></small></h2>
     <p class="sheet-lead" style="margin-bottom:10px"><label class="cmp"><input type="checkbox" id="cmp-gift"> 顯示與 8 月的異動對照</label></p>
     <p class="sheet-note">9 月正在跑的贈品活動全列，新增與異動的用「新／改」標出。滿數量可累贈／滿金額不可累贈；同一正貨多個門檻時擇一贈送，除非標「可重複贈」。</p>
@@ -335,7 +395,7 @@ details.expired>summary{font-size:15px}
 
     <div class="band rule">
       <strong>酒類單瓶滿 $20,000 折 $1,000</strong>
-      <span>全檔通用・與 7 月相同</span>
+      <span>全檔通用・與 7 月相同・不可再參加滿 $18,800 現金折抵</span>
     </div>
   </section>
 </div>
