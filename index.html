@@ -359,6 +359,34 @@ details.expired>summary{font-size:15px}
   .tile,.promo,.band{break-inside:avoid}
 }
 
+/* ── 黏頂工具列：搜尋 / 跳轉 / 收合 ── */
+.jump{position:sticky;top:0;z-index:30;background:var(--bg);padding:10px 0 8px;margin-bottom:10px;
+  border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.jump input[type=search]{flex:1 1 200px;min-width:0;font-family:inherit;font-size:15px;
+  padding:8px 12px;border:1px solid var(--line-strong);border-radius:3px;background:var(--surface);color:var(--ink)}
+.jump input[type=search]:focus-visible{outline:2px solid var(--accent);outline-offset:-1px}
+.jump .fold{appearance:none;background:var(--surface);border:1px solid var(--line-strong);color:var(--ink-2);
+  font-family:inherit;font-size:13px;padding:8px 12px;border-radius:3px;cursor:pointer;white-space:nowrap}
+.jump .fold[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.jump .chips{flex:1 1 100%;display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+.jump .chips button{flex:none;appearance:none;background:var(--surface);border:1px solid var(--line);
+  color:var(--ink-2);font-family:inherit;font-size:12.5px;padding:5px 10px;border-radius:99px;cursor:pointer;white-space:nowrap}
+.jump .chips button:hover{border-color:var(--accent);color:var(--accent)}
+.jump .chips button b{font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:10.5px;color:var(--ink-3);margin-left:4px}
+/* 標題可點收合 */
+.tile-h{cursor:pointer;user-select:none;position:relative}
+.tile-h::after{content:"▾";position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  color:var(--ink-3);font-size:12px}
+.tile.folded .tile-h::after{content:"▸"}
+.tile.folded ol,.tile.folded .gal,.tile.folded .diff{display:none}
+.tile.hide{display:none}
+.tile li.hide{display:none}
+@media (max-width:720px){
+  .jump{padding-top:8px}
+  .tile-h h3{padding-right:18px}
+}
+@media print{.jump{display:none!important}.tile.folded ol{display:block!important}.tile.hide,.tile li.hide{display:none!important}}
+
 </style>
 </head>
 <body>
@@ -430,6 +458,11 @@ details.expired>summary{font-size:15px}
       </div>
       <div class="count" id="sheet-count"></div>
     </div>
+      <div class="jump" id="jump-disc">
+        <input type="search" id="q-disc" placeholder="搜尋酒名／品牌…" aria-label="搜尋折扣品項">
+        <button class="fold" id="fold-disc" aria-pressed="false">全部收合</button>
+        <div class="chips" id="chips-disc"></div>
+      </div>
     <div class="tiles" id="tiles"></div>
     <details class="wine expired" id="exp-disc">
       <summary>已失效酒類折扣　<small>7 月有、9 月下檔 — 要比對新舊時再打開</small></summary>
@@ -463,6 +496,10 @@ details.expired>summary{font-size:15px}
     <h2 class="grp" style="margin-top:22px">9 月滿額贈<small id="gift-n"></small></h2>
     <p class="sheet-lead" style="margin-bottom:10px"><label class="cmp"><input type="checkbox" id="cmp-gift"> 顯示與 8 月的異動對照</label></p>
     <p class="sheet-note">9 月正在跑的贈品活動全列，新增與異動的用「新／改」標出。滿數量可累贈／滿金額不可累贈；同一正貨多個門檻時擇一贈送，除非標「可重複贈」。</p>
+      <div class="jump" id="jump-gift">
+        <input type="search" id="q-gift" placeholder="搜尋正貨／贈品…" aria-label="搜尋滿額贈">
+        <button class="fold" id="fold-gift" aria-pressed="false">全部收合</button>
+      </div>
     <div class="tiles" id="gifts"></div>
 
     <details class="wine expired" id="exp-gift">
@@ -689,7 +726,7 @@ document.getElementById('views').addEventListener('click',e=>{
   window.scrollTo({top:0});
 });
 
-counts(); renderSheet();
+counts(); renderSheet(); setupTools();
 ['cmp-disc','cmp-gift'].forEach(function(id){
   const el=document.getElementById(id); if(!el) return;
   el.addEventListener('change',function(){
@@ -699,6 +736,64 @@ counts(); renderSheet();
     if(d) d.open = el.checked;
   });
 });
+
+
+/* ── 搜尋 / 跳轉 / 收合 ── */
+function setupTools(){
+  // 類別跳轉 chips
+  const chips=document.getElementById('chips-disc');
+  if(chips){
+    chips.innerHTML=[...document.querySelectorAll('#tiles .tile')].map(function(t,i){
+      t.id='t'+i;
+      const h=t.querySelector('.tile-h h3');
+      const name=h?h.textContent.replace(/^\s*\d+\s*/,'').trim():('區塊'+i);
+      const n=t.querySelectorAll('ol > li').length;
+      return '<button type="button" data-go="t'+i+'">'+esc(name)+'<b>'+n+'</b></button>';
+    }).join('');
+    chips.addEventListener('click',function(e){
+      const b=e.target.closest('button[data-go]'); if(!b) return;
+      const el=document.getElementById(b.dataset.go); if(!el) return;
+      el.classList.remove('folded');
+      const y=el.getBoundingClientRect().top+window.scrollY-70;
+      window.scrollTo({top:y,behavior:'smooth'});
+    });
+  }
+  // 點標題收合
+  document.addEventListener('click',function(e){
+    if(e.target.closest('.galbtn')) return;
+    const h=e.target.closest('.tile-h'); if(!h) return;
+    h.closest('.tile').classList.toggle('folded');
+  });
+  // 全部收合
+  [['fold-disc','#tiles'],['fold-gift','#gifts']].forEach(function(p){
+    const btn=document.getElementById(p[0]); if(!btn) return;
+    btn.addEventListener('click',function(){
+      const on=btn.getAttribute('aria-pressed')==='true';
+      btn.setAttribute('aria-pressed',String(!on));
+      btn.textContent = !on ? '全部展開' : '全部收合';
+      document.querySelectorAll(p[1]+' .tile').forEach(t=>t.classList.toggle('folded',!on));
+    });
+  });
+  // 搜尋
+  function wire(inputId, host){
+    const inp=document.getElementById(inputId); if(!inp) return;
+    inp.addEventListener('input',function(){
+      const q=inp.value.trim().toLowerCase();
+      document.querySelectorAll(host+' .tile').forEach(function(t){
+        let hit=0;
+        t.querySelectorAll('ol > li').forEach(function(li){
+          const m = !q || li.textContent.toLowerCase().indexOf(q)>=0;
+          li.classList.toggle('hide',!m); if(m) hit++;
+        });
+        const titleHit = q && (t.querySelector('.tile-h')||{textContent:''}).textContent.toLowerCase().indexOf(q)>=0;
+        if(titleHit){ t.querySelectorAll('ol > li').forEach(li=>li.classList.remove('hide')); hit=t.querySelectorAll('ol > li').length; }
+        t.classList.toggle('hide', q && hit===0);
+        if(q) t.classList.remove('folded');
+      });
+    });
+  }
+  wire('q-disc','#tiles'); wire('q-gift','#gifts');
+}
 
 </script>
 
