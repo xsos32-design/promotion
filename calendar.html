@@ -56,6 +56,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
     <button type="button" class="cal-btn cal-today" data-m="0">今天</button>
   </div>
   <div class="cal-grid" id="cal-grid" role="grid"></div>
+  <div class="cal-note"><b>結帳提醒：A7 ＋ A3 同時成立</b><ol><li>先打 <u>A7</u>（酒類滿額）</li><li><u>A3</u>（泡麵）另外打一張單</li><li>最後兩張<u>併單</u></li></ol></div>
   <ol class="cal-legend" id="cal-legend"></ol>
   <p class="cal-foot">日期以你手機／電腦當下的日期為準；「送完為止」的檔沒有結束日，色條一路畫到月底。實際折抵與贈品發放以 POS 與現場公告為準。</p>
 </section>
@@ -63,9 +64,9 @@ body{margin:0;background:var(--bg);color:var(--ink);
 </div>
 
 <style id="cal-css">
-:root{--cal-blue:#2B5C8A;--cal-blue-bg:#DDE9F5;--cal-purple:#6B4C9A;--cal-brown:#8A5A2B}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--cal-blue:#7FB3E6;--cal-blue-bg:#16283A;--cal-purple:#B9A2E6;--cal-brown:#D9A66E}}
-:root[data-theme="dark"]{--cal-blue:#7FB3E6;--cal-blue-bg:#16283A;--cal-purple:#B9A2E6;--cal-brown:#D9A66E}
+:root{--cal-blue:#2B5C8A;--cal-blue-bg:#DDE9F5;--cal-purple:#6B4C9A;--cal-brown:#8A5A2B;--cal-pink:#B0457E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--cal-blue:#7FB3E6;--cal-blue-bg:#16283A;--cal-purple:#B9A2E6;--cal-brown:#D9A66E;--cal-pink:#E98BBE}}
+:root[data-theme="dark"]{--cal-blue:#7FB3E6;--cal-blue-bg:#16283A;--cal-purple:#B9A2E6;--cal-brown:#D9A66E;--cal-pink:#E98BBE}
 #view-cal{padding-bottom:20px}
 .cal-head{margin:18px 0 0;padding:15px 16px;background:var(--surface);border:1px solid var(--line);
   border-radius:var(--r-lg,14px);box-shadow:var(--sh-2);position:relative;overflow:hidden}
@@ -100,7 +101,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
 .cal-lane.e{border-radius:0 4px 4px 0;margin-right:3px}
 .cal-lane.s.e{border-radius:4px}
 .c-drop{background:var(--drop)} .c-add{background:var(--add)} .c-swap{background:var(--swap)}
-.c-accent{background:var(--accent)} .c-blue{background:var(--cal-blue)} .c-purple{background:var(--cal-purple)} .c-brown{background:var(--cal-brown)}
+.c-accent{background:var(--accent)} .c-blue{background:var(--cal-blue)} .c-purple{background:var(--cal-purple)} .c-brown{background:var(--cal-brown)} .c-pink{background:var(--cal-pink)}
 .cal-head{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-start;justify-content:space-between}
 .cal-cat{display:inline-flex;gap:4px;padding:3px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px}
 .cal-cat button{appearance:none;border:0;background:transparent;color:var(--ink-2);font-family:inherit;font-size:12.5px;
@@ -109,6 +110,14 @@ body{margin:0;background:var(--bg);color:var(--ink);
 .cal-legend .ct{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;border:1px solid var(--line-strong);
   color:var(--ink-3);margin-right:6px;vertical-align:1px;font-weight:500}
 body.cal-solo .cal-lane.on:not(.pick){opacity:.12}
+.cal-lane.tbd{background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.55) 0 4px,transparent 4px 8px)}
+.cal-legend .st.tbd{color:var(--drop);background:var(--drop-bg);border-color:var(--drop)}
+.cal-legend .rg .tbd{font-family:"Noto Sans TC",sans-serif;font-size:12px;color:var(--drop);font-weight:500}
+.cal-note{margin:14px 0 0;padding:12px 14px;border:1px solid var(--swap);border-radius:var(--r-md,11px);
+  background:var(--swap-bg);font-size:13px;line-height:1.7}
+.cal-note b{display:block;color:var(--swap);font-size:13.5px}
+.cal-note ol{margin:4px 0 0;padding-left:20px}
+.cal-note u{text-decoration:none;font-weight:700;color:var(--ink)}
 .cal-legend{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:7px}
 .cal-legend li{display:grid;grid-template-columns:14px 1fr auto;gap:10px;align-items:start;
   padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md,11px);
@@ -123,7 +132,7 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
   background-image:linear-gradient(transparent 52%,color-mix(in srgb,var(--mk) 32%,transparent) 52%,color-mix(in srgb,var(--mk) 32%,transparent) 96%,transparent 96%)}
 .cal-legend li{--mk:#C48C2E}
 .cal-legend li.m-drop{--mk:var(--drop)} .cal-legend li.m-add{--mk:var(--add)} .cal-legend li.m-swap{--mk:var(--swap)}
-.cal-legend li.m-blue{--mk:var(--cal-blue)} .cal-legend li.m-purple{--mk:var(--cal-purple)} .cal-legend li.m-brown{--mk:var(--cal-brown)}
+.cal-legend li.m-blue{--mk:var(--cal-blue)} .cal-legend li.m-purple{--mk:var(--cal-purple)} .cal-legend li.m-brown{--mk:var(--cal-brown)} .cal-legend li.m-pink{--mk:var(--cal-pink)}
 .cal-legend .sb{display:block;margin-top:1px;font-size:11.5px;color:var(--ink-3)}
 .cal-legend .st{font-size:11px;padding:2px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap;font-weight:500}
 .cal-legend .st.on{color:var(--add);background:var(--add-bg);border-color:var(--add)}
@@ -139,7 +148,7 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
 
 <script id="cal-js">
 (function(){
-  var CAL=[{"k": "bag", "cat": "choc", "n": "折扣後滿 $4,000 贈透明旅行袋", "s": "三段，中間沒有", "c": "drop", "r": [["2026-09-24", "2026-09-28"], ["2026-10-02", "2026-10-11"], ["2026-10-23", "2026-10-26"]]}, {"k": "d150", "cat": "choc", "n": "國產食品＆巧克力 滿 $2,000 折 $150", "s": "整段都有", "c": "add", "r": [["2026-09-22", "2026-10-31"]]}, {"k": "gift", "cat": "choc", "n": "不限金額 送會員禮小燈箱", "s": "送完為止", "c": "blue", "r": [["2026-09-22", null]]}, {"k": "noodle", "cat": "both", "n": "泡麵：酒 滿 2 件／巧克力折扣後滿 $1,500 → 贈 2 杯", "s": "送完為止・各大類分開算，樂高不併計", "c": "swap", "r": [["2026-09-24", null]]}, {"k": "amt", "cat": "wine", "n": "酒類全店滿額（$8,000／$18,800／單瓶 $20,000）", "s": "9 月整月・要 key 活動代碼 A7", "c": "purple", "r": [["2026-09-01", "2026-09-30"]]}, {"k": "tier", "cat": "both", "n": "9 月促銷表折扣級距（酒＋巧克力）", "s": "整月", "c": "brown", "r": [["2026-09-01", "2026-09-30"]]}];
+  var CAL=[{"k": "member", "cat": "both", "n": "凡會員送來店禮：招牌燈（磁吸潮台小燈箱）", "s": "不限金額・限量送完為止", "c": "blue", "r": [["2026-09-22", null]]}, {"k": "amt", "cat": "wine", "n": "酒類滿額：$8,000 折 $200／$16,800 送行動電源／$18,800 送行李箱", "s": "要 key 活動代碼 A7・各檔不疊加，擇一", "c": "purple", "tbd": true, "r": [["2026-09-25", null]]}, {"k": "noodle", "cat": "both", "n": "泡麵 A3：酒單筆 2 瓶 → 贈 2 杯／巧克力折扣後滿 $1,500 → 贈 2 杯", "s": "口味：麻油、牛肉（現場說法；公文寫口味隨機）・每人限一次・送完為止", "c": "swap", "r": [["2026-09-24", null]]}, {"k": "d150", "cat": "choc", "n": "國產食品＆巧克力 滿 $2,000 折 $150", "s": "整段都有", "c": "add", "r": [["2026-09-22", "2026-10-31"]]}, {"k": "godiva", "cat": "choc", "n": "Godiva 滿 $2,200 送盲盒（Keychain Blind Box）", "s": "9 月促銷表・款式隨機", "c": "pink", "r": [["2026-09-01", "2026-09-30"]]}, {"k": "bag", "cat": "choc", "n": "巧克力折扣後滿 $4,000 贈透明旅行袋", "s": "三段，中間沒有・限量 1,900 個", "c": "drop", "r": [["2026-09-24", "2026-09-28"], ["2026-10-02", "2026-10-11"], ["2026-10-23", "2026-10-26"]]}, {"k": "tier", "cat": "both", "n": "9 月促銷表折扣級距（酒＋巧克力）", "s": "整月", "c": "brown", "r": [["2026-09-01", "2026-09-30"]]}];
   var grid=document.getElementById('cal-grid'), leg=document.getElementById('cal-legend'),
       title=document.getElementById('cal-title'), sec=document.getElementById('view-cal');
   if(!grid||!sec) return;
@@ -178,7 +187,7 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
       h+='<div class="'+cls+'" data-d="'+ymd(d)+'"><span class="n">'+d.getDate()+'</span>';
       list.forEach(function(c){
         var r=inRange(c,d), k='cal-lane';
-        if(r){ k+=' on c-'+c.c; if(ymd(d)===r[0]) k+=' s'; if(r[1]&&ymd(d)===r[1]) k+=' e'; if(pick===c.k) k+=' pick'; }
+        if(r){ k+=' on c-'+c.c+(c.tbd?' tbd':''); if(ymd(d)===r[0]&&!c.tbd) k+=' s'; if(r[1]&&ymd(d)===r[1]) k+=' e'; if(pick===c.k) k+=' pick'; }
         h+='<div class="'+k+'"></div>';
       });
       h+='</div>';
@@ -186,8 +195,9 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
     grid.innerHTML=h;
     if(!list.length){ leg.innerHTML='<li class="cal-empty" style="display:block">這個月沒有這一類的活動。</li>'; return; }
     leg.innerHTML=list.map(function(c){
-      var st=status(c,t);
-      var rg=c.r.map(function(x){ return '<u>'+md(x[0])+(x[1]?'–'+md(x[1]):' 起')+'</u>'; }).join('・');
+      var st=c.tbd?['tbd','日期待確認']:status(c,t);
+      var rg=c.tbd?'<span class="tbd">日期待確認（先從 '+md(c.r[0][0])+' 畫起）</span>'
+        :c.r.map(function(x){ return '<u>'+md(x[0])+(x[1]?'–'+md(x[1]):' 起')+'</u>'; }).join('・');
       return '<li data-k="'+c.k+'" class="m-'+c.c+' '+(pick===c.k?'pick ':'')+(st[0]==='over'?'over':'')+'">'
         +'<span class="sw c-'+c.c+'"></span><span><b><span class="ct">'+CATN[c.cat]+'</span>'+c.n+'</b><span class="rg">'+rg+'</span>'
         +(c.s?'<span class="sb">'+c.s+'</span>':'')+'</span><span class="st '+st[0]+'">'+st[1]+'</span></li>';
