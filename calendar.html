@@ -48,7 +48,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
 
 <section id="view-cal">
   <div class="cal-head"><div><h2><span>活動月曆（酒＋巧克力）</span></h2>
-  <p>酒和巧克力的活動合在同一份。選月份，每一檔的期間用色條畫在日期上；點活動名稱可以只看那一檔。</p></div><div class="cal-cat" role="group" aria-label="類別"><button type="button" class="on" data-cat="all">全部</button><button type="button" data-cat="wine">酒</button><button type="button" data-cat="choc">巧克力</button></div></div>
+  <p>酒和巧克力的活動合在同一份。選月份，每一檔的期間用色條畫在日期上；點活動名稱可以只看那一檔。</p></div><div class="cal-cat" role="group" aria-label="類別"><button type="button" class="on" data-cat="all">全部</button><button type="button" data-cat="wine">酒</button><button type="button" data-cat="choc">巧克力</button></div><button type="button" class="cal-dl" id="cal-dl"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>存成照片</button></div>
   <div class="cal-nav">
     <button type="button" class="cal-btn" data-m="-1" aria-label="上個月">‹</button>
     <b id="cal-title">—</b>
@@ -103,6 +103,24 @@ body{margin:0;background:var(--bg);color:var(--ink);
 .c-drop{background:var(--drop)} .c-add{background:var(--add)} .c-swap{background:var(--swap)}
 .c-accent{background:var(--accent)} .c-blue{background:var(--cal-blue)} .c-purple{background:var(--cal-purple)} .c-brown{background:var(--cal-brown)} .c-pink{background:var(--cal-pink)} .c-teal{background:var(--cal-teal)}
 .cal-head{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-start;justify-content:space-between}
+.cal-dl{appearance:none;cursor:pointer;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--accent);
+  background:var(--accent);color:var(--on-accent);font-family:inherit;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px}
+.cal-dl .ic{width:15px;height:15px}
+.cal-dl:disabled{opacity:.6}
+#cal-pv{position:fixed;inset:0;z-index:2147483600;background:rgba(10,6,3,.72);display:none;align-items:flex-start;justify-content:center;
+  overflow-y:auto;padding:max(16px,env(safe-area-inset-top)) 12px 24px}
+#cal-pv.on{display:flex}
+#cal-pv .pv-box{width:min(560px,100%);background:var(--surface);border-radius:16px;padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+#cal-pv .pv-bar{display:flex;align-items:center;justify-content:space-between;padding:2px 4px 10px}
+#cal-pv .pv-bar b{font-size:15px}
+#cal-pv .pv-x{appearance:none;border:0;background:var(--surface-2);color:var(--ink);width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer}
+#cal-pv img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid var(--line);-webkit-touch-callout:default}
+#cal-pv .pv-hint{margin:10px 4px 0;font-size:12.5px;color:var(--ink-2);line-height:1.6}
+#cal-pv .pv-act{display:flex;gap:8px;margin-top:10px}
+#cal-pv .pv-act>*{flex:1;text-align:center;appearance:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:600;
+  padding:11px 10px;border-radius:12px;text-decoration:none;border:1px solid var(--accent)}
+#cal-pv .pv-share{background:var(--accent);color:var(--on-accent)}
+#cal-pv .pv-dl{background:var(--surface);color:var(--accent)}
 .cal-cat{display:inline-flex;gap:4px;padding:3px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px}
 .cal-cat button{appearance:none;border:0;background:transparent;color:var(--ink-2);font-family:inherit;font-size:12.5px;
   padding:5px 12px;border-radius:999px;cursor:pointer;font-weight:500}
@@ -224,6 +242,134 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
     if(!sec.hidden) render();
   });
   document.addEventListener('visibilitychange',function(){ if(!document.hidden && !sec.hidden) render(); });
+  /* ===== 存成照片：直接在 canvas 上畫一張月曆海報 ===== */
+  var PAL={drop:'#A32F44',add:'#0B6F55',swap:'#9A5C00',blue:'#2B5C8A',purple:'#6B4C9A',brown:'#8A5A2B',pink:'#B0457E',teal:'#1F7F86',accent:'#7A4A1E'};
+  var INK='#2A1D12',INK2='#6B5847',INK3='#9A8875',LINE='#DED3C6',BG='#F7F3EE',SURF='#FFFFFF',SURF2='#EDE6DD';
+  var FS='"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif', FSER='"Noto Serif TC","Songti TC",serif', FMONO='"IBM Plex Mono",ui-monospace,monospace';
+  function rr(x,c,y,w,h,r){ x.beginPath(); x.moveTo(c+r,y); x.arcTo(c+w,y,c+w,y+h,r); x.arcTo(c+w,y+h,c,y+h,r); x.arcTo(c,y+h,c,y,r); x.arcTo(c,y,c+w,y,r); x.closePath(); }
+  function wrap(x,t,maxW){ var out=[],line=''; for(var i=0;i<t.length;i++){ var ch=t[i], test=line+ch; if(x.measureText(test).width>maxW && line){ out.push(line); line=ch.trim()?ch:''; } else line=test; } if(line) out.push(line); return out; }
+  function rgba(hex,a){ var n=parseInt(hex.slice(1),16); return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'; }
+  function drawPoster(){
+    var y0=cur.getFullYear(), m0=cur.getMonth(), t=today();
+    var list=CAL.filter(function(c){return touches(c,y0,m0) && (cat==='all'||c.cat==='both'||c.cat===cat);});
+    var W=1080, P=48, S=2, cv=document.createElement('canvas'); cv.width=W*S; cv.height=4200*S;
+    var x=cv.getContext('2d'); x.scale(S,S); x.textBaseline='alphabetic';
+    x.fillStyle=BG; x.fillRect(0,0,W,4200);
+    var y=P;
+    // 標題
+    x.fillStyle=INK3; x.font='500 20px '+FMONO; x.fillText('EVER RICH・TPE　酒＋巧克力活動', P, y+20);
+    y+=34; x.fillStyle=INK; x.font='700 54px '+FSER; x.fillText(y0+' 年 '+(m0+1)+' 月 活動月曆', P, y+50);
+    y+=70; x.fillStyle=INK2; x.font='400 22px '+FS;
+    var catTxt={all:'全部活動',wine:'只看酒類',choc:'只看巧克力'}[cat];
+    x.fillText(catTxt+'・製作日 '+ymd(t).replace(/-/g,'/')+'・色條＝活動期間', P, y+26);
+    y+=52;
+    // 月曆格
+    var gw=W-P*2, cw=gw/7, laneH=11, laneG=5, numH=40;
+    var rowH=numH+Math.max(1,list.length)*(laneH+laneG)+12;
+    var first=new Date(y0,m0,1), start=new Date(y0,m0,1-first.getDay());
+    var rows=0; for(var i=0;i<42;i++){ var dd=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i); if(i%7===0){ if(i>=35 && dd.getMonth()!==m0) break; rows++; } }
+    var gh=46+rows*rowH;
+    x.save(); rr(x,P,y,gw,gh,18); x.fillStyle=SURF; x.fill(); x.clip();
+    x.fillStyle=SURF2; x.fillRect(P,y,gw,46);
+    ['日','一','二','三','四','五','六'].forEach(function(d,i){ x.fillStyle=(i===0||i===6)?PAL.drop:INK3; x.font='500 20px '+FS; x.textAlign='center'; x.fillText(d,P+cw*i+cw/2,y+31); });
+    x.textAlign='left';
+    var gy=y+46;
+    for(var i2=0;i2<rows*7;i2++){
+      var d=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i2), r=Math.floor(i2/7), c=i2%7;
+      var cx=P+c*cw, cy=gy+r*rowH, out=d.getMonth()!==m0;
+      if(out){ x.fillStyle='rgba(237,230,221,.55)'; x.fillRect(cx,cy,cw,rowH); }
+      var isT=d.getTime()===t.getTime(), we=(d.getDay()===0||d.getDay()===6);
+      if(isT){ x.fillStyle=INK; x.beginPath(); x.arc(cx+26,cy+22,16,0,Math.PI*2); x.fill(); }
+      x.font=(isT?'600 ':'400 ')+'21px '+FMONO; x.textAlign='center';
+      x.fillStyle=isT?BG:(out?'#C9BCAB':(we?PAL.drop:INK)); x.fillText(String(d.getDate()),cx+26,cy+29); x.textAlign='left';
+      list.forEach(function(cc,li){
+        var rg=inRange(cc,d); if(!rg) return;
+        var ly=cy+numH+li*(laneH+laneG), s0=ymd(d)===rg[0], e0=rg[1]&&ymd(d)===rg[1];
+        var lx=cx+(s0?4:0), lw=cw-(s0?4:0)-(e0?4:0);
+        x.fillStyle=out?rgba(PAL[cc.c]||PAL.accent,.32):(PAL[cc.c]||PAL.accent);
+        var rL=s0?5:0, rR=e0?5:0;
+        x.beginPath(); x.moveTo(lx+rL,ly); x.lineTo(lx+lw-rR,ly);
+        if(rR) x.arcTo(lx+lw,ly,lx+lw,ly+rR,rR); x.lineTo(lx+lw,ly+laneH-rR); if(rR) x.arcTo(lx+lw,ly+laneH,lx+lw-rR,ly+laneH,rR);
+        x.lineTo(lx+rL,ly+laneH); if(rL) x.arcTo(lx,ly+laneH,lx,ly+laneH-rL,rL); x.lineTo(lx,ly+rL); if(rL) x.arcTo(lx,ly,lx+rL,ly,rL);
+        x.closePath(); x.fill();
+        if(cc.tbd){ x.save(); rr(x,lx,ly,lw,laneH,0); x.clip(); x.strokeStyle='rgba(255,255,255,.7)'; x.lineWidth=3; for(var k=-20;k<lw+20;k+=10){ x.beginPath(); x.moveTo(lx+k,ly+laneH); x.lineTo(lx+k+laneH,ly); x.stroke(); } x.restore(); }
+        x.globalAlpha=1;
+      });
+    }
+    x.strokeStyle=LINE; x.lineWidth=1;
+    for(var c2=1;c2<7;c2++){ x.beginPath(); x.moveTo(P+c2*cw+.5,gy); x.lineTo(P+c2*cw+.5,gy+rows*rowH); x.stroke(); }
+    for(var r2=0;r2<=rows;r2++){ x.beginPath(); x.moveTo(P,gy+r2*rowH+.5); x.lineTo(P+gw,gy+r2*rowH+.5); x.stroke(); }
+    x.restore(); rr(x,P,y,gw,gh,18); x.strokeStyle=LINE; x.lineWidth=1.5; x.stroke();
+    y+=gh+30;
+    // A7+A3 提醒
+    if(cat!=='choc'){
+      var nh=118; rr(x,P,y,gw,nh,16); x.fillStyle='#FBEDD5'; x.fill(); x.strokeStyle=PAL.swap; x.lineWidth=1.5; x.stroke();
+      x.fillStyle=PAL.swap; x.font='700 24px '+FS; x.fillText('結帳提醒：A7 ＋ A3 同時成立',P+22,y+38);
+      x.fillStyle=INK; x.font='400 22px '+FS; x.fillText('① 先打 A7（酒類滿額）　② A3（泡麵）另打一張單　③ 最後兩張併單',P+22,y+80);
+      y+=nh+24;
+    }
+    // 活動清單
+    if(!list.length){ x.fillStyle=INK3; x.font='400 24px '+FS; x.fillText('這個月沒有這一類的活動。',P,y+30); y+=60; }
+    list.forEach(function(cc){
+      var st=cc.tbd?['tbd','日期待確認']:status(cc,t);
+      var col=PAL[cc.c]||PAL.accent;
+      x.font='700 27px '+FS; var tagW=x.measureText(st[1]).width*0.78+34;
+      var nameLines=wrap(x,cc.n,gw-44-54-tagW-16);
+      var rgt=cc.tbd?'日期待確認':(cc.rgtxt||cc.r.map(function(q){return md(q[0])+(q[1]?'–'+md(q[1]):' 起');}).join('・'));
+      x.font='400 21px '+FS; var subLines=cc.s?wrap(x,cc.s,gw-44-54):[];
+      var h=24+nameLines.length*38+10+30+(subLines.length?8+subLines.length*30:0)+22;
+      rr(x,P,y,gw,h,16); x.fillStyle=SURF; x.fill(); x.strokeStyle=LINE; x.lineWidth=1.5; x.stroke();
+      rr(x,P+22,y+30,22,22,6); x.fillStyle=col; x.fill();
+      // 狀態標籤
+      var tc={on:[PAL.add,'#DFF1EA'],soon:[INK2,SURF2],gap:[PAL.swap,'#FBEDD5'],over:[INK3,SURF2],tbd:[PAL.drop,'#FAE3E7']}[st[0]]||[INK2,SURF2];
+      x.font='600 20px '+FS; var tw=x.measureText(st[1]).width+28;
+      rr(x,P+gw-22-tw,y+22,tw,36,18); x.fillStyle=tc[1]; x.fill(); x.strokeStyle=tc[0]; x.lineWidth=1.5; x.stroke();
+      x.fillStyle=tc[0]; x.fillText(st[1],P+gw-22-tw+14,y+47);
+      // 名稱
+      var ty=y+24; x.fillStyle=INK; x.font='700 27px '+FS;
+      var chip=CATN[cc.cat]; x.font='500 18px '+FS; var chw=x.measureText(chip).width+20;
+      nameLines.forEach(function(L,i){ x.font='700 27px '+FS; x.fillStyle=INK; x.fillText(L,P+62,ty+30+i*38); });
+      ty+=nameLines.length*38+10;
+      // 類別小標＋日期（螢光筆）
+      rr(x,P+62,ty+2,chw,28,14); x.strokeStyle=LINE; x.lineWidth=1.5; x.stroke(); x.font='500 18px '+FS; x.fillStyle=INK3; x.fillText(chip,P+72,ty+23);
+      x.font='600 22px '+FMONO; var rw=x.measureText(rgt).width, rx=P+62+chw+12;
+      x.fillStyle=rgba(col,.28); x.fillRect(rx-3,ty+14,rw+6,16);
+      x.fillStyle=cc.tbd?PAL.drop:INK; x.fillText(rgt,rx,ty+25);
+      ty+=30;
+      if(subLines.length){ ty+=8; x.font='400 21px '+FS; x.fillStyle=INK2; subLines.forEach(function(L,i){ x.fillText(L,P+62,ty+22+i*30); }); }
+      y+=h+14;
+    });
+    y+=14; x.fillStyle=INK3; x.font='400 19px '+FS;
+    wrap(x,'實際折抵與贈品發放以 POS 與現場公告為準・小韋整理・僅供內部同仁參考，請勿外流',gw).forEach(function(L,i){ x.fillText(L,P,y+22+i*28); y+=0; });
+    y+=60;
+    var outc=document.createElement('canvas'); outc.width=W*S; outc.height=Math.ceil(y)*S;
+    outc.getContext('2d').drawImage(cv,0,0);
+    return outc;
+  }
+  function showPreview(url,blob,fname){
+    var ov=document.getElementById('cal-pv');
+    if(!ov){ ov=document.createElement('div'); ov.id='cal-pv'; document.body.appendChild(ov);
+      ov.addEventListener('click',function(e){ if(e.target===ov||e.target.closest('.pv-x')) ov.classList.remove('on'); }); }
+    ov.innerHTML='<div class="pv-box"><div class="pv-bar"><b>月曆照片</b><button type="button" class="pv-x" aria-label="關閉">✕</button></div>'
+      +'<img alt="活動月曆" src="'+url+'"><p class="pv-hint">手機：<b>長按圖片</b> →「加入照片／儲存影像」就會存進相簿。</p>'
+      +'<div class="pv-act"><button type="button" class="pv-share">分享／存到相簿</button><a class="pv-dl" download="'+fname+'" href="'+url+'">下載 PNG</a></div></div>';
+    var sb=ov.querySelector('.pv-share');
+    var file=null; try{ file=new File([blob],fname,{type:'image/png'}); }catch(e){}
+    if(!(file && navigator.canShare && navigator.canShare({files:[file]}))) sb.style.display='none';
+    sb.addEventListener('click',function(){ navigator.share({files:[file],title:fname}).catch(function(){}); });
+    ov.classList.add('on');
+  }
+  var dl=document.getElementById('cal-dl');
+  if(dl) dl.addEventListener('click',function(){
+    dl.disabled=true; var old=dl.innerHTML; dl.textContent='產生中…';
+    var go=function(){
+      try{
+        var cv=drawPoster(), fname='活動月曆_'+cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0')+'.png';
+        cv.toBlob(function(b){ var u=URL.createObjectURL(b); showPreview(u,b,fname); dl.disabled=false; dl.innerHTML=old; },'image/png');
+      }catch(err){ dl.disabled=false; dl.innerHTML=old; alert('產生失敗：'+err.message); }
+    };
+    (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(go);
+  });
   render();
 })();
 </script>
