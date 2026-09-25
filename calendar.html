@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -9,29 +9,14 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 :root{
-  --bg:#F7F3EE; --surface:#FFFFFF; --surface-2:#EDE6DD;
-  --ink:#2A1D12; --ink-2:#6B5847; --ink-3:#9A8875;
-  --line:#DED3C6; --line-strong:#C8BBAA;
+  --bg:#FFFFFF; --surface:#FFFFFF; --surface-2:#F4F4F5;
+  --ink:#18181B; --ink-2:#52525B; --ink-3:#A1A1AA;
+  --line:#E4E4E7; --line-strong:#D4D4D8;
   --accent:#7A4A1E; --on-accent:#FFFFFF;
-  --add:#0B6F55; --add-bg:#DFF1EA; --swap:#9A5C00; --swap-bg:#FBEDD5; --drop:#A32F44; --drop-bg:#FAE3E7;
+  --add:#16A34A; --add-bg:#DCFCE7; --swap:#EA580C; --swap-bg:#FFF7ED; --drop:#DC2626; --drop-bg:#FEE2E2;
   --r-lg:14px; --r-md:11px;
-  --sh-2:0 1px 2px rgba(26,17,10,.05),0 14px 34px -22px rgba(26,17,10,.85);
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#150E09; --surface:#1E140C; --surface-2:#261A10;
-  --ink:#F1E6D8; --ink-2:#BCAB96; --ink-3:#8A7660;
-  --line:#33251A; --line-strong:#463322;
-  --accent:#E0B37A; --on-accent:#150E09;
-  --add:#4FC0A0; --add-bg:#123028; --swap:#E0A548; --swap-bg:#332512; --drop:#EC8496; --drop-bg:#361A20;
-  --sh-2:0 1px 2px rgba(0,0,0,.45),0 14px 34px -20px rgba(0,0,0,.9);
-}}
-:root[data-theme="dark"]{
-  --bg:#150E09; --surface:#1E140C; --surface-2:#261A10;
-  --ink:#F1E6D8; --ink-2:#BCAB96; --ink-3:#8A7660;
-  --line:#33251A; --line-strong:#463322;
-  --accent:#E0B37A; --on-accent:#150E09;
-  --add:#4FC0A0; --add-bg:#123028; --swap:#E0A548; --swap-bg:#332512; --drop:#EC8496; --drop-bg:#361A20;
-  --sh-2:0 1px 2px rgba(0,0,0,.45),0 14px 34px -20px rgba(0,0,0,.9);
+  --sh-2:0 1px 2px rgba(0,0,0,.05),0 12px 30px -20px rgba(0,0,0,.35);
+  color-scheme:light;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -89,19 +74,20 @@ body{margin:0;background:var(--bg);color:var(--ink);
 .cal-d{position:relative;min-height:64px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);
   padding:4px 0 5px}
 .cal-d:nth-child(7n){border-right:0}
-.cal-d.out{background:var(--surface-2);opacity:.45}
+.cal-d.out{background:#FAFAFA;opacity:.4}
 .cal-d.past .n{color:var(--ink-3)}
 .cal-d .n{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;
   margin:0 0 3px 4px;font-family:"IBM Plex Mono",monospace;font-size:12.5px;border-radius:999px;color:var(--ink)}
 .cal-d.we .n{color:var(--drop)}
 .cal-d.today .n{background:var(--ink);color:var(--bg);font-weight:600}
-.cal-lane{height:7px;margin:0 0 2px;opacity:0}
-.cal-lane.on{opacity:.82}
+.cal-lane{height:9px;margin:0 0 3px;opacity:0}
+.cal-lane.on{opacity:1}
 .cal-lane.s{border-radius:4px 0 0 4px;margin-left:3px}
 .cal-lane.e{border-radius:0 4px 4px 0;margin-right:3px}
 .cal-lane.s.e{border-radius:4px}
-.c-drop{background:var(--drop)} .c-add{background:var(--add)} .c-swap{background:var(--swap)}
-.c-accent{background:var(--accent)} .c-blue{background:var(--cal-blue)} .c-purple{background:var(--cal-purple)} .c-brown{background:var(--cal-brown)} .c-pink{background:var(--cal-pink)} .c-teal{background:var(--cal-teal)}
+:root{--cv-drop:#DC2626;--cv-swap:#F97316;--cv-brown:#CA8A04;--cv-add:#16A34A;--cv-teal:#0891B2;--cv-blue:#2563EB;--cv-purple:#7C3AED;--cv-pink:#DB2777}
+.c-drop{background:var(--cv-drop)} .c-add{background:var(--cv-add)} .c-swap{background:var(--cv-swap)}
+.c-accent{background:var(--cv-brown)} .c-blue{background:var(--cv-blue)} .c-purple{background:var(--cv-purple)} .c-brown{background:var(--cv-brown)} .c-pink{background:var(--cv-pink)} .c-teal{background:var(--cv-teal)}
 .cal-head{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-start;justify-content:space-between}
 .cal-dl{appearance:none;cursor:pointer;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--accent);
   background:var(--accent);color:var(--on-accent);font-family:inherit;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px}
@@ -127,7 +113,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
 .cal-cat button.on{background:var(--accent);color:var(--on-accent)}
 .cal-legend .ct{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;border:1px solid var(--line-strong);
   color:var(--ink-3);margin-right:6px;vertical-align:1px;font-weight:500}
-body.cal-solo .cal-lane.on:not(.pick){opacity:.12}
+body.cal-solo .cal-lane.on:not(.pick){opacity:.15}
 .cal-lane.tbd{background-image:repeating-linear-gradient(135deg,rgba(255,255,255,.55) 0 4px,transparent 4px 8px)}
 .cal-legend .st.tbd{color:var(--drop);background:var(--drop-bg);border-color:var(--drop)}
 .cal-legend .rg .tbd{font-family:"Noto Sans TC",sans-serif;font-size:12px;color:var(--drop);font-weight:500}
@@ -149,8 +135,8 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
   background-image:linear-gradient(transparent 52%,rgba(196,140,46,.34) 52%,rgba(196,140,46,.34) 96%,transparent 96%);
   background-image:linear-gradient(transparent 52%,color-mix(in srgb,var(--mk) 32%,transparent) 52%,color-mix(in srgb,var(--mk) 32%,transparent) 96%,transparent 96%)}
 .cal-legend li{--mk:#C48C2E}
-.cal-legend li.m-drop{--mk:var(--drop)} .cal-legend li.m-add{--mk:var(--add)} .cal-legend li.m-swap{--mk:var(--swap)}
-.cal-legend li.m-blue{--mk:var(--cal-blue)} .cal-legend li.m-purple{--mk:var(--cal-purple)} .cal-legend li.m-brown{--mk:var(--cal-brown)} .cal-legend li.m-pink{--mk:var(--cal-pink)} .cal-legend li.m-teal{--mk:var(--cal-teal)}
+.cal-legend li.m-drop{--mk:var(--cv-drop)} .cal-legend li.m-add{--mk:var(--cv-add)} .cal-legend li.m-swap{--mk:var(--cv-swap)}
+.cal-legend li.m-blue{--mk:var(--cv-blue)} .cal-legend li.m-purple{--mk:var(--cv-purple)} .cal-legend li.m-brown{--mk:var(--cv-brown)} .cal-legend li.m-pink{--mk:var(--cv-pink)} .cal-legend li.m-teal{--mk:var(--cv-teal)}
 .cal-legend .sb{display:block;margin-top:1px;font-size:11.5px;color:var(--ink-3)}
 .cal-legend .st{font-size:11px;padding:2px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap;font-weight:500}
 .cal-legend .st.on{color:var(--add);background:var(--add-bg);border-color:var(--add)}
@@ -160,7 +146,7 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
 .cal-legend li.over{opacity:.55}
 .cal-empty{padding:14px;text-align:center;color:var(--ink-3);font-size:13px;border:1px dashed var(--line-strong);border-radius:var(--r-md,11px)}
 .cal-foot{margin:14px 0 0;font-size:11.5px;line-height:1.75;color:var(--ink-3)}
-@media(min-width:720px){.cal-d{min-height:82px}.cal-lane{height:8px}.cal-legend{grid-template-columns:1fr 1fr}}
+@media(min-width:720px){.cal-d{min-height:82px}.cal-lane{height:10px}.cal-legend{grid-template-columns:1fr 1fr}}
 @media print{#view-cal{display:none!important}}
 </style>
 
@@ -243,8 +229,8 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
   });
   document.addEventListener('visibilitychange',function(){ if(!document.hidden && !sec.hidden) render(); });
   /* ===== 存成照片：直接在 canvas 上畫一張月曆海報 ===== */
-  var PAL={drop:'#A32F44',add:'#0B6F55',swap:'#9A5C00',blue:'#2B5C8A',purple:'#6B4C9A',brown:'#8A5A2B',pink:'#B0457E',teal:'#1F7F86',accent:'#7A4A1E'};
-  var INK='#2A1D12',INK2='#6B5847',INK3='#9A8875',LINE='#DED3C6',BG='#F7F3EE',SURF='#FFFFFF',SURF2='#EDE6DD';
+  var PAL={drop:'#DC2626',add:'#16A34A',swap:'#F97316',blue:'#2563EB',purple:'#7C3AED',brown:'#CA8A04',pink:'#DB2777',teal:'#0891B2',accent:'#CA8A04'};
+  var INK='#18181B',INK2='#52525B',INK3='#A1A1AA',LINE='#E4E4E7',BG='#FFFFFF',SURF='#FFFFFF',SURF2='#F4F4F5';
   var FS='"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif', FSER='"Noto Serif TC","Songti TC",serif', FMONO='"IBM Plex Mono",ui-monospace,monospace';
   function rr(x,c,y,w,h,r){ x.beginPath(); x.moveTo(c+r,y); x.arcTo(c+w,y,c+w,y+h,r); x.arcTo(c+w,y+h,c,y+h,r); x.arcTo(c,y+h,c,y,r); x.arcTo(c,y,c+w,y,r); x.closePath(); }
   function wrap(x,t,maxW){ var out=[],line=''; for(var i=0;i<t.length;i++){ var ch=t[i], test=line+ch; if(x.measureText(test).width>maxW && line){ out.push(line); line=ch.trim()?ch:''; } else line=test; } if(line) out.push(line); return out; }
@@ -264,7 +250,7 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
     x.fillText(catTxt+'・製作日 '+ymd(t).replace(/-/g,'/')+'・色條＝活動期間', P, y+26);
     y+=52;
     // 月曆格
-    var gw=W-P*2, cw=gw/7, laneH=11, laneG=5, numH=40;
+    var gw=W-P*2, cw=gw/7, laneH=13, laneG=5, numH=42;
     var rowH=numH+Math.max(1,list.length)*(laneH+laneG)+12;
     var first=new Date(y0,m0,1), start=new Date(y0,m0,1-first.getDay());
     var rows=0; for(var i=0;i<42;i++){ var dd=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i); if(i%7===0){ if(i>=35 && dd.getMonth()!==m0) break; rows++; } }
@@ -277,11 +263,11 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
     for(var i2=0;i2<rows*7;i2++){
       var d=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i2), r=Math.floor(i2/7), c=i2%7;
       var cx=P+c*cw, cy=gy+r*rowH, out=d.getMonth()!==m0;
-      if(out){ x.fillStyle='rgba(237,230,221,.55)'; x.fillRect(cx,cy,cw,rowH); }
+      if(out){ x.fillStyle='#FAFAFA'; x.fillRect(cx,cy,cw,rowH); }
       var isT=d.getTime()===t.getTime(), we=(d.getDay()===0||d.getDay()===6);
       if(isT){ x.fillStyle=INK; x.beginPath(); x.arc(cx+26,cy+22,16,0,Math.PI*2); x.fill(); }
       x.font=(isT?'600 ':'400 ')+'21px '+FMONO; x.textAlign='center';
-      x.fillStyle=isT?BG:(out?'#C9BCAB':(we?PAL.drop:INK)); x.fillText(String(d.getDate()),cx+26,cy+29); x.textAlign='left';
+      x.fillStyle=isT?'#FFFFFF':(out?'#D4D4D8':(we?PAL.drop:INK)); x.fillText(String(d.getDate()),cx+26,cy+29); x.textAlign='left';
       list.forEach(function(cc,li){
         var rg=inRange(cc,d); if(!rg) return;
         var ly=cy+numH+li*(laneH+laneG), s0=ymd(d)===rg[0], e0=rg[1]&&ymd(d)===rg[1];
@@ -303,7 +289,7 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
     y+=gh+30;
     // A7+A3 提醒
     if(cat!=='choc'){
-      var nh=118; rr(x,P,y,gw,nh,16); x.fillStyle='#FBEDD5'; x.fill(); x.strokeStyle=PAL.swap; x.lineWidth=1.5; x.stroke();
+      var nh=118; rr(x,P,y,gw,nh,16); x.fillStyle='#FFF7ED'; x.fill(); x.strokeStyle=PAL.swap; x.lineWidth=1.5; x.stroke();
       x.fillStyle=PAL.swap; x.font='700 24px '+FS; x.fillText('結帳提醒：A7 ＋ A3 同時成立',P+22,y+38);
       x.fillStyle=INK; x.font='400 22px '+FS; x.fillText('① 先打 A7（酒類滿額）　② A3（泡麵）另打一張單　③ 最後兩張併單',P+22,y+80);
       y+=nh+24;
@@ -321,7 +307,7 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
       rr(x,P,y,gw,h,16); x.fillStyle=SURF; x.fill(); x.strokeStyle=LINE; x.lineWidth=1.5; x.stroke();
       rr(x,P+22,y+30,22,22,6); x.fillStyle=col; x.fill();
       // 狀態標籤
-      var tc={on:[PAL.add,'#DFF1EA'],soon:[INK2,SURF2],gap:[PAL.swap,'#FBEDD5'],over:[INK3,SURF2],tbd:[PAL.drop,'#FAE3E7']}[st[0]]||[INK2,SURF2];
+      var tc={on:[PAL.add,'#DCFCE7'],soon:[INK2,SURF2],gap:[PAL.swap,'#FFEDD5'],over:[INK3,SURF2],tbd:[PAL.drop,'#FEE2E2']}[st[0]]||[INK2,SURF2];
       x.font='600 20px '+FS; var tw=x.measureText(st[1]).width+28;
       rr(x,P+gw-22-tw,y+22,tw,36,18); x.fillStyle=tc[1]; x.fill(); x.strokeStyle=tc[0]; x.lineWidth=1.5; x.stroke();
       x.fillStyle=tc[0]; x.fillText(st[1],P+gw-22-tw+14,y+47);
