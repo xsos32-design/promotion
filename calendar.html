@@ -87,7 +87,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
 .cal-lane.s.e{border-radius:4px}
 :root{--cv-drop:#DC2626;--cv-swap:#F97316;--cv-brown:#CA8A04;--cv-add:#16A34A;--cv-teal:#0891B2;--cv-blue:#2563EB;--cv-purple:#7C3AED;--cv-pink:#DB2777}
 .c-drop{background:var(--cv-drop)} .c-add{background:var(--cv-add)} .c-swap{background:var(--cv-swap)}
-.c-accent{background:var(--cv-brown)} .c-blue{background:var(--cv-blue)} .c-purple{background:var(--cv-purple)} .c-brown{background:var(--cv-brown)} .c-pink{background:var(--cv-pink)} .c-teal{background:var(--cv-teal)}
+.c-accent{background:var(--cv-brown)} .c-gray{background:#C4C4CC} .c-blue{background:var(--cv-blue)} .c-purple{background:var(--cv-purple)} .c-brown{background:var(--cv-brown)} .c-pink{background:var(--cv-pink)} .c-teal{background:var(--cv-teal)}
 .cal-head{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-start;justify-content:space-between}
 .cal-dl{appearance:none;cursor:pointer;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--accent);
   background:var(--accent);color:var(--on-accent);font-family:inherit;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px}
@@ -129,6 +129,15 @@ body.cal-solo .cal-lane.on:not(.pick){opacity:.15}
 .cal-legend li.pick{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
 body.cal-solo .cal-legend li:not(.pick){opacity:.5}
 .cal-legend .sw{width:14px;height:14px;border-radius:4px;margin-top:3px}
+.cal-legend .sw.open{background:#fff;border:2px solid #52525B;border-radius:50%;width:12px;height:12px}
+.cal-legend li.cal-gh{display:block;cursor:default;border:0;background:none;padding:10px 2px 0;font-size:11.5px;letter-spacing:.12em;color:var(--ink-3);box-shadow:none}
+.cal-legend li.open .rg u{--mk:#A1A1AA}
+.cal-legend li.m-gray{--mk:#A1A1AA}
+.cal-start{display:block;margin:3px 2px 0;padding:1px 1px;border:1.5px solid #3F3F46;border-left-width:4px;border-radius:4px;background:#fff;
+  font-size:9.5px;line-height:1.3;font-weight:700;color:#18181B;text-align:center;letter-spacing:-.03em;word-break:break-all}
+@media(min-width:720px){.cal-start::before{content:"▶";font-size:8px;margin-right:3px;vertical-align:1px}.cal-start{letter-spacing:0;padding:1px 4px}}
+body.cal-solo .cal-start:not(.pick){opacity:.2}
+@media(min-width:720px){.cal-start{font-size:11.5px;margin:4px 4px 0}}
 .cal-legend b{display:block;font-size:14px;line-height:1.45}
 .cal-legend .rg{display:block;margin-top:2px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-2)}
 .cal-legend .rg u{text-decoration:none;padding:0 .1em;border-radius:2px;font-weight:500;color:var(--ink);
@@ -152,7 +161,7 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
 
 <script id="cal-js">
 (function(){
-  var CAL=[{"k": "member", "cat": "both", "n": "凡會員送來店禮：招牌燈（磁吸潮台小燈箱）", "s": "不限金額・限量送完為止", "c": "blue", "r": [["2026-09-22", null]]}, {"k": "amt", "cat": "wine", "n": "酒類滿額 A7：$8,000 折 $200／$18,800 折 $600", "s": "暫定到 9/30・要 key 活動代碼 A7・各檔不疊加，擇一", "c": "purple", "r": [["2026-09-01", "2026-09-30"]]}, {"k": "power", "cat": "wine", "n": "酒類滿 $16,800 送行動電源", "s": "", "c": "teal", "r": [["2026-09-25", null]], "rgtxt": "送完為止（開始日未提供，從 09/25 畫起）"}, {"k": "noodle", "cat": "both", "n": "泡麵 A3：酒單筆 2 瓶 → 贈 2 杯／巧克力折扣後滿 $1,500 → 贈 2 杯", "s": "口味：麻油、牛肉（現場說法；公文寫口味隨機）・每人限一次・送完為止", "c": "swap", "r": [["2026-09-24", null]]}, {"k": "d150", "cat": "choc", "n": "國產食品＆巧克力 滿 $2,000 折 $150", "s": "整段都有", "c": "add", "r": [["2026-09-22", "2026-10-31"]]}, {"k": "godiva", "cat": "choc", "n": "Godiva 滿 $2,200 送盲盒（Keychain Blind Box）", "s": "9 月促銷表・款式隨機", "c": "pink", "r": [["2026-09-01", "2026-09-30"]]}, {"k": "bag", "cat": "choc", "n": "巧克力折扣後滿 $4,000 贈透明旅行袋", "s": "三段，中間沒有・限量 1,900 個", "c": "drop", "r": [["2026-09-24", "2026-09-28"], ["2026-10-02", "2026-10-11"], ["2026-10-23", "2026-10-26"]]}, {"k": "tier", "cat": "both", "n": "9 月促銷表折扣級距（酒＋巧克力）", "s": "整月", "c": "brown", "r": [["2026-09-01", "2026-09-30"]]}];
+  var CAL=[{"k": "member", "cat": "both", "short": "會員禮", "n": "凡會員送來店禮：招牌燈（磁吸潮台小燈箱）", "s": "不限金額・限量送完為止", "c": "open", "r": [["2026-09-22", null]]}, {"k": "amt", "cat": "wine", "n": "酒類滿額 A7：$8,000 折 $200／$18,800 折 $600", "s": "暫定到 9/30・要 key 活動代碼 A7・各檔不疊加，擇一", "c": "purple", "r": [["2026-09-01", "2026-09-30"]]}, {"k": "power", "cat": "wine", "short": "行動電源", "n": "酒類滿 $16,800 送行動電源", "s": "開始日未提供，先記 09/25", "c": "open", "r": [["2026-09-25", null]]}, {"k": "noodle", "cat": "both", "short": "泡麵", "n": "泡麵 A3：酒單筆 2 瓶 → 贈 2 杯／巧克力折扣後滿 $1,500 → 贈 2 杯", "s": "口味：麻油、牛肉（現場說法；公文寫口味隨機）・每人限一次", "c": "open", "r": [["2026-09-24", null]]}, {"k": "d150", "cat": "choc", "n": "國產食品＆巧克力 滿 $2,000 折 $150", "s": "整段都有", "c": "add", "r": [["2026-09-22", "2026-10-31"]]}, {"k": "godiva", "cat": "choc", "n": "Godiva 滿 $2,200 送盲盒（Keychain Blind Box）", "s": "9 月促銷表・款式隨機", "c": "pink", "r": [["2026-09-01", "2026-09-30"]]}, {"k": "bag", "cat": "choc", "n": "巧克力折扣後滿 $4,000 贈透明旅行袋", "s": "三段，中間沒有・限量 1,900 個", "c": "drop", "r": [["2026-09-24", "2026-09-28"], ["2026-10-02", "2026-10-11"], ["2026-10-23", "2026-10-26"]]}, {"k": "tier", "cat": "both", "n": "9 月促銷表折扣級距（酒＋巧克力）", "s": "整月（底色參考，灰色）", "c": "gray", "r": [["2026-09-01", "2026-09-30"]]}];
   var grid=document.getElementById('cal-grid'), leg=document.getElementById('cal-legend'),
       title=document.getElementById('cal-title'), sec=document.getElementById('view-cal');
   if(!grid||!sec) return;
@@ -177,10 +186,12 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
     for(var i=0;i<c.r.length;i++){ var s=D(c.r[i][0]), e=c.r[i][1]?D(c.r[i][1]):null;
       if(s<=b && (!e||e>=a)) return true; } return false;
   }
+  function isOpen(c){ return c.r.length===1 && !c.r[0][1]; }
   function render(){
     var y=cur.getFullYear(), m=cur.getMonth(), t=today();
     title.textContent=y+' 年 '+(m+1)+' 月';
     var list=CAL.filter(function(c){return touches(c,y,m) && (cat==='all'||c.cat==='both'||c.cat===cat);});
+    var lanes=list.filter(function(c){return !isOpen(c);}), opens=list.filter(isOpen);
     var h='';
     ['日','一','二','三','四','五','六'].forEach(function(d,i){ h+='<div class="cal-dow'+(i===0||i===6?' we':'')+'">'+d+'</div>'; });
     var first=new Date(y,m,1), start=new Date(y,m,1-first.getDay());
@@ -189,24 +200,33 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
       if(i>=35 && d.getMonth()!==m) break;
       var out=d.getMonth()!==m, cls='cal-d'+(out?' out':'')+(d.getTime()===t.getTime()?' today':'')+(d<t?' past':'')+(d.getDay()===0||d.getDay()===6?' we':'');
       h+='<div class="'+cls+'" data-d="'+ymd(d)+'"><span class="n">'+d.getDate()+'</span>';
-      list.forEach(function(c){
+      lanes.forEach(function(c){
         var r=inRange(c,d), k='cal-lane';
         if(r){ k+=' on c-'+c.c+(c.tbd?' tbd':''); if(ymd(d)===r[0]&&!c.tbd) k+=' s'; if(r[1]&&ymd(d)===r[1]) k+=' e'; if(pick===c.k) k+=' pick'; }
         h+='<div class="'+k+'"></div>';
       });
+      opens.forEach(function(c){ if(ymd(d)===c.r[0][0] && !out) h+='<span class="cal-start'+(pick===c.k?' pick':'')+'">'+c.short+'</span>'; });
       h+='</div>';
     }
     grid.innerHTML=h;
     if(!list.length){ leg.innerHTML='<li class="cal-empty" style="display:block">這個月沒有這一類的活動。</li>'; return; }
-    leg.innerHTML=list.map(function(c){
+    var H='';
+    if(lanes.length) H+='<li class="cal-gh">有期限的活動（色條＝期間）</li>'+lanes.map(function(c){
       var st=c.tbd?['tbd','日期待確認']:status(c,t);
-      var rg=c.tbd?'<span class="tbd">日期待確認（先從 '+md(c.r[0][0])+' 畫起）</span>'
-        :c.rgtxt?'<u>'+c.rgtxt+'</u>'
+      var rg=c.tbd?'<span class="tbd">日期待確認</span>'
         :c.r.map(function(x){ return '<u>'+md(x[0])+(x[1]?'–'+md(x[1]):' 起')+'</u>'; }).join('・');
       return '<li data-k="'+c.k+'" class="m-'+c.c+' '+(pick===c.k?'pick ':'')+(st[0]==='over'?'over':'')+'">'
         +'<span class="sw c-'+c.c+'"></span><span><b><span class="ct">'+CATN[c.cat]+'</span>'+c.n+'</b><span class="rg">'+rg+'</span>'
         +(c.s?'<span class="sb">'+c.s+'</span>':'')+'</span><span class="st '+st[0]+'">'+st[1]+'</span></li>';
     }).join('');
+    if(opens.length) H+='<li class="cal-gh">送完為止（只標開始日）</li>'+opens.map(function(c){
+      var started=t>=D(c.r[0][0]);
+      return '<li data-k="'+c.k+'" class="open '+(pick===c.k?'pick':'')+'">'
+        +'<span class="sw open"></span><span><b><span class="ct">'+CATN[c.cat]+'</span>'+c.n+'</b>'
+        +'<span class="rg"><u>'+md(c.r[0][0])+' 開始</u>・送完為止</span>'
+        +(c.s?'<span class="sb">'+c.s+'</span>':'')+'</span><span class="st '+(started?'on':'soon')+'">'+(started?'進行中':'尚未開始')+'</span></li>';
+    }).join('');
+    leg.innerHTML=H;
   }
   sec.addEventListener('click',function(e){
     var cb=e.target.closest('.cal-cat button');
@@ -229,7 +249,7 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
   });
   document.addEventListener('visibilitychange',function(){ if(!document.hidden && !sec.hidden) render(); });
   /* ===== 存成照片：直接在 canvas 上畫一張月曆海報 ===== */
-  var PAL={drop:'#DC2626',add:'#16A34A',swap:'#F97316',blue:'#2563EB',purple:'#7C3AED',brown:'#CA8A04',pink:'#DB2777',teal:'#0891B2',accent:'#CA8A04'};
+  var PAL={drop:'#DC2626',add:'#16A34A',swap:'#F97316',blue:'#2563EB',purple:'#7C3AED',brown:'#CA8A04',pink:'#DB2777',teal:'#0891B2',accent:'#CA8A04',gray:'#C4C4CC',open:'#52525B'};
   var INK='#18181B',INK2='#52525B',INK3='#A1A1AA',LINE='#E4E4E7',BG='#FFFFFF',SURF='#FFFFFF',SURF2='#F4F4F5';
   var FS='"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif', FSER='"Noto Serif TC","Songti TC",serif', FMONO='"IBM Plex Mono",ui-monospace,monospace';
   function rr(x,c,y,w,h,r){ x.beginPath(); x.moveTo(c+r,y); x.arcTo(c+w,y,c+w,y+h,r); x.arcTo(c+w,y+h,c,y+h,r); x.arcTo(c,y+h,c,y,r); x.arcTo(c,y,c+w,y,r); x.closePath(); }
@@ -237,7 +257,8 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
   function rgba(hex,a){ var n=parseInt(hex.slice(1),16); return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'; }
   function drawPoster(){
     var y0=cur.getFullYear(), m0=cur.getMonth(), t=today();
-    var list=CAL.filter(function(c){return touches(c,y0,m0) && (cat==='all'||c.cat==='both'||c.cat===cat);});
+    var all=CAL.filter(function(c){return touches(c,y0,m0) && (cat==='all'||c.cat==='both'||c.cat===cat);});
+    var list=all.filter(function(c){return !isOpen(c);}), opens=all.filter(isOpen);
     var W=1080, P=48, S=2, cv=document.createElement('canvas'); cv.width=W*S; cv.height=4200*S;
     var x=cv.getContext('2d'); x.scale(S,S); x.textBaseline='alphabetic';
     x.fillStyle=BG; x.fillRect(0,0,W,4200);
@@ -251,7 +272,8 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
     y+=52;
     // 月曆格
     var gw=W-P*2, cw=gw/7, laneH=13, laneG=5, numH=42;
-    var rowH=numH+Math.max(1,list.length)*(laneH+laneG)+12;
+    var maxStart=0; opens.forEach(function(c){ var n=opens.filter(function(o){return o.r[0][0]===c.r[0][0];}).length; if(n>maxStart) maxStart=n; });
+    var rowH=numH+Math.max(1,list.length)*(laneH+laneG)+12+maxStart*30;
     var first=new Date(y0,m0,1), start=new Date(y0,m0,1-first.getDay());
     var rows=0; for(var i=0;i<42;i++){ var dd=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i); if(i%7===0){ if(i>=35 && dd.getMonth()!==m0) break; rows++; } }
     var gh=46+rows*rowH;
@@ -281,6 +303,13 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
         if(cc.tbd){ x.save(); rr(x,lx,ly,lw,laneH,0); x.clip(); x.strokeStyle='rgba(255,255,255,.7)'; x.lineWidth=3; for(var k=-20;k<lw+20;k+=10){ x.beginPath(); x.moveTo(lx+k,ly+laneH); x.lineTo(lx+k+laneH,ly); x.stroke(); } x.restore(); }
         x.globalAlpha=1;
       });
+      var si=0; opens.forEach(function(cc){
+        if(out || ymd(d)!==cc.r[0][0]) return;
+        var sy=cy+numH+list.length*(laneH+laneG)+4+si*30; si++;
+        x.font='700 17px '+FS; var lbl='▶ '+cc.short, lw2=Math.min(cw-8, x.measureText(lbl).width+14);
+        rr(x,cx+4,sy,lw2,25,6); x.fillStyle='#FFFFFF'; x.fill(); x.strokeStyle='#3F3F46'; x.lineWidth=2; x.stroke();
+        x.fillStyle='#18181B'; x.fillText(lbl,cx+11,sy+19);
+      });
     }
     x.strokeStyle=LINE; x.lineWidth=1;
     for(var c2=1;c2<7;c2++){ x.beginPath(); x.moveTo(P+c2*cw+.5,gy); x.lineTo(P+c2*cw+.5,gy+rows*rowH); x.stroke(); }
@@ -295,7 +324,9 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
       y+=nh+24;
     }
     // 活動清單
-    if(!list.length){ x.fillStyle=INK3; x.font='400 24px '+FS; x.fillText('這個月沒有這一類的活動。',P,y+30); y+=60; }
+    if(!all.length){ x.fillStyle=INK3; x.font='400 24px '+FS; x.fillText('這個月沒有這一類的活動。',P,y+30); y+=60; }
+    function ghead(t0){ x.fillStyle=INK3; x.font='500 20px '+FS; x.fillText(t0,P+4,y+24); y+=40; }
+    if(list.length) ghead('有期限的活動（色條＝期間）');
     list.forEach(function(cc){
       var st=cc.tbd?['tbd','日期待確認']:status(cc,t);
       var col=PAL[cc.c]||PAL.accent;
@@ -324,6 +355,25 @@ body.cal-solo .cal-legend li:not(.pick){opacity:.5}
       ty+=30;
       if(subLines.length){ ty+=8; x.font='400 21px '+FS; x.fillStyle=INK2; subLines.forEach(function(L,i){ x.fillText(L,P+62,ty+22+i*30); }); }
       y+=h+14;
+    });
+    if(opens.length){ y+=6; ghead('送完為止（只標開始日）'); }
+    opens.forEach(function(cc){
+      var started=t>=D(cc.r[0][0]);
+      x.font='700 25px '+FS; var nl=wrap(x,cc.n,gw-44-54-140);
+      var h=22+nl.length*36+8+28+(cc.s?30:0)+18;
+      rr(x,P,y,gw,h,14); x.fillStyle=SURF; x.fill(); x.strokeStyle=LINE; x.lineWidth=1.5; x.stroke();
+      x.beginPath(); x.arc(P+33,y+40,9,0,Math.PI*2); x.fillStyle='#fff'; x.fill(); x.strokeStyle='#52525B'; x.lineWidth=3; x.stroke();
+      nl.forEach(function(L,i){ x.font='700 25px '+FS; x.fillStyle=INK; x.fillText(L,P+62,y+46+i*36); });
+      var ty=y+22+nl.length*36+8;
+      x.font='600 22px '+FMONO; var txt=md(cc.r[0][0])+' 開始', tw2=x.measureText(txt).width;
+      x.fillStyle='rgba(161,161,170,.35)'; x.fillRect(P+59,ty+10,tw2+6,16); x.fillStyle=INK; x.fillText(txt,P+62,ty+22);
+      x.font='400 21px '+FS; x.fillStyle=INK2; x.fillText('・送完為止',P+62+tw2+10,ty+22);
+      if(cc.s){ x.fillStyle=INK2; x.font='400 20px '+FS; x.fillText(wrap(x,cc.s,gw-80)[0],P+62,ty+52); }
+      var tc2=started?[PAL.add,'#DCFCE7','進行中']:[INK2,SURF2,'尚未開始'];
+      x.font='600 20px '+FS; var tw=x.measureText(tc2[2]).width+28;
+      rr(x,P+gw-22-tw,y+20,tw,36,18); x.fillStyle=tc2[1]; x.fill(); x.strokeStyle=tc2[0]; x.lineWidth=1.5; x.stroke();
+      x.fillStyle=tc2[0]; x.fillText(tc2[2],P+gw-22-tw+14,y+45);
+      y+=h+12;
     });
     y+=14; x.fillStyle=INK3; x.font='400 19px '+FS;
     wrap(x,'實際折抵與贈品發放以 POS 與現場公告為準・小韋整理・僅供內部同仁參考，請勿外流',gw).forEach(function(L,i){ x.fillText(L,P,y+22+i*28); y+=0; });
