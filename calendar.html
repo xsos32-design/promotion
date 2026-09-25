@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>活動月曆（酒＋巧克力）</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="韋・活動月曆">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F7F3EE; --surface:#FFFFFF; --surface-2:#EDE6DD;
+  --ink:#2A1D12; --ink-2:#6B5847; --ink-3:#9A8875;
+  --line:#DED3C6; --line-strong:#C8BBAA;
+  --accent:#7A4A1E; --on-accent:#FFFFFF;
+  --add:#0B6F55; --add-bg:#DFF1EA; --swap:#9A5C00; --swap-bg:#FBEDD5; --drop:#A32F44; --drop-bg:#FAE3E7;
+  --r-lg:14px; --r-md:11px;
+  --sh-2:0 1px 2px rgba(26,17,10,.05),0 14px 34px -22px rgba(26,17,10,.85);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#150E09; --surface:#1E140C; --surface-2:#261A10;
+  --ink:#F1E6D8; --ink-2:#BCAB96; --ink-3:#8A7660;
+  --line:#33251A; --line-strong:#463322;
+  --accent:#E0B37A; --on-accent:#150E09;
+  --add:#4FC0A0; --add-bg:#123028; --swap:#E0A548; --swap-bg:#332512; --drop:#EC8496; --drop-bg:#361A20;
+  --sh-2:0 1px 2px rgba(0,0,0,.45),0 14px 34px -20px rgba(0,0,0,.9);
+}}
+:root[data-theme="dark"]{
+  --bg:#150E09; --surface:#1E140C; --surface-2:#261A10;
+  --ink:#F1E6D8; --ink-2:#BCAB96; --ink-3:#8A7660;
+  --line:#33251A; --line-strong:#463322;
+  --accent:#E0B37A; --on-accent:#150E09;
+  --add:#4FC0A0; --add-bg:#123028; --swap:#E0A548; --swap-bg:#332512; --drop:#EC8496; --drop-bg:#361A20;
+  --sh-2:0 1px 2px rgba(0,0,0,.45),0 14px 34px -20px rgba(0,0,0,.9);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:4px 16px 60px}
+@media(min-width:720px){.wrap{padding:8px 24px 72px}}
+</style>
+<script defer src="https://xsos32-design.github.io/dutyliquorwiki/nav.js"></script>
+</head>
+<body>
+<div class="wrap">
+
+<section id="view-cal">
+  <div class="cal-head"><div><h2><span>活動月曆（酒＋巧克力）</span></h2>
+  <p>酒和巧克力的活動合在同一份。選月份，每一檔的期間用色條畫在日期上；點活動名稱可以只看那一檔。</p></div><div class="cal-cat" role="group" aria-label="類別"><button type="button" class="on" data-cat="all">全部</button><button type="button" data-cat="wine">酒</button><button type="button" data-cat="choc">巧克力</button></div></div>
+  <div class="cal-nav">
+    <button type="button" class="cal-btn" data-m="-1" aria-label="上個月">‹</button>
+    <b id="cal-title">—</b>
+    <button type="button" class="cal-btn" data-m="1" aria-label="下個月">›</button>
+    <button type="button" class="cal-btn cal-today" data-m="0">今天</button>
+  </div>
+  <div class="cal-grid" id="cal-grid" role="grid"></div>
+  <ol class="cal-legend" id="cal-legend"></ol>
+  <p class="cal-foot">日期以你手機／電腦當下的日期為準；「送完為止」的檔沒有結束日，色條一路畫到月底。實際折抵與贈品發放以 POS 與現場公告為準。</p>
+</section>
+
+</div>
+
+<style id="cal-css">
+:root{--cal-blue:#2B5C8A;--cal-blue-bg:#DDE9F5;--cal-purple:#6B4C9A;--cal-brown:#8A5A2B}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--cal-blue:#7FB3E6;--cal-blue-bg:#16283A;--cal-purple:#B9A2E6;--cal-brown:#D9A66E}}
+:root[data-theme="dark"]{--cal-blue:#7FB3E6;--cal-blue-bg:#16283A;--cal-purple:#B9A2E6;--cal-brown:#D9A66E}
+#view-cal{padding-bottom:20px}
+.cal-head{margin:18px 0 0;padding:15px 16px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-lg,14px);box-shadow:var(--sh-2);position:relative;overflow:hidden}
+.cal-head::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
+.cal-head h2{font-family:"Noto Serif TC",serif;font-size:17px;margin:0;display:flex;align-items:center;gap:8px}
+.cal-head h2 .ic{width:1.05em;height:1.05em;color:var(--accent)}
+.cal-head p{margin:4px 0 0;font-size:12.5px;line-height:1.7;color:var(--ink-2);max-width:52ch}
+.cal-nav{display:flex;align-items:center;gap:8px;margin:16px 0 10px}
+.cal-nav b{flex:1;text-align:center;font-family:"Noto Serif TC",serif;font-size:18px;letter-spacing:.02em}
+.cal-btn{appearance:none;cursor:pointer;border:1px solid var(--line-strong);background:var(--surface);
+  color:var(--ink);border-radius:999px;width:38px;height:36px;font-size:20px;line-height:1;
+  display:inline-flex;align-items:center;justify-content:center}
+.cal-btn.cal-today{width:auto;padding:0 12px;font-size:12.5px;font-family:inherit}
+.cal-btn:active{transform:scale(.95)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md,11px);overflow:hidden}
+.cal-dow{padding:7px 0 6px;text-align:center;font-size:11px;letter-spacing:.06em;color:var(--ink-3);
+  border-bottom:1px solid var(--line);background:var(--surface-2)}
+.cal-dow.we{color:var(--drop)}
+.cal-d{position:relative;min-height:64px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:4px 0 5px}
+.cal-d:nth-child(7n){border-right:0}
+.cal-d.out{background:var(--surface-2);opacity:.45}
+.cal-d.past .n{color:var(--ink-3)}
+.cal-d .n{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;
+  margin:0 0 3px 4px;font-family:"IBM Plex Mono",monospace;font-size:12.5px;border-radius:999px;color:var(--ink)}
+.cal-d.we .n{color:var(--drop)}
+.cal-d.today .n{background:var(--ink);color:var(--bg);font-weight:600}
+.cal-lane{height:7px;margin:0 0 2px;opacity:0}
+.cal-lane.on{opacity:.82}
+.cal-lane.s{border-radius:4px 0 0 4px;margin-left:3px}
+.cal-lane.e{border-radius:0 4px 4px 0;margin-right:3px}
+.cal-lane.s.e{border-radius:4px}
+.c-drop{background:var(--drop)} .c-add{background:var(--add)} .c-swap{background:var(--swap)}
+.c-accent{background:var(--accent)} .c-blue{background:var(--cal-blue)} .c-purple{background:var(--cal-purple)} .c-brown{background:var(--cal-brown)}
+.cal-head{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:flex-start;justify-content:space-between}
+.cal-cat{display:inline-flex;gap:4px;padding:3px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px}
+.cal-cat button{appearance:none;border:0;background:transparent;color:var(--ink-2);font-family:inherit;font-size:12.5px;
+  padding:5px 12px;border-radius:999px;cursor:pointer;font-weight:500}
+.cal-cat button.on{background:var(--accent);color:var(--on-accent)}
+.cal-legend .ct{display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:999px;border:1px solid var(--line-strong);
+  color:var(--ink-3);margin-right:6px;vertical-align:1px;font-weight:500}
+body.cal-solo .cal-lane.on:not(.pick){opacity:.12}
+.cal-legend{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:7px}
+.cal-legend li{display:grid;grid-template-columns:14px 1fr auto;gap:10px;align-items:start;
+  padding:10px 12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md,11px);
+  cursor:pointer;user-select:none;transition:opacity .15s,border-color .15s}
+.cal-legend li.pick{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+body.cal-solo .cal-legend li:not(.pick){opacity:.5}
+.cal-legend .sw{width:14px;height:14px;border-radius:4px;margin-top:3px}
+.cal-legend b{display:block;font-size:14px;line-height:1.45}
+.cal-legend .rg{display:block;margin-top:2px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-2)}
+.cal-legend .rg u{text-decoration:none;padding:0 .1em;border-radius:2px;font-weight:500;color:var(--ink);
+  background-image:linear-gradient(transparent 52%,rgba(196,140,46,.34) 52%,rgba(196,140,46,.34) 96%,transparent 96%);
+  background-image:linear-gradient(transparent 52%,color-mix(in srgb,var(--mk) 32%,transparent) 52%,color-mix(in srgb,var(--mk) 32%,transparent) 96%,transparent 96%)}
+.cal-legend li{--mk:#C48C2E}
+.cal-legend li.m-drop{--mk:var(--drop)} .cal-legend li.m-add{--mk:var(--add)} .cal-legend li.m-swap{--mk:var(--swap)}
+.cal-legend li.m-blue{--mk:var(--cal-blue)} .cal-legend li.m-purple{--mk:var(--cal-purple)} .cal-legend li.m-brown{--mk:var(--cal-brown)}
+.cal-legend .sb{display:block;margin-top:1px;font-size:11.5px;color:var(--ink-3)}
+.cal-legend .st{font-size:11px;padding:2px 9px;border-radius:999px;border:1px solid transparent;white-space:nowrap;font-weight:500}
+.cal-legend .st.on{color:var(--add);background:var(--add-bg);border-color:var(--add)}
+.cal-legend .st.gap{color:var(--swap);background:var(--swap-bg);border-color:var(--swap)}
+.cal-legend .st.soon{color:var(--ink-2);background:var(--surface-2);border-color:var(--line-strong)}
+.cal-legend .st.over{color:var(--ink-3);background:var(--surface-2);border-color:var(--line);text-decoration:line-through}
+.cal-legend li.over{opacity:.55}
+.cal-empty{padding:14px;text-align:center;color:var(--ink-3);font-size:13px;border:1px dashed var(--line-strong);border-radius:var(--r-md,11px)}
+.cal-foot{margin:14px 0 0;font-size:11.5px;line-height:1.75;color:var(--ink-3)}
+@media(min-width:720px){.cal-d{min-height:82px}.cal-lane{height:8px}.cal-legend{grid-template-columns:1fr 1fr}}
+@media print{#view-cal{display:none!important}}
+</style>
+
+<script id="cal-js">
+(function(){
+  var CAL=[{"k": "bag", "cat": "choc", "n": "折扣後滿 $4,000 贈透明旅行袋", "s": "三段，中間沒有", "c": "drop", "r": [["2026-09-24", "2026-09-28"], ["2026-10-02", "2026-10-11"], ["2026-10-23", "2026-10-26"]]}, {"k": "d150", "cat": "choc", "n": "國產食品＆巧克力 滿 $2,000 折 $150", "s": "整段都有", "c": "add", "r": [["2026-09-22", "2026-10-31"]]}, {"k": "gift", "cat": "choc", "n": "不限金額 送會員禮小燈箱", "s": "送完為止", "c": "blue", "r": [["2026-09-22", null]]}, {"k": "noodle", "cat": "both", "n": "泡麵：酒 滿 2 件／巧克力折扣後滿 $1,500 → 贈 2 杯", "s": "送完為止・各大類分開算，樂高不併計", "c": "swap", "r": [["2026-09-24", null]]}, {"k": "amt", "cat": "wine", "n": "酒類全店滿額（$8,000／$18,800／單瓶 $20,000）", "s": "9 月整月・要 key 活動代碼 A7", "c": "purple", "r": [["2026-09-01", "2026-09-30"]]}, {"k": "tier", "cat": "both", "n": "9 月促銷表折扣級距（酒＋巧克力）", "s": "整月", "c": "brown", "r": [["2026-09-01", "2026-09-30"]]}];
+  var grid=document.getElementById('cal-grid'), leg=document.getElementById('cal-legend'),
+      title=document.getElementById('cal-title'), sec=document.getElementById('view-cal');
+  if(!grid||!sec) return;
+  function D(s){ var p=s.split('-'); return new Date(+p[0],+p[1]-1,+p[2]); }
+  function ymd(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+  function md(s){ return s.slice(5).replace('-','/'); }
+  function today(){ var t=new Date(); return new Date(t.getFullYear(),t.getMonth(),t.getDate()); }
+  var cur=today(); cur=new Date(cur.getFullYear(),cur.getMonth(),1);
+  var pick=null, cat='all';
+  var CATN={"choc": "巧克力", "wine": "酒", "both": "酒＋巧克力"};
+  function inRange(c,d){ for(var i=0;i<c.r.length;i++){ var a=D(c.r[i][0]), b=c.r[i][1]?D(c.r[i][1]):null;
+      if(d>=a && (!b||d<=b)) return c.r[i]; } return null; }
+  function status(c,t){
+    var on=inRange(c,t); if(on) return ['on','進行中'];
+    var first=D(c.r[0][0]); if(t<first) return ['soon','尚未開始'];
+    var lastEnd=c.r[c.r.length-1][1];
+    if(lastEnd && t>D(lastEnd)) return ['over','已結束'];
+    return ['gap','空檔中・等下一段'];
+  }
+  function touches(c,y,m){
+    var a=new Date(y,m,1), b=new Date(y,m+1,0);
+    for(var i=0;i<c.r.length;i++){ var s=D(c.r[i][0]), e=c.r[i][1]?D(c.r[i][1]):null;
+      if(s<=b && (!e||e>=a)) return true; } return false;
+  }
+  function render(){
+    var y=cur.getFullYear(), m=cur.getMonth(), t=today();
+    title.textContent=y+' 年 '+(m+1)+' 月';
+    var list=CAL.filter(function(c){return touches(c,y,m) && (cat==='all'||c.cat==='both'||c.cat===cat);});
+    var h='';
+    ['日','一','二','三','四','五','六'].forEach(function(d,i){ h+='<div class="cal-dow'+(i===0||i===6?' we':'')+'">'+d+'</div>'; });
+    var first=new Date(y,m,1), start=new Date(y,m,1-first.getDay());
+    for(var i=0;i<42;i++){
+      var d=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i);
+      if(i>=35 && d.getMonth()!==m) break;
+      var out=d.getMonth()!==m, cls='cal-d'+(out?' out':'')+(d.getTime()===t.getTime()?' today':'')+(d<t?' past':'')+(d.getDay()===0||d.getDay()===6?' we':'');
+      h+='<div class="'+cls+'" data-d="'+ymd(d)+'"><span class="n">'+d.getDate()+'</span>';
+      list.forEach(function(c){
+        var r=inRange(c,d), k='cal-lane';
+        if(r){ k+=' on c-'+c.c; if(ymd(d)===r[0]) k+=' s'; if(r[1]&&ymd(d)===r[1]) k+=' e'; if(pick===c.k) k+=' pick'; }
+        h+='<div class="'+k+'"></div>';
+      });
+      h+='</div>';
+    }
+    grid.innerHTML=h;
+    if(!list.length){ leg.innerHTML='<li class="cal-empty" style="display:block">這個月沒有這一類的活動。</li>'; return; }
+    leg.innerHTML=list.map(function(c){
+      var st=status(c,t);
+      var rg=c.r.map(function(x){ return '<u>'+md(x[0])+(x[1]?'–'+md(x[1]):' 起')+'</u>'; }).join('・');
+      return '<li data-k="'+c.k+'" class="m-'+c.c+' '+(pick===c.k?'pick ':'')+(st[0]==='over'?'over':'')+'">'
+        +'<span class="sw c-'+c.c+'"></span><span><b><span class="ct">'+CATN[c.cat]+'</span>'+c.n+'</b><span class="rg">'+rg+'</span>'
+        +(c.s?'<span class="sb">'+c.s+'</span>':'')+'</span><span class="st '+st[0]+'">'+st[1]+'</span></li>';
+    }).join('');
+  }
+  sec.addEventListener('click',function(e){
+    var cb=e.target.closest('.cal-cat button');
+    if(cb){ cat=cb.getAttribute('data-cat'); pick=null; document.body.classList.remove('cal-solo');
+      Array.prototype.forEach.call(sec.querySelectorAll('.cal-cat button'),function(x){x.classList.toggle('on',x===cb);}); render(); return; }
+    var b=e.target.closest('.cal-btn');
+    if(b){ var n=+b.getAttribute('data-m');
+      if(n===0){ var t=today(); cur=new Date(t.getFullYear(),t.getMonth(),1); }
+      else cur=new Date(cur.getFullYear(),cur.getMonth()+n,1);
+      render(); return; }
+    var li=e.target.closest('.cal-legend li[data-k]');
+    if(li){ var k=li.getAttribute('data-k'); pick=(pick===k)?null:k;
+      document.body.classList.toggle('cal-solo',!!pick); render(); }
+  });
+  var v=document.getElementById('views');
+  if(v) v.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-v]'); if(!b) return;
+    sec.hidden = b.getAttribute('data-v')!=='cal';
+    if(!sec.hidden) render();
+  });
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden && !sec.hidden) render(); });
+  render();
+})();
+</script>
+<style id="ic-css">
+:root{--i-alert:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx=%2212%22 cy=%2212%22 r=%2210%22/><line x1=%2212%22 x2=%2212%22 y1=%228%22 y2=%2212%22/><line x1=%2212%22 x2=%2212.01%22 y1=%2216%22 y2=%2216%22/></svg>");--i-award:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526%22/> <circle cx=%2212%22 cy=%228%22 r=%226%22/></svg>");--i-badge_check:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z%22/> <path d=%22m16 9-5.5 5.5L8 12%22/></svg>");--i-ban:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx=%2212%22 cy=%2212%22 r=%2210%22/> <path d=%22M4.929 4.929 19.07 19.071%22/></svg>");--i-barrel:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M7.2 3.3h9.6c1.2 2.3 1.85 5.35 1.85 8.7s-.65 6.4-1.85 8.7H7.2C6 18.4 5.35 15.35 5.35 12S6 5.6 7.2 3.3z%22/><path d=%22M5.6 8.5h12.8%22/><path d=%22M5.6 15.5h12.8%22/><path d=%22M12 3.5v17%22/></svg>");--i-bird:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M16 7h.01%22/> <path d=%22M3.4 18H12a8 8 0 0 0 8-8V7a4 4 0 0 0-7.28-2.3L2 20%22/> <path d=%22m20 7 2 .5-2 .5%22/> <path d=%22M10 18v3%22/> <path d=%22M14 17.75V21%22/> <path d=%22M7 18a6 6 0 0 0 3.84-10.61%22/></svg>");--i-book_open:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12 5v16%22/> <path d=%22M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z%22/></svg>");--i-bookmark:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z%22/></svg>");--i-bottle:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M10 2.6h4%22/><path d=%22M10.2 2.6v3.1c0 .93-.32 1.83-.9 2.55l-.72.88A4.2 4.2 0 0 0 7.6 11.8V19a2.5 2.5 0 0 0 2.5 2.5h3.8a2.5 2.5 0 0 0 2.5-2.5v-7.2a4.2 4.2 0 0 0-.98-2.67l-.72-.88a4.05 4.05 0 0 1-.9-2.55V2.6%22/><path d=%22M7.7 13.4h8.6%22/><path d=%22M7.7 17.4h8.6%22/></svg>");--i-broom:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M20 3.6 12.2 11.4%22/><path d=%22M10.1 9.3 14.3 13.5%22/><path d=%22M12.2 11.4 6.7 16.9a1.6 1.6 0 0 0-.34 1.77L7.5 21.2h6.6l1.28-2.5a1.6 1.6 0 0 0-.3-1.85z%22/><path d=%22M9.9 17.6 9.2 21.2%22/><path d=%22M12.5 17.8v3.4%22/></svg>");--i-bug:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12 20v-9%22/> <path d=%22M14 7a4 4 0 0 1 4 4v3a6 6 0 0 1-12 0v-3a4 4 0 0 1 4-4z%22/> <path d=%22M14.12 3.88 16 2%22/> <path d=%22M21 21a4 4 0 0 0-3.81-4%22/> <path d=%22M21 5a4 4 0 0 1-3.55 3.97%22/> <path d=%22M22 13h-4%22/> <path d=%22M3 21a4 4 0 0 1 3.81-4%22/> <path d=%22M3 5a4 4 0 0 0 3.55 3.97%22/> <path d=%22M6 13H2%22/> <path d=%22m8 2 1.88 1.88%22/> <path d=%22M9 7.13V6a3 3 0 1 1 6 0v1.13%22/></svg>");--i-cal:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M8 2v3%22/><path d=%22M16 2v3%22/><rect x=%223%22 y=%223%22 width=%2218%22 height=%2218%22 rx=%222%22/><path d=%22M3 9h18%22/><path d=%22M8 13h.01%22/><path d=%22M12 13h.01%22/><path d=%22M16 13h.01%22/><path d=%22M8 17h.01%22/><path d=%22M12 17h.01%22/><path d=%22M16 17h.01%22/></svg>");--i-calendar_days:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M8 2v3%22/> <path d=%22M16 2v3%22/> <rect x=%223%22 y=%223%22 width=%2218%22 height=%2218%22 rx=%222%22/> <path d=%22M3 9h18%22/> <path d=%22M8 13h.01%22/> <path d=%22M12 13h.01%22/> <path d=%22M16 13h.01%22/> <path d=%22M8 17h.01%22/> <path d=%22M12 17h.01%22/> <path d=%22M16 17h.01%22/></svg>");--i-camera:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z%22/> <circle cx=%2212%22 cy=%2213%22 r=%223%22/></svg>");--i-candy:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M10 7v10.9%22/> <path d=%22M14 6.1V17%22/> <path d=%22M16 7V3a1 1 0 0 1 1.707-.707 2.5 2.5 0 0 0 2.152.717 1 1 0 0 1 1.131 1.131 2.5 2.5 0 0 0 .717 2.152A1 1 0 0 1 21 8h-4%22/> <path d=%22M16.536 7.465a5 5 0 0 0-7.072 0l-2 2a5 5 0 0 0 0 7.07 5 5 0 0 0 7.072 0l2-2a5 5 0 0 0 0-7.07%22/> <path d=%22M8 17v4a1 1 0 0 1-1.707.707 2.5 2.5 0 0 0-2.152-.717 1 1 0 0 1-1.131-1.131 2.5 2.5 0 0 0-.717-2.152A1 1 0 0 1 3 16h4%22/></svg>");--i-chart_column:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M3 3v16a2 2 0 0 0 2 2h16%22/> <path d=%22M18 17V9%22/> <path d=%22M13 17V5%22/> <path d=%22M8 17v-3%22/></svg>");--i-cherry:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M2 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z%22/> <path d=%22M12 17a5 5 0 0 0 10 0c0-2.76-2.5-5-5-3-2.5-2-5 .24-5 3Z%22/> <path d=%22M7 14c3.22-2.91 4.29-8.75 5-12 1.66 2.38 4.94 9 5 12%22/> <path d=%22M22 9c-4.29 0-7.14-2.33-10-7 5.71 0 10 4.67 10 7Z%22/></svg>");--i-chevD:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22m6 9 6 6 6-6%22/></svg>");--i-chevR:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22m9 18 6-6-6-6%22/></svg>");--i-chevron_down:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22m6 9 6 6 6-6%22/></svg>");--i-chevron_right:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22m9 18 6-6-6-6%22/></svg>");--i-choc:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x=%223.4%22 y=%225%22 width=%2217.2%22 height=%2214%22 rx=%222.1%22/><path d=%22M3.4 12h17.2%22/><path d=%22M9.13 5v14%22/><path d=%22M14.87 5v14%22/></svg>");--i-circle_alert:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx=%2212%22 cy=%2212%22 r=%2210%22/> <line x1=%2212%22 x2=%2212%22 y1=%228%22 y2=%2212%22/> <line x1=%2212%22 x2=%2212.01%22 y1=%2216%22 y2=%2216%22/></svg>");--i-circle_check_big:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M21.801 10A10 10 0 1 1 17 3.335%22/> <path d=%22m9 11 3 3L22 4%22/></svg>");--i-circle_dot:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx=%2212%22 cy=%2212%22 r=%221%22/> <circle cx=%2212%22 cy=%2212%22 r=%2210%22/></svg>");--i-circle_x:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx=%2212%22 cy=%2212%22 r=%2210%22/> <path d=%22m15 9-6 6%22/> <path d=%22m9 9 6 6%22/></svg>");--i-citrus:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M21.66 17.67a1.08 1.08 0 0 1-.04 1.6A12 12 0 0 1 4.73 2.38a1.1 1.1 0 0 1 1.61-.04z%22/> <path d=%22M19.65 15.66A8 8 0 0 1 8.35 4.34%22/> <path d=%22m14 10-5.5 5.5%22/> <path d=%22M14 17.85V10H6.15%22/></svg>");--i-clipboard_list:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect width=%228%22 height=%224%22 x=%228%22 y=%222%22 rx=%221%22 ry=%221%22/> <path d=%22M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2%22/> <path d=%22M12 11h4%22/> <path d=%22M12 16h4%22/> <path d=%22M8 11h.01%22/> <path d=%22M8 16h.01%22/></svg>");--i-clock:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx=%2212%22 cy=%2212%22 r=%2210%22/> <path d=%22M12 6v6l4 2%22/></svg>");--i-coins:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M13.744 17.736a6 6 0 1 1-7.48-7.48%22/> <path d=%22M15 6h1v4%22/> <path d=%22m6.134 14.768.866-.5 2 3.464%22/> <circle cx=%2216%22 cy=%228%22 r=%226%22/></svg>");--i-cookie:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M11 17h.01%22/> <path d=%22M11.496 2c.324-.016.558.292.529.615a4 4 0 004.235 4.368.713.713 0 01.758.757 4 4 0 004.366 4.237c.323-.03.63.204.614.527a10 10 0 01-2.915 6.566A1 1 0 114.93 4.918 10 10 0 0111.496 2%22/> <path d=%22M12 12h.01%22/> <path d=%22M16 16h.01%22/> <path d=%22M16 3h.01%22/> <path d=%22M21 4h.01%22/> <path d=%22M21 8h.01%22/> <path d=%22M7 14h.01%22/> <path d=%22M9 8h.01%22/></svg>");--i-crown:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z%22/> <path d=%22M5 21h14%22/></svg>");--i-download:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12 15V3%22/> <path d=%22M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4%22/> <path d=%22m7 10 5 5 5-5%22/></svg>");--i-droplet:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z%22/></svg>");--i-eye:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0%22/> <circle cx=%2212%22 cy=%2212%22 r=%223%22/></svg>");--i-factory:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12 16h.01%22/> <path d=%22M16 16h.01%22/> <path d=%22M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.5a.5.5 0 0 0-.769-.422l-4.462 2.844A.5.5 0 0 1 15 10.5v-2a.5.5 0 0 0-.769-.422L9.77 10.922A.5.5 0 0 1 9 10.5V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z%22/> <path d=%22M8 16h.01%22/></svg>");--i-feather:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M14.086 18.412A2 2 0 0112.67 19H5v-7.672a2 2 0 01.586-1.414L11.75 3.75a6 6 0 118.49 8.49z%22/> <path d=%22M16 8 2 22%22/> <path d=%22M17.488 15H9%22/></svg>");--i-flame:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4%22/></svg>");--i-flask_conical:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M14 2v6a2 2 0 0 0 .245.96l5.51 10.08A2 2 0 0 1 18 22H6a2 2 0 0 1-1.755-2.96l5.51-10.08A2 2 0 0 0 10 8V2%22/> <path d=%22M6.453 15h11.094%22/> <path d=%22M8.5 2h7%22/></svg>");--i-flower_2:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12 5a3 3 0 1 1 3 3m-3-3a3 3 0 1 0-3 3m3-3v1M9 8a3 3 0 1 0 3 3M9 8h1m5 0a3 3 0 1 1-3 3m3-3h-1m-2 3v-1%22/> <circle cx=%2212%22 cy=%228%22 r=%222%22/> <path d=%22M12 10v12%22/> <path d=%22M12 22c4.2 0 7-1.667 7-5-4.2 0-7 1.667-7 5Z%22/> <path d=%22M12 22c-4.2 0-7-1.667-7-5 4.2 0 7 1.667 7 5Z%22/></svg>");--i-gift:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12 7v14%22/> <path d=%22M20 11v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8%22/> <path d=%22M7.5 7a1 1 0 0 1 0-5A4.8 8 0 0 1 12 7a4.8 8 0 0 1 4.5-5 1 1 0 0 1 0 5%22/> <rect x=%223%22 y=%227%22 width=%2218%22 height=%224%22 rx=%221%22/></svg>");--i-grape:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M22 5V2l-5.89 5.89%22/> <circle cx=%2216.6%22 cy=%2215.89%22 r=%223%22/> <circle cx=%228.11%22 cy=%227.4%22 r=%223%22/> <circle cx=%2212.35%22 cy=%2211.65%22 r=%223%22/> <circle cx=%2213.91%22 cy=%225.85%22 r=%223%22/> <circle cx=%2218.15%22 cy=%2210.09%22 r=%223%22/> <circle cx=%226.56%22 cy=%2213.2%22 r=%223%22/> <circle cx=%2210.8%22 cy=%2217.44%22 r=%223%22/> <circle cx=%225%22 cy=%2219%22 r=%223%22/></svg>");--i-grid:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect x=%223.2%22 y=%223.2%22 width=%227.4%22 height=%227.4%22 rx=%221.5%22/><rect x=%2213.4%22 y=%223.2%22 width=%227.4%22 height=%227.4%22 rx=%221.5%22/><rect x=%223.2%22 y=%2213.4%22 width=%227.4%22 height=%227.4%22 rx=%221.5%22/><rect x=%2213.4%22 y=%2213.4%22 width=%227.4%22 height=%227.4%22 rx=%221.5%22/></svg>");--i-hand_coins:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17%22/> <path d=%22m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9%22/> <path d=%22m2 16 6 6%22/> <circle cx=%2216%22 cy=%229%22 r=%222.9%22/> <circle cx=%226%22 cy=%225%22 r=%223%22/></svg>");--i-hard_hat:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5%22/> <path d=%22M14 6a6 6 0 0 1 6 6v3%22/> <path d=%22M4 15v-3a6 6 0 0 1 6-6%22/> <rect x=%222%22 y=%2215%22 width=%2220%22 height=%224%22 rx=%221%22/></svg>");--i-hash:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><line x1=%224%22 x2=%2220%22 y1=%229%22 y2=%229%22/> <line x1=%224%22 x2=%2220%22 y1=%2215%22 y2=%2215%22/> <line x1=%2210%22 x2=%228%22 y1=%223%22 y2=%2221%22/> <line x1=%2216%22 x2=%2214%22 y1=%223%22 y2=%2221%22/></svg>");--i-layers:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z%22/> <path d=%22M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12%22/> <path d=%22M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17%22/></svg>");--i-layout_grid:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><rect width=%227%22 height=%227%22 x=%223%22 y=%223%22 rx=%221%22/> <rect width=%227%22 height=%227%22 x=%2214%22 y=%223%22 rx=%221%22/> <rect width=%227%22 height=%227%22 x=%2214%22 y=%2214%22 rx=%221%22/> <rect width=%227%22 height=%227%22 x=%223%22 y=%2214%22 rx=%221%22/></svg>");--i-lightbulb:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5%22/> <path d=%22M9 18h6%22/> <path d=%22M10 22h4%22/></svg>");--i-map_pin:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0%22/> <circle cx=%2212%22 cy=%2210%22 r=%223%22/></svg>");--i-milk:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M8 2h8%22/> <path d=%22M9 2v2.789a4 4 0 0 1-.672 2.219l-.656.984A4 4 0 0 0 7 10.212V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.789a4 4 0 0 0-.672-2.219l-.656-.984A4 4 0 0 1 15 4.788V2%22/> <path d=%22M7 15a6.472 6.472 0 0 1 5 0 6.47 6.47 0 0 0 5 0%22/></svg>");--i-no:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx=%2212%22 cy=%2212%22 r=%2210%22/><path d=%22m15 9-6 6%22/><path d=%22m9 9 6 6%22/></svg>");--i-ok:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M21.801 10A10 10 0 1 1 17 3.335%22/><path d=%22m9 11 3 3L22 4%22/></svg>");--i-package:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z%22/> <path d=%22M12 22V12%22/> <polyline points=%223.29 7 12 12 20.71 7%22/> <path d=%22m7.5 4.27 9 5.15%22/></svg>");--i-party:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M5.8 11.3 2 22l10.7-3.79%22/><path d=%22M4 3h.01%22/><path d=%22M22 8h.01%22/><path d=%22M15 2h.01%22/><path d=%22M22 20h.01%22/><path d=%22m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10%22/><path d=%22m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17%22/><path d=%22m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7%22/><path d=%22M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z%22/></svg>");--i-party_popper:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M5.8 11.3 2 22l10.7-3.79%22/> <path d=%22M4 3h.01%22/> <path d=%22M22 8h.01%22/> <path d=%22M15 2h.01%22/> <path d=%22M22 20h.01%22/> <path d=%22m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10%22/> <path d=%22m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11c-.11.7-.72 1.22-1.43 1.22H17%22/> <path d=%22m11 2 .33.82c.34.86-.2 1.82-1.11 1.98C9.52 4.9 9 5.52 9 6.23V7%22/> <path d=%22M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z%22/></svg>");--i-pin:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12 17v5%22/> <path d=%22M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z%22/></svg>");--i-popcorn:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M18 8a2 2 0 0 0 0-4 2 2 0 0 0-4 0 2 2 0 0 0-4 0 2 2 0 0 0-4 0 2 2 0 0 0 0 4%22/> <path d=%22M10 22 9 8%22/> <path d=%22m14 22 1-14%22/> <path d=%22M20 8c.5 0 .9.4.8 1l-2.6 12c-.1.5-.7 1-1.2 1H7c-.6 0-1.1-.4-1.2-1L3.2 9c-.1-.6.3-1 .8-1Z%22/></svg>");--i-printer:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2%22/> <path d=%22M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6%22/> <rect x=%226%22 y=%2214%22 width=%2212%22 height=%228%22 rx=%221%22/></svg>");--i-refresh:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8%22/><path d=%22M21 3v5h-5%22/><path d=%22M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16%22/><path d=%22M8 16H3v5%22/></svg>");--i-refresh_cw:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8%22/> <path d=%22M21 3v5h-5%22/> <path d=%22M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16%22/> <path d=%22M8 16H3v5%22/></svg>");--i-ruler:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z%22/> <path d=%22m14.5 12.5 2-2%22/> <path d=%22m11.5 9.5 2-2%22/> <path d=%22m8.5 6.5 2-2%22/> <path d=%22m17.5 15.5 2-2%22/></svg>");--i-salad:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M7 21h10%22/> <path d=%22M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z%22/> <path d=%22M11.38 12a2.4 2.4 0 0 1-.4-4.77 2.4 2.4 0 0 1 3.2-2.77 2.4 2.4 0 0 1 3.47-.63 2.4 2.4 0 0 1 3.37 3.37 2.4 2.4 0 0 1-1.1 3.7 2.51 2.51 0 0 1 .03 1.1%22/> <path d=%22m13 12 4-4%22/> <path d=%22M10.9 7.25A3.99 3.99 0 0 0 4 10c0 .73.2 1.41.54 2%22/></svg>");--i-sale:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M3 4.3A1.3 1.3 0 0 1 4.3 3h6.1a2 2 0 0 1 1.42.59l9.06 9.06a1.7 1.7 0 0 1 0 2.4l-5.83 5.83a1.7 1.7 0 0 1-2.4 0L3.59 11.82A2 2 0 0 1 3 10.4z%22/><circle cx=%227%22 cy=%227%22 r=%221.35%22/><path d=%22m11.4 14.7 4.2-4.2%22/><circle cx=%2211.2%22 cy=%2210.6%22 r=%22.95%22/><circle cx=%2215.8%22 cy=%2215.2%22 r=%22.95%22/></svg>");--i-scale:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12 3v18%22/> <path d=%22m19 8 3 8a5 5 0 0 1-6 0zV7%22/> <path d=%22M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1%22/> <path d=%22m5 8 3 8a5 5 0 0 1-6 0zV7%22/> <path d=%22M7 21h10%22/></svg>");--i-scroll_text:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M15 12h-5%22/> <path d=%22M15 8h-5%22/> <path d=%22M19 17V5a2 2 0 0 0-2-2H4%22/> <path d=%22M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3%22/></svg>");--i-search:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22m21 21-4.34-4.34%22/> <circle cx=%2211%22 cy=%2211%22 r=%228%22/></svg>");--i-settings:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915%22/> <circle cx=%2212%22 cy=%2212%22 r=%223%22/></svg>");--i-snowflake:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22m10 20-1.25-2.5L6 18%22/> <path d=%22M10 4 8.75 6.5 6 6%22/> <path d=%22m14 20 1.25-2.5L18 18%22/> <path d=%22m14 4 1.25 2.5L18 6%22/> <path d=%22m17 21-3-6h-4%22/> <path d=%22m17 3-3 6 1.5 3%22/> <path d=%22M2 12h6.5L10 9%22/> <path d=%22m20 10-1.5 2 1.5 2%22/> <path d=%22M22 12h-6.5L14 15%22/> <path d=%22m4 10 1.5 2L4 14%22/> <path d=%22m7 21 3-6-1.5-3%22/> <path d=%22m7 3 3 6h4%22/></svg>");--i-soup:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z%22/> <path d=%22M7 21h10%22/> <path d=%22M19.5 12 22 6%22/> <path d=%22M16.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.73 1.62%22/> <path d=%22M11.25 3c.27.1.8.53.74 1.36-.05.83-.93 1.2-.98 2.02-.06.78.33 1.24.72 1.62%22/> <path d=%22M6.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.74 1.62%22/></svg>");--i-sparkles:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z%22/> <path d=%22M20 2v4%22/> <path d=%22M22 4h-4%22/> <circle cx=%224%22 cy=%2220%22 r=%222%22/></svg>");--i-star:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z%22/></svg>");--i-store:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5%22/> <path d=%22M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244%22/> <path d=%22M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05%22/></svg>");--i-tag:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z%22/> <circle cx=%227.5%22 cy=%227.5%22 r=%22.5%22 fill=%22currentColor%22/></svg>");--i-target:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><circle cx=%2212%22 cy=%2212%22 r=%228.6%22/><circle cx=%2212%22 cy=%2212%22 r=%224.6%22/><circle cx=%2212%22 cy=%2212%22 r=%221.1%22 fill=%22currentColor%22 stroke=%22none%22/><path d=%22M12 1.6v2.2%22/><path d=%22M12 20.2v2.2%22/><path d=%22M1.6 12h2.2%22/><path d=%22M20.2 12h2.2%22/></svg>");--i-thermometer:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z%22/></svg>");--i-trash:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M10 11v6%22/> <path d=%22M14 11v6%22/> <path d=%22M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6%22/> <path d=%22M3 6h18%22/> <path d=%22M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2%22/></svg>");--i-trash_2:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'>404: Not Found</svg>");--i-triangle_alert:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3%22/> <path d=%22M12 9v4%22/> <path d=%22M12 17h.01%22/></svg>");--i-trophy:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M10 14.66V17a1 1 0 0 1-1 1 2 2 0 0 0-2 2v2%22/> <path d=%22M14 14.66V17a1 1 0 0 0 1 1 2 2 0 0 1 2 2v2%22/> <path d=%22M17.916 10H19.5A2.5 2.5 0 0 0 22 7.5V5a1 1 0 0 0-1-1h-3%22/> <path d=%22M4 22h16%22/> <path d=%22M6 9a6 6 0 0 0 12 0V3a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1z%22/> <path d=%22M6.084 10H4.5A2.5 2.5 0 0 1 2 7.5V5a1 1 0 0 1 1-1h3%22/></svg>");--i-tumbler:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M5.9 4.4h12.2l-1.02 14.1a2.4 2.4 0 0 1-2.4 2.2H9.32a2.4 2.4 0 0 1-2.4-2.2z%22/><path d=%22M6.65 12.1h10.7%22/><rect x=%229.7%22 y=%2214.3%22 width=%224.3%22 height=%224.3%22 rx=%22.85%22 transform=%22rotate(11 11.85 16.45)%22/></svg>");--i-upload:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12 3v12%22/> <path d=%22m17 8-5-5-5 5%22/> <path d=%22M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4%22/></svg>");--i-utensils:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2%22/> <path d=%22M7 2v20%22/> <path d=%22M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7%22/></svg>");--i-warn:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3%22/><path d=%22M12 9v4%22/><path d=%22M12 17h.01%22/></svg>");--i-wheat:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M2 22 16 8%22/> <path d=%22M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z%22/> <path d=%22M7.47 8.53 9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z%22/> <path d=%22M11.47 4.53 13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z%22/> <path d=%22M20 2h2v2a4 4 0 0 1-4 4h-2V6a4 4 0 0 1 4-4Z%22/> <path d=%22M11.47 17.47 13 19l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L5 19l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z%22/> <path d=%22M15.47 13.47 17 15l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L9 15l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z%22/> <path d=%22M19.47 9.47 21 11l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L13 11l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z%22/></svg>");--i-wind:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M12.8 19.6A2 2 0 1 0 14 16H2%22/> <path d=%22M17.5 8a2.5 2.5 0 1 1 2 4H2%22/> <path d=%22M9.8 4.4A2 2 0 1 1 11 8H2%22/></svg>");--i-wine:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d=%22M8 22h8%22/> <path d=%22M7 10h10%22/> <path d=%22M12 15v7%22/> <path d=%22M12 15a5 5 0 0 0 5-5c0-2-.5-4-2-8H9c-1.5 4-2 6-2 8a5 5 0 0 0 5 5Z%22/></svg>");}
+.ic-alert{-webkit-mask-image:var(--i-alert);mask-image:var(--i-alert)}
+.ic-award{-webkit-mask-image:var(--i-award);mask-image:var(--i-award)}
+.ic-badge_check{-webkit-mask-image:var(--i-badge_check);mask-image:var(--i-badge_check)}
+.ic-ban{-webkit-mask-image:var(--i-ban);mask-image:var(--i-ban)}
+.ic-barrel{-webkit-mask-image:var(--i-barrel);mask-image:var(--i-barrel)}
+.ic-bird{-webkit-mask-image:var(--i-bird);mask-image:var(--i-bird)}
+.ic-book_open{-webkit-mask-image:var(--i-book_open);mask-image:var(--i-book_open)}
+.ic-bookmark{-webkit-mask-image:var(--i-bookmark);mask-image:var(--i-bookmark)}
+.ic-bottle{-webkit-mask-image:var(--i-bottle);mask-image:var(--i-bottle)}
+.ic-broom{-webkit-mask-image:var(--i-broom);mask-image:var(--i-broom)}
+.ic-bug{-webkit-mask-image:var(--i-bug);mask-image:var(--i-bug)}
+.ic-cal{-webkit-mask-image:var(--i-cal);mask-image:var(--i-cal)}
+.ic-calendar_days{-webkit-mask-image:var(--i-calendar_days);mask-image:var(--i-calendar_days)}
+.ic-camera{-webkit-mask-image:var(--i-camera);mask-image:var(--i-camera)}
+.ic-candy{-webkit-mask-image:var(--i-candy);mask-image:var(--i-candy)}
+.ic-chart_column{-webkit-mask-image:var(--i-chart_column);mask-image:var(--i-chart_column)}
+.ic-cherry{-webkit-mask-image:var(--i-cherry);mask-image:var(--i-cherry)}
+.ic-chevD{-webkit-mask-image:var(--i-chevD);mask-image:var(--i-chevD)}
+.ic-chevR{-webkit-mask-image:var(--i-chevR);mask-image:var(--i-chevR)}
+.ic-chevron_down{-webkit-mask-image:var(--i-chevron_down);mask-image:var(--i-chevron_down)}
+.ic-chevron_right{-webkit-mask-image:var(--i-chevron_right);mask-image:var(--i-chevron_right)}
+.ic-choc{-webkit-mask-image:var(--i-choc);mask-image:var(--i-choc)}
+.ic-circle_alert{-webkit-mask-image:var(--i-circle_alert);mask-image:var(--i-circle_alert)}
+.ic-circle_check_big{-webkit-mask-image:var(--i-circle_check_big);mask-image:var(--i-circle_check_big)}
+.ic-circle_dot{-webkit-mask-image:var(--i-circle_dot);mask-image:var(--i-circle_dot)}
+.ic-circle_x{-webkit-mask-image:var(--i-circle_x);mask-image:var(--i-circle_x)}
+.ic-citrus{-webkit-mask-image:var(--i-citrus);mask-image:var(--i-citrus)}
+.ic-clipboard_list{-webkit-mask-image:var(--i-clipboard_list);mask-image:var(--i-clipboard_list)}
+.ic-clock{-webkit-mask-image:var(--i-clock);mask-image:var(--i-clock)}
+.ic-coins{-webkit-mask-image:var(--i-coins);mask-image:var(--i-coins)}
+.ic-cookie{-webkit-mask-image:var(--i-cookie);mask-image:var(--i-cookie)}
+.ic-crown{-webkit-mask-image:var(--i-crown);mask-image:var(--i-crown)}
+.ic-download{-webkit-mask-image:var(--i-download);mask-image:var(--i-download)}
+.ic-droplet{-webkit-mask-image:var(--i-droplet);mask-image:var(--i-droplet)}
+.ic-eye{-webkit-mask-image:var(--i-eye);mask-image:var(--i-eye)}
+.ic-factory{-webkit-mask-image:var(--i-factory);mask-image:var(--i-factory)}
+.ic-feather{-webkit-mask-image:var(--i-feather);mask-image:var(--i-feather)}
+.ic-flame{-webkit-mask-image:var(--i-flame);mask-image:var(--i-flame)}
+.ic-flask_conical{-webkit-mask-image:var(--i-flask_conical);mask-image:var(--i-flask_conical)}
+.ic-flower_2{-webkit-mask-image:var(--i-flower_2);mask-image:var(--i-flower_2)}
+.ic-gift{-webkit-mask-image:var(--i-gift);mask-image:var(--i-gift)}
+.ic-grape{-webkit-mask-image:var(--i-grape);mask-image:var(--i-grape)}
+.ic-grid{-webkit-mask-image:var(--i-grid);mask-image:var(--i-grid)}
+.ic-hand_coins{-webkit-mask-image:var(--i-hand_coins);mask-image:var(--i-hand_coins)}
+.ic-hard_hat{-webkit-mask-image:var(--i-hard_hat);mask-image:var(--i-hard_hat)}
+.ic-hash{-webkit-mask-image:var(--i-hash);mask-image:var(--i-hash)}
+.ic-layers{-webkit-mask-image:var(--i-layers);mask-image:var(--i-layers)}
+.ic-layout_grid{-webkit-mask-image:var(--i-layout_grid);mask-image:var(--i-layout_grid)}
+.ic-lightbulb{-webkit-mask-image:var(--i-lightbulb);mask-image:var(--i-lightbulb)}
+.ic-map_pin{-webkit-mask-image:var(--i-map_pin);mask-image:var(--i-map_pin)}
+.ic-milk{-webkit-mask-image:var(--i-milk);mask-image:var(--i-milk)}
+.ic-no{-webkit-mask-image:var(--i-no);mask-image:var(--i-no)}
+.ic-ok{-webkit-mask-image:var(--i-ok);mask-image:var(--i-ok)}
+.ic-package{-webkit-mask-image:var(--i-package);mask-image:var(--i-package)}
+.ic-party{-webkit-mask-image:var(--i-party);mask-image:var(--i-party)}
+.ic-party_popper{-webkit-mask-image:var(--i-party_popper);mask-image:var(--i-party_popper)}
+.ic-pin{-webkit-mask-image:var(--i-pin);mask-image:var(--i-pin)}
+.ic-popcorn{-webkit-mask-image:var(--i-popcorn);mask-image:var(--i-popcorn)}
+.ic-printer{-webkit-mask-image:var(--i-printer);mask-image:var(--i-printer)}
+.ic-refresh{-webkit-mask-image:var(--i-refresh);mask-image:var(--i-refresh)}
+.ic-refresh_cw{-webkit-mask-image:var(--i-refresh_cw);mask-image:var(--i-refresh_cw)}
+.ic-ruler{-webkit-mask-image:var(--i-ruler);mask-image:var(--i-ruler)}
+.ic-salad{-webkit-mask-image:var(--i-salad);mask-image:var(--i-salad)}
+.ic-sale{-webkit-mask-image:var(--i-sale);mask-image:var(--i-sale)}
+.ic-scale{-webkit-mask-image:var(--i-scale);mask-image:var(--i-scale)}
+.ic-scroll_text{-webkit-mask-image:var(--i-scroll_text);mask-image:var(--i-scroll_text)}
+.ic-search{-webkit-mask-image:var(--i-search);mask-image:var(--i-search)}
+.ic-settings{-webkit-mask-image:var(--i-settings);mask-image:var(--i-settings)}
+.ic-snowflake{-webkit-mask-image:var(--i-snowflake);mask-image:var(--i-snowflake)}
+.ic-soup{-webkit-mask-image:var(--i-soup);mask-image:var(--i-soup)}
+.ic-sparkles{-webkit-mask-image:var(--i-sparkles);mask-image:var(--i-sparkles)}
+.ic-star{-webkit-mask-image:var(--i-star);mask-image:var(--i-star)}
+.ic-store{-webkit-mask-image:var(--i-store);mask-image:var(--i-store)}
+.ic-tag{-webkit-mask-image:var(--i-tag);mask-image:var(--i-tag)}
+.ic-target{-webkit-mask-image:var(--i-target);mask-image:var(--i-target)}
+.ic-thermometer{-webkit-mask-image:var(--i-thermometer);mask-image:var(--i-thermometer)}
+.ic-trash{-webkit-mask-image:var(--i-trash);mask-image:var(--i-trash)}
+.ic-trash_2{-webkit-mask-image:var(--i-trash_2);mask-image:var(--i-trash_2)}
+.ic-triangle_alert{-webkit-mask-image:var(--i-triangle_alert);mask-image:var(--i-triangle_alert)}
+.ic-trophy{-webkit-mask-image:var(--i-trophy);mask-image:var(--i-trophy)}
+.ic-tumbler{-webkit-mask-image:var(--i-tumbler);mask-image:var(--i-tumbler)}
+.ic-upload{-webkit-mask-image:var(--i-upload);mask-image:var(--i-upload)}
+.ic-utensils{-webkit-mask-image:var(--i-utensils);mask-image:var(--i-utensils)}
+.ic-warn{-webkit-mask-image:var(--i-warn);mask-image:var(--i-warn)}
+.ic-wheat{-webkit-mask-image:var(--i-wheat);mask-image:var(--i-wheat)}
+.ic-wind{-webkit-mask-image:var(--i-wind);mask-image:var(--i-wind)}
+.ic-wine{-webkit-mask-image:var(--i-wine);mask-image:var(--i-wine)}
+
+.ic{width:1em;height:1em;display:inline-block;vertical-align:-.15em;flex:none;
+  background-color:currentColor;margin-right:.18em;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  -webkit-mask-position:center;mask-position:center;
+  -webkit-mask-size:contain;mask-size:contain}
+.ic:last-child{margin-right:0}
+h1 .ic,h2 .ic,h3 .ic,summary .ic,b .ic,strong .ic{vertical-align:-.16em}
+.anv h2 .ic,.wl-head h2 .ic{width:1.06em;height:1.06em;margin-right:.3em;color:var(--drop)}
+.wl-head h2 .ic{color:var(--accent)}
+.anv .anv-today .ic{color:var(--ink-3)}
+.anv .ac-k .ic{color:var(--drop);width:.95em;height:.95em}
+.warn .ic,.tips .ic{color:var(--drop)}
+details.wine>summary::before{content:"";display:inline-block;width:.8em;height:.8em;
+  background:currentColor;color:var(--ink-3);vertical-align:-.04em;
+  -webkit-mask:var(--i-chevR) center/contain no-repeat;mask:var(--i-chevR) center/contain no-repeat}
+details.wine[open]>summary::before{-webkit-mask-image:var(--i-chevD);mask-image:var(--i-chevD)}
+.tile-h::after{content:"";display:block;width:13px;height:13px;background:var(--ink-3);
+  -webkit-mask:var(--i-chevD) center/contain no-repeat;mask:var(--i-chevD) center/contain no-repeat}
+.tile.folded .tile-h::after{-webkit-mask-image:var(--i-chevR);mask-image:var(--i-chevR)}
+.promo .warn li::before{content:"";display:block;width:15px;height:15px;background:var(--drop);
+  position:absolute;left:0;top:4px;
+  -webkit-mask:var(--i-warn) center/contain no-repeat;mask:var(--i-warn) center/contain no-repeat}
+</style>
+<!--
+  Icons: Lucide (https://lucide.dev) - ISC License
+  Copyright (c) for portions of Lucide are held by Cole Bemis 2013-2022 as part of Feather (MIT).
+  All other copyright (c) for Lucide are held by Lucide Contributors 2022.
+  Permission to use, copy, modify, and/or distribute this software for any purpose with or without
+  fee is hereby granted, provided that the above copyright notice and this permission notice appear
+  in all copies. THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+  REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO
+  EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR
+  ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF
+  CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+  PERFORMANCE OF THIS SOFTWARE.
+  Other icons (bottle / tumbler / barrel / chocolate bar / broom / discount tag / target / grid)
+  are original SVG drawn for this site.
+-->
+<style>.ic-credit{max-width:1180px;margin:0 auto;padding:10px 20px 26px;font-size:11.5px;
+  line-height:1.6;color:var(--ink-3,#888);text-align:center;opacity:.8}
+.ic-credit a{color:inherit}@media print{.ic-credit{display:none}}</style>
+<p class="ic-credit">圖示：<a href="https://lucide.dev" target="_blank" rel="noopener">Lucide Icons</a>
+（ISC 授權・開源）＋本站手繪 SVG。全站不使用 emoji。</p>
+
+<script id="ic-js">
+(function(){
+  if(typeof true==='boolean') window.__IC_WATCH=true;
+  var M={"🎉": "party", "🎊": "party", "🧹": "broom", "❗": "alert", "❕": "alert", "⁉": "alert", "‼": "alert", "🔁": "refresh", "⚠": "warn", "★": "star", "⭐": "star", "✅": "ok", "❌": "no", "🚫": "ban", "✋": "ban", "📦": "package", "🍽": "utensils", "✨": "sparkles", "🆕": "sparkles", "🥇": "award", "🏅": "award", "🏆": "trophy", "⚗": "flask_conical", "🔬": "flask_conical", "📌": "pin", "👑": "crown", "📜": "scroll_text", "📚": "book_open", "📖": "book_open", "🎯": "target", "🍇": "grape", "📊": "chart_column", "⚫": "circle_dot", "🟡": "circle_dot", "🥃": "tumbler", "🛢": "barrel", "🪵": "barrel", "💡": "lightbulb", "🧠": "lightbulb", "🍑": "cherry", "🍎": "cherry", "🍒": "cherry", "🕊": "bird", "🦉": "bird", "🦋": "bug", "🔍": "search", "🔎": "search", "⌕": "search", "🌸": "flower_2", "🌹": "flower_2", "🌿": "wheat", "🌱": "wheat", "🌾": "wheat", "🍋": "citrus", "🍊": "citrus", "🍷": "wine", "🥂": "wine", "🍸": "wine", "🍹": "wine", "🍶": "wine", "🍺": "wine", "🏺": "wine", "🔢": "hash", "🔤": "hash", "🔥": "flame", "🧯": "flame", "🚨": "warn", "🎁": "gift", "👷": "hard_hat", "📋": "clipboard_list", "🗂": "clipboard_list", "📄": "clipboard_list", "📇": "clipboard_list", "❄": "snowflake", "🧊": "snowflake", "🪶": "feather", "💨": "wind", "🌬": "wind", "💰": "coins", "💵": "coins", "💎": "coins", "🏭": "factory", "🏬": "store", "🏢": "store", "🏛": "store", "💧": "droplet", "🍯": "droplet", "🌡": "thermometer", "⚙": "settings", "🏷": "tag", "📷": "camera", "🗑": "trash", "👁": "eye", "⏳": "clock", "🐄": "milk", "☕": "milk", "🍵": "milk", "🛃": "badge_check", "🌐": "map_pin", "🗺": "map_pin", "🧭": "map_pin", "📐": "ruler", "⚖": "scale", "📤": "upload", "📥": "download", "🖼": "grid", "☰": "layers", "🪜": "layers", "🔄": "refresh", "↷": "refresh", "🍫": "choc", "🍬": "candy", "🍭": "candy", "🍪": "cookie", "🍿": "popcorn", "📅": "cal", "🔖": "bookmark", "❖": "bookmark", "👉": "chevron_right", "🦒": "bookmark", "🦦": "bookmark", "🫗": "tumbler", "🖨": "printer", "📃": "clipboard_list", "🧾": "clipboard_list", "🥤": "tumbler", "🫙": "barrel", "💪": "", "😌": "", "🌰": "", "🥜": "", "🧂": "", "🌶": "", "🥥": "", "🥭": "", "🌵": "", "🎋": "", "🌽": "", "👩": "", "👨": "", "🧸": "", "🍨": "", "🎻": "", "🎡": "", "🆚": "", "⛰": "", "🪨": "", "📱": "", "🔗": "", "📣": "", "🗣": "", "✈": "", "✏": "", "🇺": "", "🇸": "", "🇹": "", "🇼": "", "🔥 ": ""};
+  var KEEP="\u2192\u2190\u2191\u2193\u2197\u2198\u21e5\u27a2\u279c\u2713\u2714\u2715\u2718\u2500\u2550\u2502\u00b7\u203b";
+  var SRC="[\\u2300-\\u27bf\\u2b00-\\u2bff]|[\\ud83c-\\udbff][\\udc00-\\udfff]";
+  var RE=new RegExp(SRC), REG=new RegExp(SRC,"g");
+  var NS='http://www.w3.org/2000/svg';
+  function icon(n){
+    var e=document.createElement('i');
+    e.className='ic ic-'+n; e.setAttribute('aria-hidden','true'); return e;
+  }
+  function sweep(root){
+    if(!root||!root.nodeType) return;
+    var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:function(n){
+      var p=n.parentNode; if(!p||!p.nodeName) return NodeFilter.FILTER_REJECT;
+      var t=p.nodeName.toUpperCase();
+      if(t==='SCRIPT'||t==='STYLE'||t==='TITLE'||t==='TEXTAREA') return NodeFilter.FILTER_REJECT;
+      if(p.namespaceURI===NS) return NodeFilter.FILTER_REJECT;
+      return RE.test(n.nodeValue)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+    }});
+    var list=[],n; while((n=w.nextNode())) list.push(n);
+    for(var i=0;i<list.length;i++){
+      var node=list[i], v=node.nodeValue, m, last=0, frag=null;
+      REG.lastIndex=0;
+      while((m=REG.exec(v))){
+        var c=m[0], nm=M[c];
+        if(nm===undefined||nm===null){
+          if(KEEP.indexOf(c)>=0) continue;
+          nm=(v.charAt(REG.lastIndex)==='\u3010')?'bookmark':'';
+        }
+        if(!frag) frag=document.createDocumentFragment();
+        if(m.index>last) frag.appendChild(document.createTextNode(v.slice(last,m.index)));
+        if(nm) frag.appendChild(icon(nm));
+        last=REG.lastIndex;
+      }
+      if(!frag) continue;
+      if(last<v.length) frag.appendChild(document.createTextNode(v.slice(last)));
+      if(node.parentNode) node.parentNode.replaceChild(frag,node);
+    }
+  }
+  function boot(){
+    var t0=(window.performance&&performance.now)?performance.now():0;
+    sweep(document.body);
+    if(window.console&&t0) console.log('[ic] sweep',Math.round(performance.now()-t0)+'ms');
+    if(window.__IC_WATCH!==false){
+      var pend=[],tm=null;
+      var mo=new MutationObserver(function(recs){
+        for(var i=0;i<recs.length;i++){var a=recs[i].addedNodes;
+          for(var j=0;j<a.length;j++) if(a[j].nodeType===1||a[j].nodeType===3) pend.push(a[j]);}
+        if(tm) return;
+        tm=setTimeout(function(){tm=null;var q=pend;pend=[];
+          if(q.length>24){ try{sweep(document.body);}catch(e){} return; }
+          for(var k=0;k<q.length;k++){try{sweep(q[k].nodeType===3?(q[k].parentNode||document.body):q[k]);}catch(e){}}
+        },220);
+      });
+      mo.observe(document.body,{childList:true,subtree:true});
+    }
+    setTimeout(function(){sweep(document.body);},600);
+    setTimeout(function(){sweep(document.body);},2200);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
+})();
+</script>
+</body>
+</html>
