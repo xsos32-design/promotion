@@ -80,7 +80,10 @@ body{margin:0;background:var(--bg);color:var(--ink);
   margin:0 0 3px 4px;font-family:"IBM Plex Mono",monospace;font-size:12.5px;border-radius:999px;color:var(--ink)}
 .cal-d.we .n{color:var(--drop)}
 .cal-d.today .n{background:var(--ink);color:var(--bg);font-weight:600}
-.cal-lane{height:9px;margin:0 0 3px;opacity:0}
+.cal-lane{height:17px;margin:0 0 3px;opacity:0;position:relative}
+.cal-lab{position:absolute;left:4px;top:0;height:17px;line-height:17px;font-size:10.5px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:2;pointer-events:none;letter-spacing:-.01em}
+.c-yellow .cal-lab,.c-gray .cal-lab{color:#18181B}
+.cal-d{overflow:visible}
 .cal-lane.on{opacity:1}
 .cal-lane.s{border-radius:4px 0 0 4px;margin-left:3px}
 .cal-lane.e{border-radius:0 4px 4px 0;margin-right:3px}
@@ -155,13 +158,13 @@ body.cal-solo .cal-start:not(.pick){opacity:.2}
 .cal-legend li.over{opacity:.55}
 .cal-empty{padding:14px;text-align:center;color:var(--ink-3);font-size:13px;border:1px dashed var(--line-strong);border-radius:var(--r-md,11px)}
 .cal-foot{margin:14px 0 0;font-size:11.5px;line-height:1.75;color:var(--ink-3)}
-@media(min-width:720px){.cal-d{min-height:82px}.cal-lane{height:10px}.cal-legend{grid-template-columns:1fr 1fr}}
+@media(min-width:720px){.cal-d{min-height:82px}.cal-lane{height:20px}.cal-lab{height:20px;line-height:20px;font-size:12px;left:6px}.cal-legend{grid-template-columns:1fr 1fr}}
 @media print{#view-cal{display:none!important}}
 </style>
 
 <script id="cal-js">
 (function(){
-  var CAL=[{"k": "member", "cat": "both", "short": "會員禮", "n": "凡會員送來店禮：招牌燈（磁吸潮台小燈箱）", "s": "不限金額・限量送完為止", "c": "open", "r": [["2026-09-22", null]]}, {"k": "amt", "cat": "wine", "n": "酒類滿額 A7：$8,000 折 $200／$18,800 折 $600", "s": "暫定到 9/30・要 key 活動代碼 A7・各檔不疊加，擇一", "c": "blue", "r": [["2026-09-01", "2026-09-30"]]}, {"k": "noodle", "cat": "both", "short": "泡麵", "n": "泡麵 A3：酒單筆 2 瓶 → 贈 2 杯／巧克力折扣後滿 $1,500 → 贈 2 杯", "s": "口味：麻油、牛肉（現場說法；公文寫口味隨機）・每人限一次", "c": "open", "r": [["2026-09-24", null]]}, {"k": "d150", "cat": "choc", "n": "國產食品＆巧克力 滿 $2,000 折 $150", "s": "整段都有", "c": "green", "r": [["2026-09-22", "2026-10-31"]]}, {"k": "bag", "cat": "choc", "n": "巧克力折扣後滿 $4,000 贈透明旅行袋", "s": "三段，中間沒有・限量 1,900 個", "c": "red", "r": [["2026-09-24", "2026-09-28"], ["2026-10-02", "2026-10-11"], ["2026-10-23", "2026-10-26"]]}, {"k": "tier", "cat": "both", "n": "9 月促銷表折扣級距（酒＋巧克力）", "s": "整月（底色參考，灰色）", "c": "gray", "r": [["2026-09-01", "2026-09-30"]]}];
+  var CAL=[{"k": "member", "cat": "both", "short": "會員禮", "n": "凡會員送來店禮：招牌燈（磁吸潮台小燈箱）", "s": "不限金額・限量送完為止", "c": "open", "r": [["2026-09-22", null]]}, {"k": "amt", "cat": "wine", "short": "酒滿額 A7", "n": "酒類滿額 A7：$8,000 折 $200／$18,800 折 $600", "s": "暫定到 9/30・要 key 活動代碼 A7・各檔不疊加，擇一", "c": "blue", "r": [["2026-09-01", "2026-09-30"]]}, {"k": "noodle", "cat": "both", "short": "泡麵", "n": "泡麵 A3：酒單筆 2 瓶 → 贈 2 杯／巧克力折扣後滿 $1,500 → 贈 2 杯", "s": "口味：麻油、牛肉（現場說法；公文寫口味隨機）・每人限一次", "c": "open", "r": [["2026-09-24", null]]}, {"k": "d150", "cat": "choc", "short": "巧克力滿2000折150", "n": "國產食品＆巧克力 滿 $2,000 折 $150", "s": "整段都有", "c": "green", "r": [["2026-09-22", "2026-10-31"]]}, {"k": "bag", "cat": "choc", "short": "滿4000送旅行袋", "n": "巧克力折扣後滿 $4,000 贈透明旅行袋", "s": "三段，中間沒有・限量 1,900 個", "c": "red", "r": [["2026-09-24", "2026-09-28"], ["2026-10-02", "2026-10-11"], ["2026-10-23", "2026-10-26"]]}, {"k": "tier", "cat": "both", "short": "9月促銷表", "n": "9 月促銷表折扣級距（酒＋巧克力）", "s": "整月（底色參考，灰色）", "c": "gray", "r": [["2026-09-01", "2026-09-30"]]}];
   var grid=document.getElementById('cal-grid'), leg=document.getElementById('cal-legend'),
       title=document.getElementById('cal-title'), sec=document.getElementById('view-cal');
   if(!grid||!sec) return;
@@ -195,15 +198,21 @@ body.cal-solo .cal-start:not(.pick){opacity:.2}
     var h='';
     ['日','一','二','三','四','五','六'].forEach(function(d,i){ h+='<div class="cal-dow'+(i===0||i===6?' we':'')+'">'+d+'</div>'; });
     var first=new Date(y,m,1), start=new Date(y,m,1-first.getDay());
+    var rowLanes=[];
     for(var i=0;i<42;i++){
       var d=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i);
       if(i>=35 && d.getMonth()!==m) break;
+      if(i%7===0){ rowLanes=lanes.filter(function(c){ for(var q=0;q<7;q++){ if(inRange(c,new Date(d.getFullYear(),d.getMonth(),d.getDate()+q))) return true; } return false; }); }
       var out=d.getMonth()!==m, cls='cal-d'+(out?' out':'')+(d.getTime()===t.getTime()?' today':'')+(d<t?' past':'')+(d.getDay()===0||d.getDay()===6?' we':'');
       h+='<div class="'+cls+'" data-d="'+ymd(d)+'"><span class="n">'+d.getDate()+'</span>';
-      lanes.forEach(function(c){
-        var r=inRange(c,d), k='cal-lane';
-        if(r){ k+=' on c-'+c.c+(c.tbd?' tbd':''); if(ymd(d)===r[0]&&!c.tbd) k+=' s'; if(r[1]&&ymd(d)===r[1]) k+=' e'; if(pick===c.k) k+=' pick'; }
-        h+='<div class="'+k+'"></div>';
+      rowLanes.forEach(function(c){
+        var r=inRange(c,d), k='cal-lane', lab='';
+        if(r){ k+=' on c-'+c.c+(c.tbd?' tbd':''); if(ymd(d)===r[0]&&!c.tbd) k+=' s'; if(r[1]&&ymd(d)===r[1]) k+=' e'; if(pick===c.k) k+=' pick';
+          if(ymd(d)===r[0] || d.getDay()===0){
+            var n=1; for(var q=1;q<7-d.getDay();q++){ var dd=new Date(d.getFullYear(),d.getMonth(),d.getDate()+q); if(inRange(c,dd)===r) n++; else break; }
+            lab='<span class="cal-lab" style="width:calc('+n+'00% + '+(n-1)+'px - 6px)">'+(c.short||c.n)+'</span>';
+          } }
+        h+='<div class="'+k+'">'+lab+'</div>';
       });
       opens.forEach(function(c){ if(ymd(d)===c.r[0][0] && !out) h+='<span class="cal-start'+(pick===c.k?' pick':'')+'">'+c.short+'</span>'; });
       h+='</div>';
@@ -271,26 +280,32 @@ body.cal-solo .cal-start:not(.pick){opacity:.2}
     x.fillText(catTxt+'・製作日 '+ymd(t).replace(/-/g,'/')+'・色條＝活動期間', P, y+26);
     y+=52;
     // 月曆格
-    var gw=W-P*2, cw=gw/7, laneH=13, laneG=5, numH=42;
-    var maxStart=0; opens.forEach(function(c){ var n=opens.filter(function(o){return o.r[0][0]===c.r[0][0];}).length; if(n>maxStart) maxStart=n; });
-    var rowH=numH+Math.max(1,list.length)*(laneH+laneG)+12+maxStart*30;
+    var gw=W-P*2, cw=gw/7, laneH=24, laneG=5, numH=42;
     var first=new Date(y0,m0,1), start=new Date(y0,m0,1-first.getDay());
     var rows=0; for(var i=0;i<42;i++){ var dd=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i); if(i%7===0){ if(i>=35 && dd.getMonth()!==m0) break; rows++; } }
-    var gh=46+rows*rowH;
+    var RL=[], RH=[], RY=[];
+    for(var r0=0;r0<rows;r0++){
+      var ws=new Date(start.getFullYear(),start.getMonth(),start.getDate()+r0*7);
+      RL[r0]=list.filter(function(c){ for(var q=0;q<7;q++){ if(inRange(c,new Date(ws.getFullYear(),ws.getMonth(),ws.getDate()+q))) return true; } return false; });
+      var ns=0; for(var q2=0;q2<7;q2++){ var dq2=new Date(ws.getFullYear(),ws.getMonth(),ws.getDate()+q2); if(dq2.getMonth()!==m0) continue; var c2=opens.filter(function(o){return o.r[0][0]===ymd(dq2);}).length; if(c2>ns) ns=c2; }
+      RH[r0]=numH+RL[r0].length*(laneH+laneG)+14+ns*30; if(RH[r0]<86) RH[r0]=86;
+    }
+    var acc=0; for(var r1=0;r1<rows;r1++){ RY[r1]=acc; acc+=RH[r1]; }
+    var gh=46+acc;
     x.save(); rr(x,P,y,gw,gh,18); x.fillStyle=SURF; x.fill(); x.clip();
     x.fillStyle=SURF2; x.fillRect(P,y,gw,46);
     ['日','一','二','三','四','五','六'].forEach(function(d,i){ x.fillStyle=(i===0||i===6)?PAL.drop:INK3; x.font='500 20px '+FS; x.textAlign='center'; x.fillText(d,P+cw*i+cw/2,y+31); });
     x.textAlign='left';
-    var gy=y+46;
+    var gy=y+46, LABELS=[];
     for(var i2=0;i2<rows*7;i2++){
       var d=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i2), r=Math.floor(i2/7), c=i2%7;
-      var cx=P+c*cw, cy=gy+r*rowH, out=d.getMonth()!==m0;
+      var rowH=RH[r], cx=P+c*cw, cy=gy+RY[r], out=d.getMonth()!==m0;
       if(out){ x.fillStyle='#FAFAFA'; x.fillRect(cx,cy,cw,rowH); }
       var isT=d.getTime()===t.getTime(), we=(d.getDay()===0||d.getDay()===6);
       if(isT){ x.fillStyle=INK; x.beginPath(); x.arc(cx+26,cy+22,16,0,Math.PI*2); x.fill(); }
       x.font=(isT?'600 ':'400 ')+'21px '+FMONO; x.textAlign='center';
       x.fillStyle=isT?'#FFFFFF':(out?'#D4D4D8':(we?PAL.drop:INK)); x.fillText(String(d.getDate()),cx+26,cy+29); x.textAlign='left';
-      list.forEach(function(cc,li){
+      RL[r].forEach(function(cc,li){
         var rg=inRange(cc,d); if(!rg) return;
         var ly=cy+numH+li*(laneH+laneG), s0=ymd(d)===rg[0], e0=rg[1]&&ymd(d)===rg[1];
         var lx=cx+(s0?4:0), lw=cw-(s0?4:0)-(e0?4:0);
@@ -300,20 +315,28 @@ body.cal-solo .cal-start:not(.pick){opacity:.2}
         if(rR) x.arcTo(lx+lw,ly,lx+lw,ly+rR,rR); x.lineTo(lx+lw,ly+laneH-rR); if(rR) x.arcTo(lx+lw,ly+laneH,lx+lw-rR,ly+laneH,rR);
         x.lineTo(lx+rL,ly+laneH); if(rL) x.arcTo(lx,ly+laneH,lx,ly+laneH-rL,rL); x.lineTo(lx,ly+rL); if(rL) x.arcTo(lx,ly,lx+rL,ly,rL);
         x.closePath(); x.fill();
+        if(!out && (s0 || d.getDay()===0 || d.getDate()===1)) LABELS.push([cc,rg,d,lx,ly]);
         if(cc.tbd){ x.save(); rr(x,lx,ly,lw,laneH,0); x.clip(); x.strokeStyle='rgba(255,255,255,.7)'; x.lineWidth=3; for(var k=-20;k<lw+20;k+=10){ x.beginPath(); x.moveTo(lx+k,ly+laneH); x.lineTo(lx+k+laneH,ly); x.stroke(); } x.restore(); }
         x.globalAlpha=1;
       });
       var si=0; opens.forEach(function(cc){
         if(out || ymd(d)!==cc.r[0][0]) return;
-        var sy=cy+numH+list.length*(laneH+laneG)+4+si*30; si++;
+        var sy=cy+numH+RL[r].length*(laneH+laneG)+4+si*30; si++;
         x.font='700 17px '+FS; var lbl='▶ '+cc.short, lw2=Math.min(cw-8, x.measureText(lbl).width+14);
         rr(x,cx+4,sy,lw2,25,6); x.fillStyle='#FFFFFF'; x.fill(); x.strokeStyle='#3F3F46'; x.lineWidth=2; x.stroke();
         x.fillStyle='#18181B'; x.fillText(lbl,cx+11,sy+19);
       });
     }
+    LABELS.forEach(function(L){
+      var cc=L[0], rg=L[1], d=L[2], lx=L[3], ly=L[4];
+      var nseg=1; for(var q=1;q<7-d.getDay();q++){ var dq=new Date(d.getFullYear(),d.getMonth(),d.getDate()+q); if(dq.getMonth()===m0 && inRange(cc,dq)===rg) nseg++; else break; }
+      x.save(); x.beginPath(); x.rect(lx+2,ly,nseg*cw-10,laneH); x.clip();
+      x.font='700 16px '+FS; x.fillStyle=(cc.c==='yellow'||cc.c==='gray')?'#18181B':'#FFFFFF';
+      x.fillText(cc.short||cc.n, lx+8, ly+17); x.restore();
+    });
     x.strokeStyle=LINE; x.lineWidth=1;
-    for(var c2=1;c2<7;c2++){ x.beginPath(); x.moveTo(P+c2*cw+.5,gy); x.lineTo(P+c2*cw+.5,gy+rows*rowH); x.stroke(); }
-    for(var r2=0;r2<=rows;r2++){ x.beginPath(); x.moveTo(P,gy+r2*rowH+.5); x.lineTo(P+gw,gy+r2*rowH+.5); x.stroke(); }
+    for(var c2=1;c2<7;c2++){ x.beginPath(); x.moveTo(P+c2*cw+.5,gy); x.lineTo(P+c2*cw+.5,gy+acc); x.stroke(); }
+    for(var r2=0;r2<=rows;r2++){ var yy=gy+(r2<rows?RY[r2]:acc); x.beginPath(); x.moveTo(P,yy+.5); x.lineTo(P+gw,yy+.5); x.stroke(); }
     x.restore(); rr(x,P,y,gw,gh,18); x.strokeStyle=LINE; x.lineWidth=1.5; x.stroke();
     y+=gh+30;
     // A7+A3 提醒
