@@ -41,7 +41,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
     <button type="button" class="cal-btn cal-today" data-m="0">今天</button>
   </div>
   <div class="cal-grid" id="cal-grid" role="grid"></div>
-  <div class="cal-note"><b>結帳提醒：A7 ＋ A3 同時成立</b><ol><li>先打 <u>A7</u>（酒類滿額）</li><li><u>A3</u>（泡麵）另外打一張單</li><li>最後兩張<u>併單</u></li></ol></div>
+  
   <ol class="cal-legend" id="cal-legend"></ol>
   <p class="cal-foot">日期以你手機／電腦當下的日期為準；「送完為止」的檔沒有結束日，色條一路畫到月底。實際折抵與贈品發放以 POS 與現場公告為準。</p>
 </section>
@@ -166,7 +166,7 @@ body.cal-solo .cal-start:not(.pick){opacity:.2}
 
 <script id="cal-js">
 (function(){
-  var CAL=[{"k": "member", "cat": "both", "short": "會員 來店送招牌燈", "n": "凡會員送來店禮：招牌燈（磁吸潮台小燈箱）", "s": "不限金額・限量送完為止", "c": "open", "r": [["2026-09-22", null]]}, {"k": "amt", "cat": "wine", "short": "酒類 滿$8,000折$200／滿$18,800折$600", "n": "酒類滿額 A7：滿 $8,000 折 $200／滿 $18,800 折 $600", "s": "暫定到 9/30・要 key 活動代碼 A7・各檔不疊加，擇一", "c": "blue", "r": [["2026-09-01", "2026-09-30"]]}, {"k": "noodle_w", "cat": "wine", "short": "酒類 單筆2瓶 送泡麵2杯", "n": "泡麵 A3（酒類）：單筆買 2 瓶 → 送泡麵 2 杯", "s": "口味：麻油、牛肉（現場說法；公文寫口味隨機）・每人限一次・要 key A3", "c": "open", "r": [["2026-09-24", null]]}, {"k": "noodle_c", "cat": "choc", "short": "巧克力 折後滿$1,500 送泡麵2杯", "n": "泡麵 A3（巧克力／食品）：折扣後滿 $1,500 → 送泡麵 2 杯", "s": "樂高不算進去・每人限一次・口味隨機", "c": "open", "r": [["2026-09-24", null]]}, {"k": "d150", "cat": "choc", "short": "巧克力 滿$2,000 折$150", "n": "國產食品＆巧克力：滿 $2,000 折 $150", "s": "整段都有・樂高不算進去", "c": "green", "r": [["2026-09-22", "2026-10-31"]]}, {"k": "bag", "cat": "choc", "short": "巧克力 折後滿$4,000 送透明旅行袋", "n": "巧克力／食品：折扣後滿 $4,000 → 送透明旅行袋", "s": "只有三段，中間沒有・限量 1,900 個・樂高不算進去", "c": "red", "r": [["2026-09-24", "2026-09-28"], ["2026-10-02", "2026-10-11"], ["2026-10-23", "2026-10-26"]]}, {"k": "tier", "cat": "both", "short": "9月促銷表 折扣級距", "n": "9 月促銷表折扣級距（酒＋巧克力）", "s": "整月（底色參考，灰色）", "c": "gray", "r": [["2026-09-01", "2026-09-30"]]}];
+  var CAL=[{"k": "member", "cat": "both", "short": "會員 來店送招牌燈", "n": "凡會員送來店禮：招牌燈（磁吸潮台小燈箱）", "s": "不限金額・限量送完為止", "c": "open", "r": [["2026-09-22", null]]}, {"k": "noodle_w", "cat": "wine", "short": "酒類 單筆2瓶 送泡麵2杯", "n": "泡麵 A3（酒類）：單筆買 2 瓶 → 送泡麵 2 杯", "s": "口味：麻油、牛肉（現場說法；公文寫口味隨機）・每人限一次・要 key A3", "c": "open", "r": [["2026-09-24", null]]}, {"k": "noodle_c", "cat": "choc", "short": "巧克力 折後滿$1,500 送泡麵2杯", "n": "泡麵 A3（巧克力／食品）：折扣後滿 $1,500 → 送泡麵 2 杯", "s": "樂高不算進去・每人限一次・口味隨機", "c": "open", "r": [["2026-09-24", null]]}, {"k": "d150", "cat": "choc", "short": "巧克力 滿$2,000 折$150", "n": "國產食品＆巧克力：滿 $2,000 折 $150", "s": "整段都有・樂高不算進去", "c": "green", "r": [["2026-09-22", "2026-10-31"]]}, {"k": "bag", "cat": "choc", "short": "巧克力 折後滿$4,000 送透明旅行袋", "n": "巧克力／食品：折扣後滿 $4,000 → 送透明旅行袋", "s": "只有三段，中間沒有・限量 1,900 個・樂高不算進去", "c": "red", "r": [["2026-09-24", "2026-09-28"], ["2026-10-02", "2026-10-11"], ["2026-10-23", "2026-10-26"]]}, {"k": "tier", "cat": "both", "short": "9月促銷表 折扣級距", "n": "9 月促銷表折扣級距（酒＋巧克力）", "s": "整月（底色參考，灰色）", "c": "gray", "r": [["2026-09-01", "2026-09-30"]]}];
   var grid=document.getElementById('cal-grid'), leg=document.getElementById('cal-legend'),
       title=document.getElementById('cal-title'), sec=document.getElementById('view-cal');
   if(!grid||!sec) return;
@@ -365,13 +365,6 @@ body.cal-solo .cal-start:not(.pick){opacity:.2}
     });
     x.restore(); rr(x,P,y,gw,gh,18); x.strokeStyle=LINE; x.lineWidth=1.5; x.stroke();
     y+=gh+30;
-    // A7+A3 提醒
-    if(cat!=='choc'){
-      var nh=118; rr(x,P,y,gw,nh,16); x.fillStyle='#FFF7ED'; x.fill(); x.strokeStyle=PAL.swap; x.lineWidth=1.5; x.stroke();
-      x.fillStyle=PAL.swap; x.font='700 24px '+FS; x.fillText('結帳提醒：A7 ＋ A3 同時成立',P+22,y+38);
-      x.fillStyle=INK; x.font='400 22px '+FS; x.fillText('① 先打 A7（酒類滿額）　② A3（泡麵）另打一張單　③ 最後兩張併單',P+22,y+80);
-      y+=nh+24;
-    }
     // 活動清單
     if(!all.length){ x.fillStyle=INK3; x.font='400 24px '+FS; x.fillText('這個月沒有這一類的活動。',P,y+30); y+=60; }
     function ghead(t0){ x.fillStyle=INK3; x.font='500 20px '+FS; x.fillText(t0,P+4,y+24); y+=40; }
