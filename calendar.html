@@ -133,7 +133,7 @@ body.cal-solo .cal-lane.on:not(.pick){opacity:.15}
 body.cal-solo .cal-legend li:not(.pick){opacity:.5}
 .cal-legend .sw{width:14px;height:14px;border-radius:4px;margin-top:3px}
 .cal-legend .sw.open{background:#fff;border:2px solid #52525B;border-radius:50%;width:12px;height:12px}
-.cal-legend li.cal-gh{display:block;cursor:default;border:0;background:none;padding:10px 2px 0;font-size:11.5px;letter-spacing:.12em;color:var(--ink-3);box-shadow:none}
+.cal-legend li.cal-gh{display:block;grid-column:1/-1;cursor:default;border:0;background:none;padding:10px 2px 0;font-size:11.5px;letter-spacing:.12em;color:var(--ink-3);box-shadow:none}
 .cal-legend li.open .rg u{--mk:#A1A1AA}
 .cal-legend li.m-gray{--mk:#A1A1AA}
 .cal-start{display:block;margin:3px 2px 0;padding:1px 1px;border:1.5px solid #3F3F46;border-left-width:4px;border-radius:4px;background:#fff;
@@ -145,7 +145,7 @@ body.cal-solo .cal-start:not(.pick){opacity:.2}
 @media(min-width:720px){.cal-start{font-size:11.5px;margin:4px 4px 0}}
 .cal-legend b{display:block;font-size:14px;line-height:1.45}
 .cal-legend .rg{display:block;margin-top:2px;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-2)}
-.cal-legend .rg u{text-decoration:none;padding:0 .1em;border-radius:2px;font-weight:500;color:var(--ink);
+.cal-legend .rg u{text-decoration:none;white-space:nowrap;padding:0 .1em;border-radius:2px;font-weight:500;color:var(--ink);
   background-image:linear-gradient(transparent 52%,rgba(196,140,46,.34) 52%,rgba(196,140,46,.34) 96%,transparent 96%);
   background-image:linear-gradient(transparent 52%,color-mix(in srgb,var(--mk) 32%,transparent) 52%,color-mix(in srgb,var(--mk) 32%,transparent) 96%,transparent 96%)}
 .cal-legend li{--mk:#C48C2E}
