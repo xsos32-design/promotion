@@ -63,15 +63,21 @@ def main():
         if ids: gmap[key] = ids
     m = re.search(r'const WIKILINK=(\{.*?\});', s)
     WL = json.loads(m.group(1)) if m else {}
+    # 折扣品項：酒品圖第一張一律用百科同一支的商品照（避免名稱相近的別款），再保留同款「現場實拍」
     for t in D['tiles']:
         for it in t['items']:
             key = 'S|' + it[0]
-            if gmap.get(key): continue
             pid = WL.get(it[0])
-            if pid and pid in W and photo(pid):
-                gmap[key] = [pidx(photo(pid), W[pid]['nameZh'], W[pid].get('nameEn') or '')]
-            else:
-                bad.append('折扣品項沒有酒品圖：' + it[0])
+            if not pid or pid not in W:
+                bad.append('折扣品項對不到百科：' + it[0]); continue
+            u = photo(pid); wn = W[pid]['nameZh']
+            new = [pidx(u, wn, W[pid].get('nameEn') or '')] if u else []
+            for j in gmap.get(key, []):
+                if j in new: continue
+                if pool[j][1].endswith('（現場實拍）'): new.append(j)
+                elif not u and pool[j][1] == wn: new.append(j)   # 百科沒照片時，保留名稱完全相同的那張
+            if not new: bad.append('折扣品項沒有酒品圖（百科也沒有正確照片）：' + it[0])
+            gmap[key] = new
     s = s[:i] + json.dumps(D, ensure_ascii=False) + s[i + end:]
     # JS：贈品卡標題下加「適用商品」
     old = "'</h3></div>'+gdv+galHTML('G|'+b.name)+'<ol>'"
