@@ -1,0 +1,51 @@
+{
+ "cats": {
+  "Guylian": "精品禮盒",
+  "Lotus": "餅乾・威化",
+  "2732713001080": "松露・夾心球",
+  "AGF": "沖泡飲品",
+  "Butlers": "分享包・零嘴",
+  "Hawaiian Host": "堅果・鹹點",
+  "Venchi": "精品禮盒",
+  "2735705000030": "餅乾・威化",
+  "2735705000040": "餅乾・威化",
+  "2735705000050": "片裝・排塊"
+ },
+ "brands": [
+  {
+   "id": "bAG",
+   "code": "AG",
+   "name": "AGF",
+   "en": "AGF（Ajinomoto AGF）",
+   "country": "日本 Japan",
+   "cat": "沖泡飲品",
+   "tag": "",
+   "story": "",
+   "history": [],
+   "points": [],
+   "extra": [],
+   "warn": "",
+   "src": "",
+   "talk": "",
+   "site": "",
+   "awards": [],
+   "n": 2,
+   "scope": ""
+  }
+ ],
+ "newcats": [
+  {
+   "n": "沖泡飲品",
+   "e": "☕",
+   "en": "DRINK",
+   "c": 0
+  }
+ ],
+ "photoSrc": {
+  "2733482100010": "henkaq.com 商品圖（BST-10A）",
+  "2733482100020": "henkaq.com 商品圖（BST-15A）",
+  "2735705000030": "beirutdutyfree.com 商品圖",
+  "2735705000040": "shop.frankfurt-airport.com 商品圖",
+  "2735705000050": "adanione.com（孟買機場免稅）商品圖"
+ }
+}
