@@ -26,7 +26,7 @@ ALIAS = {'Frank Quitely': ' FQ', '色彩系列': 'Colour Collection', 'Home Coll
          '稀印': 'Signet', 'Quartet': '四重奏', 'Quintet': '五重奏', '春季限定': '季節限定', '秋季限定': '季節限定',
          '純麥15年': '純麥 水楢', 'X.O': 'XO', '經典獨奏': '獨奏', 'Yellow Label': '皇牌'}
 ORDER_OVERRIDE = {
- '皇家禮炮 Royal Salute': ['royalsalute-21y','royalsalute-21y-4','royalsalute-21y-large','royalsalute-21y-5','royal-salute-rs','royal-salute-fashion',
+ '皇家禮炮 Royal Salute': ['royalsalute-21y','royalsalute-21y-4','royalsalute-21y-large','royalsalute-21y-5','royal-salute-rs','royal-salute-fashion','royal-salute-fashion-4',
     'royalsalute-21y-polo5','royalsalute-21y-6','royal-salute-rio-polo','royalsalute-25y','royalsalute-25y-sb','royalsalute-32y',
     'royalsalute-51y-time-series','royalsalute-62-original','royalsalute-62-peated','royalsalute-coronation-kc3'],
  '約翰走路 Johnnie Walker': ['jw-4','jw-7','jw-5','jw-8','jw-6','jw-9','jw','jw-blue-azure','jw-blue-xordinaire','jw-blue-futurecity-tw','jw-blue-cny-horse','jw-john-walker-40y'],
