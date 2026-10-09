@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8"><meta name="theme-color" content="#060D18"><!--brand-og--><meta name="description" content="10 月酒類整檔折扣與滿額贈一頁查完。個人整理速查，實際以現場公告與 POS 為準。"><meta property="og:type" content="website"><meta property="og:url" content="https://xsos32-design.github.io/promotion/"><meta property="og:title" content="10月酒類活動速查"><meta property="og:description" content="10 月酒類整檔折扣與滿額贈一頁查完。個人整理速查，實際以現場公告與 POS 為準。"><meta property="og:image" content="https://xsos32-design.github.io/promotion/img/brand/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://xsos32-design.github.io/promotion/img/brand/og.jpg"><link rel="preload" as="image" href="img/brand/hero.webp" fetchpriority="high"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><!--/brand-og-->
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -1513,5 +1513,26 @@ details.more[open]>summary{margin-bottom:4px}
 .anv .anv-days{margin-top:8px}
 .nod .nod-hero b.big{margin-bottom:8px}
 </style>
-</body>
+<style id="brand-css">
+/* ── 品牌主視覺（深藍金） ── */
+header.top{position:relative;overflow:hidden;border-bottom:0!important;background:#060D18 url(img/brand/hero.webp) right center/auto 118% no-repeat!important;color:#F3E9D2}
+header.top::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(5,11,20,.97) 0%,rgba(5,11,20,.86) 42%,rgba(5,11,20,.35) 74%,rgba(5,11,20,.05) 100%)}
+header.top::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#8E6E33,#E8CD8A 35%,#C9A45C 65%,#8E6E33)}
+header.top .top-in{position:relative;z-index:1;padding-top:26px!important;padding-bottom:22px!important}
+header.top h1{color:#F3E9D2!important;font-family:'Noto Serif TC',serif;letter-spacing:.02em;text-shadow:0 2px 14px rgba(0,0,0,.45)}
+header.top .eyebrow{color:#C9A45C!important}
+header.top .eyebrow span{color:#E8CD8A!important;border-color:rgba(201,164,92,.55)!important;background:rgba(201,164,92,.10)!important}
+header.top .sub{color:#C9D4E3!important}
+header.top .sub b,header.top .sub u{color:#E8CD8A}
+header.top .tally>div{background:rgba(6,13,24,.62)!important;border:1px solid rgba(201,164,92,.38)!important;box-shadow:inset 0 1px 0 rgba(232,205,138,.12);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+header.top .tally b{color:#F3E9D2!important}
+header.top .tally span{color:#B9C6D6!important}
+header.top .tally .t-swap b,header.top .tally .hl b{color:#E8CD8A!important}
+@media (max-width:700px){
+  header.top{background-position:right center!important;background-size:auto 100%!important}
+  header.top::before{background:linear-gradient(180deg,rgba(5,11,20,.90) 0%,rgba(5,11,20,.78) 60%,rgba(5,11,20,.86) 100%)}
+}
+nav.views button[aria-selected="true"]{box-shadow:0 0 0 1px rgba(201,164,92,.55),0 6px 16px rgba(6,13,24,.25)}
+</style></body>
 </html>
