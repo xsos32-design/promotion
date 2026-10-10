@@ -1,5 +1,5 @@
 /* 離線模式：頁面走「網路優先、斷線用快取」，圖片字型走「快取優先、背景更新」 */
-const V = 'v2026-10-10';
+const V = 'v2026-10-10b';
 const P = self.registration.scope + '|';
 const CORE = ['./', './index.html', './img/brand/hero.webp', './icon-192.png'];
 self.addEventListener('install', e => {
@@ -16,9 +16,16 @@ self.addEventListener('fetch', e => {
   const scope = new URL(self.registration.scope);
   if (r.mode === 'navigate') {
     e.respondWith(fetch(r).then(res => {
-      if (res.ok) { const cp = res.clone(); caches.open(P + 'core|' + V).then(c => c.put('./index.html', cp)); }
+      if (res.ok) {
+        const cp = res.clone();
+        const key = u.origin + u.pathname + (u.pathname.endsWith('/') ? 'index.html' : '');
+        caches.open(P + 'core|' + V).then(c => c.put(key, cp));
+      }
       return res;
-    }).catch(() => caches.match('./index.html', {ignoreSearch: true}).then(m => m || caches.match('./'))));
+    }).catch(() => {
+      const key = u.origin + u.pathname + (u.pathname.endsWith('/') ? 'index.html' : '');
+      return caches.match(key).then(m => m || caches.match('./index.html')).then(m => m || caches.match('./'));
+    }));
     return;
   }
   const same = u.origin === scope.origin;
