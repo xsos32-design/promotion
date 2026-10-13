@@ -648,6 +648,72 @@ details.wine[open]>summary::before{-webkit-mask-image:var(--i-chevD);mask-image:
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
 })();
 </script>
-<style id="r17-font">html body,html body *:not(svg):not(path):not(circle):not(rect){font-family:"Microsoft JhengHei","微軟正黑體",system-ui,-apple-system,"PingFang TC","Noto Sans TC","Noto Sans CJK TC",sans-serif!important}
+<style id="r18-cal">/* r18 活動月曆：依 Design 畫布（深藍頁首、象牙底、白色月曆卡、細色條、白色活動卡＋狀態膠囊） */
+html,body{background:#F4F1EA!important}
+body{color:#1E1A14!important}
+.wrap{max-width:760px!important;padding:0 14px 72px!important}
+#view-cal .cal-head{margin:14px -14px 0!important;padding:22px 18px 18px!important;border:0!important;border-radius:0 0 22px 22px!important;background:#0A111C!important;box-shadow:none!important;color:#F3EAD7;display:flex!important;flex-direction:column;align-items:stretch!important;gap:12px!important}
+#view-cal .cal-head::before{content:'酒＋巧克力'!important;position:static!important;width:auto!important;background:none!important;font-size:11px;letter-spacing:4px;color:#C9A45C;order:-1}
+#view-cal .cal-head h2{font-size:26px!important;letter-spacing:1px;color:#F3EAD7!important;margin:0!important}
+#view-cal .cal-head p{color:#C9D4E3!important;font-size:13px!important;margin:6px 0 0!important}
+#view-cal .cal-cat{display:flex!important;gap:6px!important;background:none!important;border:0!important;padding:0!important;box-shadow:none!important}
+#view-cal .cal-cat button{height:36px!important;padding:0 16px!important;border-radius:999px!important;border:1px solid rgba(201,164,92,.45)!important;background:transparent!important;color:#E8CD8A!important;font-size:13px!important;font-weight:500!important;box-shadow:none!important}
+#view-cal .cal-cat button.on{background:#F3EAD7!important;border-color:#F3EAD7!important;color:#14233A!important;font-weight:700!important}
+#view-cal .cal-dl{align-self:flex-start;height:40px;border-radius:12px!important;background:#C9A45C!important;border-color:#C9A45C!important;color:#0A111C!important;font-weight:700!important;padding:0 16px!important}
+#view-cal .cal-nav{margin:16px 0 12px!important;gap:8px!important}
+#view-cal .cal-nav b{font-size:20px!important;color:#1E1A14}
+#view-cal .cal-btn{width:44px!important;height:44px!important;border-radius:12px!important;border:1px solid #D3CAB9!important;background:#FFFFFF!important;color:#4E4434!important;font-size:22px!important}
+#view-cal .cal-btn.cal-today{width:auto!important;padding:0 14px!important;font-size:13px!important}
+/* 月曆卡 */
+#view-cal .cal-grid{background:#FFFFFF!important;border:1px solid #E5DFD3!important;border-radius:20px!important;padding:6px 8px 8px!important;gap:4px!important;overflow:visible!important}
+#view-cal .cal-dow{background:none!important;border:0!important;font-size:12px!important;color:#7A6A4C!important;padding:6px 0 4px!important}
+#view-cal .cal-dow.we{color:#8E2F2F!important}
+#view-cal .cal-d{min-height:62px!important;border:0!important;border-radius:10px;background:#FFFFFF;padding:5px 0 4px!important;box-sizing:border-box}
+#view-cal .cal-d.out{background:#F7F4EE!important;opacity:1!important}
+#view-cal .cal-d.out .n{color:#B0A690!important}
+#view-cal .cal-d .n{margin:0 0 4px 4px!important;font-size:13px!important;font-weight:500;color:#1E1A14!important;background:none!important;height:18px!important;min-width:0!important;justify-content:flex-start!important}
+#view-cal .cal-d.we .n{color:#8E2F2F!important}
+#view-cal .cal-d.past:not(.out) .n{color:#9C9282!important}
+#view-cal .cal-d.today{background:#14233A!important}
+#view-cal .cal-d.today .n{color:#F3EAD7!important;font-weight:700!important}
+/* 色條：細條，不放字（活動名稱看下方清單） */
+#view-cal .cal-lane{height:5px!important;margin:0 0 3px!important;border-radius:0}
+#view-cal .cal-lane.s{margin-left:4px!important;border-radius:3px 0 0 3px}
+#view-cal .cal-lane.e{margin-right:4px!important;border-radius:0 3px 3px 0}
+#view-cal .cal-lane.s.e{border-radius:3px}
+#view-cal .cal-lab{display:none!important}
+#view-cal .cal-lane.on.c-green{background:#1E8A4C!important}
+#view-cal .cal-lane.on.c-red{background:#C2353B!important}
+#view-cal .cal-lane.on.c-blue{background:#2F5FC4!important}
+#view-cal .cal-lane.on.c-gray{background:#B9B2A4!important}
+#view-cal .cal-start{display:block!important;width:7px;height:7px;padding:0!important;margin:3px 0 0 5px!important;border:2px solid #4E4434!important;border-radius:50%!important;background:#FFFFFF!important;font-size:0!important;line-height:0!important;overflow:hidden;box-sizing:border-box}
+#view-cal .cal-start::before{content:none!important}
+#view-cal .cal-d.today .cal-start{border-color:#F3EAD7!important;background:#14233A!important}
+/* 活動卡 */
+#view-cal .cal-legend{grid-template-columns:1fr!important;gap:10px!important;margin-top:16px!important}
+@media (min-width:700px){#view-cal .cal-legend{grid-template-columns:1fr 1fr!important}}
+#view-cal .cal-legend li[data-k]{grid-template-columns:10px minmax(0,1fr) auto!important;gap:12px!important;padding:14px!important;border-radius:16px!important;background:#FFFFFF!important;border:1px solid #E5DFD3!important}
+#view-cal .cal-legend li.pick{border-color:#14233A!important;box-shadow:inset 0 0 0 1px #14233A!important}
+#view-cal .cal-legend li.cal-gh{font-size:12px!important;letter-spacing:2px!important;color:#7A6A4C!important;padding:8px 2px 0!important}
+#view-cal .cal-legend .sw{width:10px!important;height:10px!important;border-radius:3px!important;margin-top:6px!important}
+#view-cal .cal-legend .sw.c-green{background:#1E8A4C!important}
+#view-cal .cal-legend .sw.c-red{background:#C2353B!important}
+#view-cal .cal-legend .sw.c-blue{background:#2F5FC4!important}
+#view-cal .cal-legend .sw.c-gray{background:#B9B2A4!important}
+#view-cal .cal-legend .sw.open{width:10px!important;height:10px!important;border:2px solid #4E4434!important;background:#FFFFFF!important;border-radius:50%!important;box-sizing:border-box}
+#view-cal .cal-legend b{font-size:15px!important;line-height:1.5!important;color:#1E1A14}
+#view-cal .cal-legend .ct{border-color:#D3CAB9!important;color:#7A6A4C!important;font-size:11px!important}
+#view-cal .cal-legend .rg{margin-top:4px!important;font-size:12.5px!important;color:#6B604E!important}
+#view-cal .cal-legend .rg u{background:none!important;color:#4E4434!important;font-weight:700!important;padding:0!important}
+#view-cal .cal-legend .sb{font-size:12px!important;color:#7A6A4C!important;margin-top:4px!important;line-height:1.6}
+#view-cal .cal-legend .st{font-size:12px!important;font-weight:700!important;border:0!important;padding:3px 10px!important;border-radius:999px!important}
+#view-cal .cal-legend .st.on{color:#0B6F55!important;background:#DFF1EA!important}
+#view-cal .cal-legend .st.gap{color:#9A5C00!important;background:#FBEDD5!important}
+#view-cal .cal-legend .st.soon{color:#4E4434!important;background:#EFEAE0!important}
+#view-cal .cal-legend .st.over{color:#9C9282!important;background:#EFEAE0!important}
+#view-cal .cal-foot{color:#7A6A4C!important;font-size:12px!important}
+</style><script id="r18-cal-js">(function(){var h=document.querySelector('#view-cal .cal-head h2 span');if(h)h.textContent='活動月曆';
+var p=document.querySelector('#view-cal .cal-head p');if(p)p.textContent='每一檔的期間用色條畫在日期上，點下方活動只看那一檔。';})();
+</script><style id="r17-font">html body,html body *:not(svg):not(path):not(circle):not(rect){font-family:"Microsoft JhengHei","微軟正黑體",system-ui,-apple-system,"PingFang TC","Noto Sans TC","Noto Sans CJK TC",sans-serif!important}
 section.card .en,#r16home .en,.en,i.en,.navhead .sub{font-style:normal!important}</style></body>
 </html>
