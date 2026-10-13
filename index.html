@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8"><meta name="theme-color" content="#060D18"><!--brand-og--><meta name="description" content="10 月酒類整檔折扣與滿額贈一頁查完。個人整理速查，實際以現場公告與 POS 為準。"><meta property="og:type" content="website"><meta property="og:url" content="https://xsos32-design.github.io/promotion/"><meta property="og:title" content="10月酒類活動速查"><meta property="og:description" content="10 月酒類整檔折扣與滿額贈一頁查完。個人整理速查，實際以現場公告與 POS 為準。"><meta property="og:image" content="https://xsos32-design.github.io/promotion/img/brand/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://xsos32-design.github.io/promotion/img/brand/og.jpg"><link rel="preload" as="image" href="img/brand/hero.webp" fetchpriority="high"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><!--/brand-og-->
+<meta charset="utf-8"><meta name="theme-color" content="#060D18"><!--brand-og--><meta name="description" content="10 月酒類整檔折扣與滿額贈一頁查完。個人整理速查，實際以現場公告與 POS 為準。"><meta property="og:type" content="website"><meta property="og:url" content="https://xsos32-design.github.io/promotion/"><meta property="og:title" content="10月酒類活動速查"><meta property="og:description" content="10 月酒類整檔折扣與滿額贈一頁查完。個人整理速查，實際以現場公告與 POS 為準。"><meta property="og:image" content="https://xsos32-design.github.io/promotion/img/brand/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://xsos32-design.github.io/promotion/img/brand/og.jpg"><link rel="preload" as="image" href="img/brand/hero.webp" fetchpriority="high"><!--/brand-og-->
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -22,7 +22,6 @@
 </head>
 <body>
 <title>10月酒類活動速查</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 :root{
   --bg:#F2F5F8; --surface:#FFFFFF; --surface-2:#E9EEF3;
@@ -1588,5 +1587,27 @@ function xw(){
 }
 if(!xw()){var tries=0,iv=setInterval(function(){if(xw()||++tries>40)clearInterval(iv);},250);}
 })();
-</script></body>
+</script><style id="r16-p">/* r16 活動頁：滿額門檻做成金額標籤 */
+.tile.gift li .th{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;color:#14233A;background:#EEF1F6;border-radius:8px;padding:3px 9px;white-space:nowrap;align-self:start}
+.tile.gift li .th.r16dash{background:none;color:#B0A690;padding:3px 9px}
+.tile.gift li .gw{font-size:14px;line-height:1.55;color:#3A3226}
+.tile.gift ol li{display:grid!important;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;padding:8px 16px!important}
+
+details.r16note{margin:6px 0 12px;font-size:13px;color:#6B604E;max-width:70ch}
+details.r16note>summary{cursor:pointer;list-style:none;line-height:1.6}
+details.r16note>summary::-webkit-details-marker{display:none}
+details.r16note>summary::after{content:'說明';margin-left:8px;font-size:12px;color:#14233A;border:1px solid #D3CAB9;border-radius:999px;padding:1px 9px;background:#fff}
+details.r16note[open]>summary::after{content:'收起'}
+details.r16note>div{margin-top:6px;line-height:1.7}
+</style><script id="r16-p-js">(function(){function f(){[].forEach.call(document.querySelectorAll('.tile.gift li .th:not([data-r16])'),function(t){t.setAttribute('data-r16','1');if(/^[—\-–\s]*$/.test(t.textContent))t.classList.add('r16dash');});}
+var q=0;new MutationObserver(function(){if(q)return;q=requestAnimationFrame(function(){q=0;f();});}).observe(document.body,{childList:true,subtree:true});f();
+function notes(){[].forEach.call(document.querySelectorAll('p.cmphint,p.imgnote,p.sheet-note,p.wl-foot,p.wl-miss,p.anv-f,p.nod-f'),function(p){if(p.getAttribute('data-r16'))return;p.setAttribute('data-r16','1');
+ var html=p.innerHTML,txt=p.textContent;var i=txt.indexOf('。');if(txt.length<60)return;
+ var d=document.createElement('details');d.className='r16note '+p.className;
+ var first=i>0&&i<70?txt.slice(0,i+1):txt.slice(0,40)+'…';
+ var sm=document.createElement('summary');sm.textContent=first;var body=document.createElement('div');body.innerHTML=html;
+ d.appendChild(sm);d.appendChild(body);p.parentNode.replaceChild(d,p);});}
+notes();var nq=0;new MutationObserver(function(){if(nq)return;nq=requestAnimationFrame(function(){nq=0;notes();});}).observe(document.body,{childList:true,subtree:true});})();
+</script><style id="r17-font">html body,html body *:not(svg):not(path):not(circle):not(rect){font-family:"Microsoft JhengHei","微軟正黑體",system-ui,-apple-system,"PingFang TC","Noto Sans TC","Noto Sans CJK TC",sans-serif!important}
+section.card .en,#r16home .en,.en,i.en,.navhead .sub{font-style:normal!important}</style></body>
 </html>
