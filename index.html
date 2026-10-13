@@ -1492,5 +1492,101 @@ body.promo-over .prombar::before{content:"10 月活動已結束 ・ ";font-size:
  a.wlk{display:inline-block;padding:7px 0!important;min-height:34px}
  details>summary{padding-top:6px!important;padding-bottom:6px!important}
  .scnote a{display:inline-block;padding:8px 2px;min-height:32px}
-}</style></body>
+}</style><style id="r15-pr">/* r15 promo layer：暖白紙感、圓角卡片、品項縮圖、價格膠囊、分頁膠囊 */
+:root{--bg:#F4F2ED;--surface-2:#F3EFE7;--line:#E5DFD3;--line-strong:#D3CAB9}
+body{background:var(--bg)!important}
+/* 分頁：膠囊切換 */
+nav.views{position:relative;z-index:2;margin-top:-1px!important;background:#FBF9F5;border-bottom:1px solid var(--line);padding:10px 12px!important;gap:8px!important}
+nav.views button{border:1px solid var(--line-strong)!important;background:#fff!important;color:#5A5040!important;border-radius:999px!important;
+ padding:9px 16px!important;font-size:14.5px!important;min-height:40px;transition:background .15s,color .15s}
+nav.views button[aria-selected="true"]{background:#14233A!important;color:#F3E9D2!important;border-color:#14233A!important;box-shadow:0 6px 16px -8px rgba(20,35,58,.7)!important}
+/* 搜尋、晶片 */
+.jump input[type=search]{border-radius:14px!important;border-color:var(--line-strong)!important;background:#fff!important;padding:10px 14px!important;min-height:44px}
+.jump .fold{border-radius:14px!important;min-height:44px;padding:0 16px!important;background:#fff!important}
+.jump .fold[aria-pressed="true"]{background:#14233A!important;color:#F3E9D2!important;border-color:#14233A!important}
+.jump .chips button{min-height:36px;padding:0 14px!important;border-color:var(--line-strong)!important;background:#fff!important;color:#5A5040!important;font-size:13px!important}
+.jump .chips button[aria-pressed="true"]{background:#9A7B3C!important;border-color:#9A7B3C!important;color:#fff!important}
+.jump .chips button[aria-pressed="true"] b{color:#FBEFD6!important}
+/* 卡片 */
+.tile{border-radius:18px!important;border:1px solid var(--line)!important;background:#fff!important;
+ box-shadow:0 1px 2px rgba(40,30,10,.05),0 14px 30px -20px rgba(40,30,10,.35)!important}
+.tile-h{position:relative;background:linear-gradient(180deg,#FFFFFF,#F8F5EF)!important;padding:14px 38px 12px 18px!important;border-bottom:1px solid var(--line)!important}
+.tile-h::before{content:'';position:absolute;left:0;top:14px;bottom:12px;width:4px;border-radius:0 4px 4px 0;background:#14233A}
+.tile.hot .tile-h::before{background:var(--drop)}.tile.amt .tile-h::before{background:var(--swap)}.tile.zone .tile-h::before{background:var(--add)}.tile.mix .tile-h::before{background:var(--accent)}
+.tile-h h3{font-family:'Noto Serif TC',serif!important;letter-spacing:.03em}
+.tile-n{background:#F1ECE2;border-radius:99px;padding:1px 9px;color:#7A6A4C!important}
+.tile li{border-bottom-color:#EFEAE0!important}
+/* 品項列：左縮圖、右品名＋價格 */
+.tile li.galrow>.line.r15l,ul.list li.galrow>.line.r15l{display:grid!important;grid-template-columns:54px minmax(0,1fr) auto;
+ grid-template-areas:"th nm tg" "th pr pr";column-gap:12px;row-gap:3px;align-items:center;padding:9px 14px!important}
+.line.r15l>.galbtn,.line.r15l>.r15th{grid-area:th;order:0!important}
+.line.r15l>span:first-child{grid-area:nm;min-width:0!important}
+.line.r15l>.tag{grid-area:tg;align-self:start}
+.line.r15l>.pr{grid-area:pr;margin:0!important;order:0!important;white-space:normal!important}
+.r15th{width:54px;height:54px;border-radius:12px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden;box-sizing:border-box}
+.r15th img{width:100%;height:100%;object-fit:contain;padding:3px;box-sizing:border-box;display:block}
+.r15th.none{background:repeating-linear-gradient(135deg,#F6F2EA 0 6px,#FBF9F5 6px 12px)}
+button.galbtn.r15t{appearance:none;position:relative;min-height:0!important;width:54px;height:54px;padding:0!important;margin:0!important;border:0!important;background:none!important;border-radius:12px!important;cursor:zoom-in}
+button.galbtn.r15t[aria-expanded="true"] .r15th{border-color:#14233A;box-shadow:0 0 0 2px #14233A}
+button.galbtn.r15t b{position:absolute;right:-5px;top:-5px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#14233A;color:#F3E9D2;
+ font:600 10.5px/18px "IBM Plex Mono",monospace;text-align:center;box-sizing:border-box}
+.tile li .line a{font-size:14px;line-height:1.45}
+em.pr.r15p{display:flex!important;flex-wrap:wrap;gap:4px 6px;align-items:center;font-style:normal}
+em.pr.r15p b{font-family:"IBM Plex Mono",monospace;font-size:12.5px;font-weight:600;color:#3A3226;margin-right:2px}
+em.pr.r15p span{font-family:"IBM Plex Mono",monospace;font-size:11.5px;padding:1px 9px;border-radius:99px;background:#FBEEE6;color:#9A3B22;border:1px solid #F1D6C5;white-space:nowrap}
+/* 展開圖 */
+.gal{background:#FBF9F5!important;border-top:1px solid #EFEAE0!important}
+.gal .box{border-radius:14px!important;border-color:var(--line)!important}
+/* 詳情、展開按鈕 */
+details.acm>summary,details.more>summary{display:inline-flex!important;align-items:center;gap:6px;border:1px solid var(--line-strong)!important;background:#fff!important;
+ border-radius:999px!important;min-height:36px;padding:0 14px!important;color:#5A5040!important;cursor:pointer;list-style:none}
+details.acm[open]>summary,details.more[open]>summary{background:#14233A!important;border-color:#14233A!important;color:#F3E9D2!important}
+/* 圖牆 */
+.wl-c{border-radius:14px!important}
+/* 上方工具列提示可滑 */
+#xwbar.r15more{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 46px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 46px),transparent)}
+@media print{.r15th,button.galbtn.r15t{display:none!important}.tile li.galrow>.line.r15l{display:flex!important}}
+button.galbtn:not(.r15t){border-radius:999px!important;border-color:var(--line-strong)!important;background:#fff!important;color:#5A5040!important}
+button.galbtn:not(.r15t)[aria-expanded="true"]{background:#14233A!important;border-color:#14233A!important;color:#F3E9D2!important}
+</style><script id="r15-pr-js">(function(){
+'use strict';
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function row(li){
+ if(li.getAttribute('data-r15'))return;li.setAttribute('data-r15','1');
+ var line=li.querySelector(':scope>.line');if(!line)return;
+ var btn=line.querySelector('.galbtn');
+ var imgs=li.querySelectorAll('.gal img');
+ if(btn&&imgs.length){
+  var lab=btn.textContent.trim();
+  btn.setAttribute('aria-label',lab+'（點開大圖）');btn.title=lab;
+  btn.innerHTML='<span class="r15th"><img loading="lazy" decoding="async" alt="" src="'+esc(imgs[0].getAttribute('src'))+'"></span>'+(imgs.length>1?'<b>'+imgs.length+'</b>':'');
+  btn.classList.add('r15t');
+  var im=btn.querySelector('img');
+  im.addEventListener('error',function(){btn.classList.remove('r15t');btn.textContent=lab;},{once:true});
+ }else if(!btn||!imgs.length){
+  var tl=li.closest('.tile');
+  if(!tl||!tl.querySelector('.galbtn'))return;
+  var ph=document.createElement('span');ph.className='r15th none';ph.setAttribute('aria-hidden','true');line.insertBefore(ph,line.firstChild);
+ }
+ line.classList.add('r15l');
+ var pr=line.querySelector('em.pr');
+ if(pr&&!pr.classList.contains('r15p')){
+  var parts=pr.textContent.split(/　+/).map(function(s){return s.trim();}).filter(Boolean);
+  if(parts.length){pr.innerHTML='<b>'+esc(parts[0])+'</b>'+parts.slice(1).map(function(s){return '<span>'+esc(s)+'</span>';}).join('');pr.classList.add('r15p');}
+ }
+}
+function scan(){[].forEach.call(document.querySelectorAll('li.galrow:not([data-r15])'),row);}
+var q=0;
+new MutationObserver(function(){if(q)return;q=requestAnimationFrame(function(){q=0;scan();});}).observe(document.body,{childList:true,subtree:true});
+scan();document.addEventListener('DOMContentLoaded',scan);
+function xw(){
+ var x=document.getElementById('xwbar');if(!x||x.getAttribute('data-r15'))return!!x;x.setAttribute('data-r15','1');
+ function f(){x.classList.toggle('r15more',x.scrollLeft+x.clientWidth<x.scrollWidth-4);}
+ x.addEventListener('scroll',f,{passive:true});window.addEventListener('resize',f);
+ var on=x.querySelector('.xwa.on');if(on&&x.scrollWidth>x.clientWidth){x.scrollLeft=Math.max(0,on.offsetLeft-x.clientWidth/2+on.offsetWidth/2);}
+ f();return true;
+}
+if(!xw()){var tries=0,iv=setInterval(function(){if(xw()||++tries>40)clearInterval(iv);},250);}
+})();
+</script></body>
 </html>
