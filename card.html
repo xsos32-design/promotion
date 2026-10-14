@@ -109,5 +109,31 @@ section.card{color:#111!important}
 .lead b{color:#F3EAD7!important}
 }
 </style><script id="r19-dk-js">
+</script><style id="r20-exp">/* r20 活動到期：10/31 過後自動收起 10 月折扣標示 */
+#r20exp{max-width:1060px;margin:10px auto;padding:12px 16px;border-radius:14px;background:#3A2A12;border:1px solid rgba(232,190,110,.55);color:#F5D9A8;font-size:14px;line-height:1.6;box-sizing:border-box}
+#r20exp b{color:#FFE7B8}
+body.r20ended .prombar,body.r20ended .fbtn[data-f="promo"],body.r20ended #promotog,body.r20ended #promopanel,body.r20ended .rwbar{display:none!important}
+body.r20ended #r16home .promo,body.r20ended #r20home .promo{opacity:.55}
+body.r20ended.r20promo .wrap>*:not(#r20exp){opacity:.45;filter:grayscale(.6)}
+@media print{#r20exp{display:none!important}}
+</style><script id="r20-exp-js">(function(){
+'use strict';
+var END=new Date(2026,10,1,0,0,0); /* 2026/11/01 00:00 起視為 10 月活動結束 */
+var now=new Date();
+try{var m=/[?&]now=(\d{4})-(\d{2})-(\d{2})/.exec(location.search);if(m)now=new Date(+m[1],+m[2]-1,+m[3],12);}catch(e){}
+if(now<END)return;
+var b=document.body;b.classList.add('r20ended');
+var promo=/活動速查|促銷|折扣/.test(document.title)&&!/速讀檔案/.test(document.title);
+if(promo)b.classList.add('r20promo');
+var d=document.createElement('div');d.id='r20exp';d.setAttribute('role','status');
+d.innerHTML=promo?'<b>10 月活動已於 10/31 結束。</b>以下是 10 月的內容，僅供參考，不要再對客人報這些折扣；11 月活動辦法更新後會換上新內容。實際折抵以 POS 為準。'
+ :'<b>10 月活動已於 10/31 結束，</b>商品卡上的 10 月折扣標示已先收起；11 月活動辦法更新後會再補上。實際折抵以 POS 為準。';
+var host=document.querySelector('.wrap')||document.getElementById('main')||b;
+if(promo&&host.parentNode)host.insertBefore(d,host.firstChild);
+else{var main=document.getElementById('main');if(main)main.insertBefore(d,main.firstChild);else b.insertBefore(d,b.firstChild);}
+function relabel(){[].forEach.call(document.querySelectorAll('#r16home .promo b,#r20home .promo b'),function(x){if(!/已結束/.test(x.textContent))x.textContent=x.textContent.replace(/本月/,'10 月')+'（已結束）';});}
+function place(){var h=document.getElementById('r16home')||document.getElementById('r20home');if(h&&!promo&&h.nextSibling!==d)h.parentNode.insertBefore(d,h.nextSibling);}
+relabel();place();setTimeout(function(){relabel();place();},900);
+})();
 </script><style id="r17-font">html body,html body *:not(svg):not(path):not(circle):not(rect){font-family:"Microsoft JhengHei","微軟正黑體",system-ui,-apple-system,"PingFang TC","Noto Sans TC","Noto Sans CJK TC",sans-serif!important}
 section.card .en,#r16home .en,.en,i.en,.navhead .sub{font-style:normal!important}</style></body></html>
