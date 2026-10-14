@@ -677,18 +677,24 @@ body{color:#1E1A14!important}
 #view-cal .cal-d.today{background:#14233A!important}
 #view-cal .cal-d.today .n{color:#F3EAD7!important;font-weight:700!important}
 /* 色條：細條，不放字（活動名稱看下方清單） */
-#view-cal .cal-lane{height:5px!important;margin:0 0 3px!important;border-radius:0}
-#view-cal .cal-lane.s{margin-left:4px!important;border-radius:3px 0 0 3px}
-#view-cal .cal-lane.e{margin-right:4px!important;border-radius:0 3px 3px 0}
-#view-cal .cal-lane.s.e{border-radius:3px}
-#view-cal .cal-lab{display:none!important}
+/* 色條：每一條都寫活動名稱（字放在色條裡），橫跨多天時一條連續 */
+#view-cal .cal-grid{column-gap:0!important;row-gap:4px!important}
+#view-cal .cal-d{border-radius:0!important;border-right:0!important}
+#view-cal .cal-d:nth-child(7n){border-right:0!important}
+#view-cal .cal-d.today{background:#FBF3DF!important}
+#view-cal .cal-d.today .n{background:#14233A!important;color:#F3EAD7!important;border-radius:999px;padding:0 7px;min-width:0}
+#view-cal .cal-lane{height:20px;margin:0 0 3px!important;border-radius:0}
+#view-cal .cal-lane.s{margin-left:3px!important;border-radius:5px 0 0 5px}
+#view-cal .cal-lane.e{margin-right:3px!important;border-radius:0 5px 5px 0}
+#view-cal .cal-lane.s.e{border-radius:5px}
+#view-cal .cal-lab{display:block!important;font-size:11.5px!important;font-weight:700!important;line-height:1.3!important;color:#FFFFFF!important;padding:2px 0!important;left:6px}
+#view-cal .cal-lane.c-gray .cal-lab{color:#1E1A14!important}
 #view-cal .cal-lane.on.c-green{background:#1E8A4C!important}
 #view-cal .cal-lane.on.c-red{background:#C2353B!important}
 #view-cal .cal-lane.on.c-blue{background:#2F5FC4!important}
-#view-cal .cal-lane.on.c-gray{background:#B9B2A4!important}
-#view-cal .cal-start{display:block!important;width:7px;height:7px;padding:0!important;margin:3px 0 0 5px!important;border:2px solid #4E4434!important;border-radius:50%!important;background:#FFFFFF!important;font-size:0!important;line-height:0!important;overflow:hidden;box-sizing:border-box}
+#view-cal .cal-lane.on.c-gray{background:#D9D2C3!important}
+#view-cal .cal-start{display:block!important;margin:3px 3px 0!important;padding:2px 5px!important;border:1.5px solid #4E4434!important;border-left-width:4px!important;border-radius:5px!important;background:#FFFFFF!important;color:#1E1A14!important;font-size:11px!important;line-height:1.3!important;font-weight:700!important;text-align:left!important}
 #view-cal .cal-start::before{content:none!important}
-#view-cal .cal-d.today .cal-start{border-color:#F3EAD7!important;background:#14233A!important}
 /* 活動卡 */
 #view-cal .cal-legend{grid-template-columns:1fr!important;gap:10px!important;margin-top:16px!important}
 @media (min-width:700px){#view-cal .cal-legend{grid-template-columns:1fr 1fr!important}}
@@ -714,6 +720,42 @@ body{color:#1E1A14!important}
 #view-cal .cal-foot{color:#7A6A4C!important;font-size:12px!important}
 </style><script id="r18-cal-js">(function(){var h=document.querySelector('#view-cal .cal-head h2 span');if(h)h.textContent='活動月曆';
 var p=document.querySelector('#view-cal .cal-head p');if(p)p.textContent='每一檔的期間用色條畫在日期上，點下方活動只看那一檔。';})();
+(function(){function f(){try{window.dispatchEvent(new Event('resize'));}catch(e){}}setTimeout(f,60);setTimeout(f,600);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(f);window.addEventListener('load',f);})();
+</script><style id="r19-dk">/* r19 月曆與列印卡頁：手機深色模式時改深藍底（列印卡本身維持白色，方便預覽列印效果） */
+@media (prefers-color-scheme:dark){
+html,html body{background:#0A111C!important;color:#E4EBF1!important}
+#view-cal .cal-nav b{color:#F3EAD7!important}
+#view-cal .cal-btn{background:#111A28!important;border-color:rgba(201,164,92,.45)!important;color:#E8CD8A!important}
+#view-cal .cal-grid{background:#111A28!important;border-color:rgba(201,164,92,.22)!important}
+#view-cal .cal-dow{color:#A7B1C0!important}
+#view-cal .cal-dow.we{color:#F2A3A3!important}
+#view-cal .cal-d{background:#152033!important}
+#view-cal .cal-d .n{color:#EEF1F5!important}
+#view-cal .cal-d.we .n{color:#F2A3A3!important}
+#view-cal .cal-d.past:not(.out) .n{color:#8C98AA!important}
+#view-cal .cal-d.out{background:#0E1726!important}
+#view-cal .cal-d.out .n{color:#5D6878!important}
+#view-cal .cal-d.today{background:#1E2A3D!important}
+#view-cal .cal-d.today .n{background:#F3EAD7!important;color:#14233A!important}
+#view-cal .cal-lane.on.c-gray{background:#5D6878!important}
+#view-cal .cal-lane.c-gray .cal-lab{color:#F3EAD7!important}
+#view-cal .cal-start{background:#152033!important;border-color:#C9A45C!important;color:#F3EAD7!important}
+#view-cal .cal-legend li[data-k]{background:#111A28!important;border-color:rgba(201,164,92,.22)!important}
+#view-cal .cal-legend li.pick{border-color:#E8CD8A!important;box-shadow:inset 0 0 0 1px #E8CD8A!important}
+#view-cal .cal-legend li.cal-gh{color:#A7B1C0!important}
+#view-cal .cal-legend b{color:#F3EAD7!important}
+#view-cal .cal-legend .ct{border-color:rgba(201,164,92,.45)!important;color:#C9A45C!important}
+#view-cal .cal-legend .rg,#view-cal .cal-legend .rg u{color:#DCE2EA!important}
+#view-cal .cal-legend .sb,#view-cal .cal-foot,.ic-credit,.ic-credit a{color:#A7B1C0!important}
+#view-cal .cal-legend .sw.open{background:#111A28!important;border-color:#E8CD8A!important}
+#view-cal .cal-legend .st.on{color:#9FE9C0!important;background:rgba(30,138,76,.22)!important}
+#view-cal .cal-legend .st.gap{color:#F5C77E!important;background:rgba(201,140,40,.2)!important}
+#view-cal .cal-legend .st.soon,#view-cal .cal-legend .st.over{color:#A7B1C0!important;background:rgba(167,177,192,.14)!important}
+.lead,.fitnote{color:#C9D1DB!important}
+section.card{color:#111!important}
+.lead b{color:#F3EAD7!important}
+}
+</style><script id="r19-dk-js">
 </script><style id="r17-font">html body,html body *:not(svg):not(path):not(circle):not(rect){font-family:"Microsoft JhengHei","微軟正黑體",system-ui,-apple-system,"PingFang TC","Noto Sans TC","Noto Sans CJK TC",sans-serif!important}
 section.card .en,#r16home .en,.en,i.en,.navhead .sub{font-style:normal!important}</style></body>
 </html>

@@ -76,5 +76,38 @@ if(!hd){
 }
 if(window.dispatchEvent)window.dispatchEvent(new Event('resize'));
 })();
+</script><style id="r19-dk">/* r19 月曆與列印卡頁：手機深色模式時改深藍底（列印卡本身維持白色，方便預覽列印效果） */
+@media (prefers-color-scheme:dark){
+html,html body{background:#0A111C!important;color:#E4EBF1!important}
+#view-cal .cal-nav b{color:#F3EAD7!important}
+#view-cal .cal-btn{background:#111A28!important;border-color:rgba(201,164,92,.45)!important;color:#E8CD8A!important}
+#view-cal .cal-grid{background:#111A28!important;border-color:rgba(201,164,92,.22)!important}
+#view-cal .cal-dow{color:#A7B1C0!important}
+#view-cal .cal-dow.we{color:#F2A3A3!important}
+#view-cal .cal-d{background:#152033!important}
+#view-cal .cal-d .n{color:#EEF1F5!important}
+#view-cal .cal-d.we .n{color:#F2A3A3!important}
+#view-cal .cal-d.past:not(.out) .n{color:#8C98AA!important}
+#view-cal .cal-d.out{background:#0E1726!important}
+#view-cal .cal-d.out .n{color:#5D6878!important}
+#view-cal .cal-d.today{background:#F3EAD7!important}
+#view-cal .cal-d.today .n{color:#14233A!important}
+#view-cal .cal-start{background:#152033!important;border-color:#C9A45C!important}
+#view-cal .cal-legend li[data-k]{background:#111A28!important;border-color:rgba(201,164,92,.22)!important}
+#view-cal .cal-legend li.pick{border-color:#E8CD8A!important;box-shadow:inset 0 0 0 1px #E8CD8A!important}
+#view-cal .cal-legend li.cal-gh{color:#A7B1C0!important}
+#view-cal .cal-legend b{color:#F3EAD7!important}
+#view-cal .cal-legend .ct{border-color:rgba(201,164,92,.45)!important;color:#C9A45C!important}
+#view-cal .cal-legend .rg,#view-cal .cal-legend .rg u{color:#DCE2EA!important}
+#view-cal .cal-legend .sb,#view-cal .cal-foot,.ic-credit,.ic-credit a{color:#A7B1C0!important}
+#view-cal .cal-legend .sw.open{background:#111A28!important;border-color:#E8CD8A!important}
+#view-cal .cal-legend .st.on{color:#9FE9C0!important;background:rgba(30,138,76,.22)!important}
+#view-cal .cal-legend .st.gap{color:#F5C77E!important;background:rgba(201,140,40,.2)!important}
+#view-cal .cal-legend .st.soon,#view-cal .cal-legend .st.over{color:#A7B1C0!important;background:rgba(167,177,192,.14)!important}
+.lead,.fitnote{color:#C9D1DB!important}
+section.card{color:#111!important}
+.lead b{color:#F3EAD7!important}
+}
+</style><script id="r19-dk-js">
 </script><style id="r17-font">html body,html body *:not(svg):not(path):not(circle):not(rect){font-family:"Microsoft JhengHei","微軟正黑體",system-ui,-apple-system,"PingFang TC","Noto Sans TC","Noto Sans CJK TC",sans-serif!important}
 section.card .en,#r16home .en,.en,i.en,.navhead .sub{font-style:normal!important}</style></body></html>
