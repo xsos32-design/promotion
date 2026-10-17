@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-Hant" data-theme="light" class="t23 noir">
-<head>
+<head><link id="r38font" rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&display=swap" media="print" onload="this.media='all'">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>活動月曆（酒＋巧克力）</title>
@@ -91,6 +91,13 @@ html.noir:not(#_a):not(#_b) nav#views{position:relative}
 html.noir:not(#_a):not(#_b) nav#views::before{content:"";position:absolute;left:50%;top:-15px;width:min(230px,58vw);height:28px;transform:translateX(-50%);background:url(img/brand/orn.webp) center/contain no-repeat;pointer-events:none;z-index:2}
 
 /* r37 效能：畫面外的商品卡先不排版，捲到附近才排（大幅減少找字、捲動的卡頓） */
+
+/* r38 排版：標題斷行平均、警語一行放得下 */
+html.noir :is(h1,h2,h3,.zh,.tile-h h3,.cal-head h2,.r24hd h2){text-wrap:balance}
+html.noir :is(p,li,.ld,.d){text-wrap:pretty}
+@media (max-width:600px){html.noir .ban{letter-spacing:3px!important;font-size:14px!important;text-wrap:balance}}
+html.noir:not(#_a):not(#_b) li.galrow .line>.r15th.none{grid-area:th!important;border-radius:10px;background:#1A1712 url(https://xsos32-design.github.io/dutyliquorwiki/img/brand/ph_liq.webp) center/62% auto no-repeat!important;border:1px solid rgba(201,164,92,.32)!important}
+html.noir:not(#_a):not(#_b) li.galrow .line>.r15th.none+span{grid-area:nm!important}
 </style></head>
 <body>
 <div class="wrap">

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="zh-Hant" class="t23 noir">
-<head>
+<head><link id="r38font" rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&display=swap" media="print" onload="this.media='all'">
 <meta charset="utf-8"><meta name="theme-color" content="#060D18"><!--brand-og--><meta name="description" content="10 月酒類整檔折扣與滿額贈一頁查完。個人整理速查，實際以現場公告與 POS 為準。"><meta property="og:type" content="website"><meta property="og:url" content="https://xsos32-design.github.io/promotion/"><meta property="og:title" content="10月酒類活動速查"><meta property="og:description" content="10 月酒類整檔折扣與滿額贈一頁查完。個人整理速查，實際以現場公告與 POS 為準。"><meta property="og:image" content="https://xsos32-design.github.io/promotion/img/brand/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://xsos32-design.github.io/promotion/img/brand/og.jpg"><link rel="preload" as="image" href="img/brand/hero.webp" fetchpriority="high"><!--/brand-og-->
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -84,6 +84,13 @@ html.noir:not(#_a):not(#_b) nav#views{position:relative}
 html.noir:not(#_a):not(#_b) nav#views::before{content:"";position:absolute;left:50%;top:-15px;width:min(230px,58vw);height:28px;transform:translateX(-50%);background:url(img/brand/orn.webp) center/contain no-repeat;pointer-events:none;z-index:2}
 
 /* r37 效能：畫面外的商品卡先不排版，捲到附近才排（大幅減少找字、捲動的卡頓） */
+
+/* r38 排版：標題斷行平均、警語一行放得下 */
+html.noir :is(h1,h2,h3,.zh,.tile-h h3,.cal-head h2,.r24hd h2){text-wrap:balance}
+html.noir :is(p,li,.ld,.d){text-wrap:pretty}
+@media (max-width:600px){html.noir .ban{letter-spacing:3px!important;font-size:14px!important;text-wrap:balance}}
+html.noir:not(#_a):not(#_b) li.galrow .line>.r15th.none{grid-area:th!important;border-radius:10px;background:#1A1712 url(https://xsos32-design.github.io/dutyliquorwiki/img/brand/ph_liq.webp) center/62% auto no-repeat!important;border:1px solid rgba(201,164,92,.32)!important}
+html.noir:not(#_a):not(#_b) li.galrow .line>.r15th.none+span{grid-area:nm!important}
 </style></head>
 <body>
 <title>10 月酒類活動速查</title>
