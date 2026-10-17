@@ -84,6 +84,11 @@ html.noir .fabrow .t{color:#E8CD8A!important;letter-spacing:2px}
 /* r34 Gemini 美術：無圖佔位插畫、金色裝飾分隔 */
 html.noir .ban::before{content:"";display:block;width:min(300px,78%);height:38px;margin:0 auto 12px;background:url(img/brand/orn.webp) center/contain no-repeat;opacity:.92}
 html.noir:not(#_a):not(#_b) :is(#r16home,#r20home) :is(.r24hd,.row>h2){background:url(img/brand/orn.webp) center top/min(240px,62%) auto no-repeat!important;padding-top:36px!important;margin-top:18px}
+
+/* r35 電腦版頂部標題列、活動頁頁首金飾、商品照深色聚光 */
+@media (min-width:901px){html.noir:not(#_a):not(#_b) #menu{padding-left:290px!important}html.noir:not(#_a):not(#_b) #menu>#mb{display:none!important}html.noir:not(#_a):not(#_b) #menu>b{flex:1 1 auto!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:18px!important;font-family:'Noto Serif TC',serif!important;font-size:18px!important;letter-spacing:6px!important;color:#E8CD8A!important;text-shadow:0 1px 10px rgba(201,164,92,.25)!important}html.noir:not(#_a):not(#_b) #menu>b::before,html.noir:not(#_a):not(#_b) #menu>b::after{content:"";flex:0 0 auto;width:150px;height:30px;background:url(img/brand/orn_l.webp) right center/contain no-repeat;opacity:.9}html.noir:not(#_a):not(#_b) #menu>b::after{background-image:url(img/brand/orn_r.webp);background-position:left center}}
+html.noir:not(#_a):not(#_b) nav#views{position:relative}
+html.noir:not(#_a):not(#_b) nav#views::before{content:"";position:absolute;left:50%;top:-15px;width:min(230px,58vw);height:28px;transform:translateX(-50%);background:url(img/brand/orn.webp) center/contain no-repeat;pointer-events:none;z-index:2}
 </style></head>
 <body>
 <div class="wrap">
