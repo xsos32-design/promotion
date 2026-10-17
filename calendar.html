@@ -285,8 +285,8 @@ body.cal-solo .cal-start:not(.pick){opacity:.2}
       rowLanes.forEach(function(c){
         var r=inRange(c,d), k='cal-lane', lab='', rowNo=Math.floor(i/7);
         if(r){ k+=' on c-'+c.c+(c.tbd?' tbd':''); if(ymd(d)===r[0]&&!c.tbd) k+=' s'; if(r[1]&&ymd(d)===r[1]) k+=' e'; if(pick===c.k) k+=' pick';
-          if(!out && (ymd(d)===r[0] || d.getDay()===0 || d.getDate()===1)){
-            var n=1; for(var q=1;q<7-d.getDay();q++){ var dd=new Date(d.getFullYear(),d.getMonth(),d.getDate()+q); if(dd.getMonth()===m && inRange(c,dd)===r) n++; else break; }
+          if((ymd(d)===r[0] || d.getDay()===0 || d.getDate()===1 || i===0)){/*r36cal*/
+            var n=1; for(var q=1;q<7-d.getDay();q++){ var dd=new Date(d.getFullYear(),d.getMonth(),d.getDate()+q); if(dd.getMonth()===d.getMonth() && inRange(c,dd)===r) n++; else break; }
             lab='<span class="cal-lab" style="width:calc('+n+'00% + '+(n-1)+'px - 12px)">'+nw(c.short||c.n)+'</span>';
           } }
         h+='<div class="'+k+'" data-row="'+rowNo+'" data-k="'+c.k+'">'+lab+'</div>';
