@@ -37,13 +37,13 @@ body{margin:0;padding-top:var(--xwh,0);background:#EDECEB;color:#000;font-family
 .stamp{border-top:.15mm solid #000}
 </style><style id="fit-css">@media screen{.card{zoom:var(--cz,1);transform-origin:0 0}.page .fitnote{font-size:12px;color:#605E5A;margin:-4mm 0 5mm}}@media screen and (max-width:520px){.page{padding:3mm}}@media print{.fitnote{display:none}.card{zoom:1!important}}</style><style id="r32">/* r32 質感層：AI 生成材質（皮革底紋、絲絨、拉絲香檳金）套用到全站按鈕與區塊 */
 html.noir{--r32g:url(img/brand/tex_gold.webp);--r32v:url(img/brand/tex_velvet.webp);--r32l:url(img/brand/tex_leather.webp)}
-html.noir body{background-color:#0B0A09;background-image:linear-gradient(rgba(11,10,9,.62),rgba(11,10,9,.62)),var(--r32l);background-size:auto,400px 400px;background-attachment:scroll}
+html.noir body{background-color:#0B0A09;background-image:linear-gradient(rgba(11,10,9,.62),rgba(11,10,9,.62)),var(--r32l);background-size:auto,256px 256px;background-attachment:scroll}
 
 /* ── 次要按鈕：絲絨底＋金色細框＋上緣高光 ── */
 html.noir:not(#_a):not(#_b) :is(.cmpb,.cmpc,.shb:not(.on),.r21more,a.go,.r24nx,#mb,#fsz,.btnB,#more,.more:not(details),details.more>summary,a.back,.cal-btn,button.fold,#fold-disc,#totop,.galbtn,#pnwrap button,#ftop,#fback,.tbtab:not(.on),a.pickgo,.pfw,.xwa:not(.on),.chip:not([aria-pressed=true]),.seg button:not([aria-pressed=true]),nav.views button:not([aria-selected=true]),#xwsoloall,#xwsb){
  background-color:#1A1712!important;
  background-image:linear-gradient(180deg,rgba(255,236,196,.08),rgba(255,236,196,0) 46%,rgba(0,0,0,.22)),linear-gradient(rgba(24,21,16,.5),rgba(24,21,16,.5)),var(--r32v)!important;
- background-size:auto,auto,300px 300px!important;
+ background-size:auto,auto,256px 256px!important;
  border:1px solid rgba(201,164,92,.42)!important;
  box-shadow:inset 0 1px 0 rgba(255,232,180,.13),inset 0 -1px 0 rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.45)!important;
  transition:border-color .18s,box-shadow .18s,transform .08s,filter .18s!important}
@@ -70,7 +70,7 @@ html.noir:not(#_a):not(#_b) .xwa.on svg{stroke:#1A140B!important}
 /* ── 大型入口方塊：絲絨＋金色頂線，滑過浮起 ── */
 html.noir :is(.cat.big,.ctile,a.brands,button.brands,.srch){
  background-image:linear-gradient(180deg,rgba(255,236,196,.06),rgba(0,0,0,.18)),var(--r32v)!important;
- background-size:auto,300px 300px!important;
+ background-size:auto,256px 256px!important;
  box-shadow:inset 0 1px 0 rgba(232,205,138,.22),0 6px 18px -10px rgba(0,0,0,.8)!important;
  transition:transform .18s,box-shadow .18s,border-color .18s!important}
 html.noir :is(.cat.big,.ctile,a.brands,button.brands):hover{transform:translateY(-2px);border-color:rgba(232,205,138,.6)!important;box-shadow:inset 0 1px 0 rgba(232,205,138,.32),0 10px 24px -10px rgba(201,164,92,.35)!important}
@@ -81,11 +81,11 @@ html.noir :is(a.promo,button.promo){
 /* ── 商品卡：極淡絲絨紋理＋金色角飾 ── */
 
 /* ── 上方工具列與下方導覽列：皮革底＋金色細線 ── */
-html.noir:not(#_a):not(#_b) #xwbar{background-color:rgba(14,12,10,.94)!important;background-image:linear-gradient(180deg,rgba(255,236,196,.04),rgba(0,0,0,.2)),var(--r32l)!important;background-size:auto,400px 400px!important;border-bottom:1px solid rgba(201,164,92,.35)!important;box-shadow:0 6px 18px -8px rgba(0,0,0,.8)!important}
+html.noir:not(#_a):not(#_b) #xwbar{background-color:rgba(14,12,10,.94)!important;background-image:linear-gradient(180deg,rgba(255,236,196,.04),rgba(0,0,0,.2)),var(--r32l)!important;background-size:auto,256px 256px!important;border-bottom:1px solid rgba(201,164,92,.35)!important;box-shadow:0 6px 18px -8px rgba(0,0,0,.8)!important}
 html.noir :is(#pnwrap,.bnav,#bnav,.r20bnav,.xwbot){backdrop-filter:blur(6px)}
 
 /* ── 話術框分頁、FAB 區塊 ── */
-html.noir .talkbox{background-image:linear-gradient(180deg,rgba(255,236,196,.03),rgba(0,0,0,.12)),var(--r32v)!important;background-size:auto,300px 300px!important}
+html.noir .talkbox{background-image:linear-gradient(180deg,rgba(255,236,196,.03),rgba(0,0,0,.12)),var(--r32v)!important;background-size:auto,256px 256px!important}
 html.noir .fabrow .t{color:#E8CD8A!important;letter-spacing:2px}
 
 @media (prefers-reduced-motion:reduce){html.noir *{transition:none!important}}
