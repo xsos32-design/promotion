@@ -1,5 +1,5 @@
 /* 離線模式：頁面走「網路優先、斷線用快取」，圖片字型走「快取優先、背景更新」 */
-const V = 'v2026-10-15-r36';
+const V = 'v2026-10-15-r37';
 const P = self.registration.scope + '|';
 const CORE = ['./', './index.html', './img/brand/hero.webp', './icon-192.png'];
 self.addEventListener('install', e => {
