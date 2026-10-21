@@ -1747,7 +1747,7 @@ section.card .en,#r16home .en,.en,i.en,.navhead .sub{font-style:normal!important
  var st=document.createElement('style');
  st.textContent='[data-wmk]::after{content:"";position:absolute;left:var(--wx);top:var(--wy);width:var(--ws);height:var(--ws);pointer-events:none;background:url(img/brand/wm.webp) center/contain no-repeat;opacity:.92;z-index:2;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}';
  document.head.appendChild(st);
- function skip(im){var s=im.getAttribute('src')||im.currentSrc||'';return /pst_|\/brand\/|icon-|wm\.webp|^data:/.test(s);}
+ function skip(im){var s=im.getAttribute('src')||im.currentSrc||'';if(/^data:/.test(s))return true;var u=im.src||s;return /^https?:\/\/xsos32-design\.github\.io\//.test(u)||u.indexOf(location.origin+'/')===0;}
  function corner(im,s){
   var k='__wc'+s;if(im[k])return im[k];var c='tr';
   try{var W=48,H=Math.max(8,Math.round(48*im.naturalHeight/im.naturalWidth)),cv=document.createElement('canvas');cv.width=W;cv.height=H;var x=cv.getContext('2d');x.drawImage(im,0,0,W,H);var d=x.getImageData(0,0,W,H).data;
