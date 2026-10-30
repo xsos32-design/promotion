@@ -137,6 +137,12 @@ html.noir:not(#_a):not(#_b) li.galrow .line>.r15th.none+span{grid-area:nm!import
 .r124pf a{display:block;border-radius:12px;overflow:hidden;box-shadow:0 10px 28px -14px rgba(0,0,0,.55);max-width:640px;width:100%;margin:0 auto}
 .r124pf img{display:block;width:100%;height:auto}
 .r124pf figcaption{text-align:center;font-size:12.5px;color:var(--ink-3)}
+.r124pb{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.r124pb button{font:inherit;font-size:14px;font-weight:700;height:38px;padding:0 16px;border-radius:999px;border:1px solid #C9A45C;background:#C9A45C;color:#14120F;cursor:pointer}
+.r124pb button.g{background:transparent;color:var(--ink)}
+.r124pb button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#r124{scroll-margin-top:84px}
+.cal-cat a.r124jump{display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 14px;border-radius:999px;border:1px solid #C9A45C;background:rgba(201,164,92,.18);color:#F3D896;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap}
 .r124e{padding:14px;border:1px dashed var(--line-strong);border-radius:10px;color:var(--ink-2);font-size:14px}
 .r124f{margin:0;font-size:12px;color:var(--ink-3);line-height:1.7}
 @media (max-width:480px){.r124g{grid-template-columns:repeat(3,minmax(0,1fr))}.r124ph{height:118px;padding:0 4px}.r124ph img{max-height:118px}.r124sign{font-size:23px}.r124tag b{font-size:14.5px}.r124tag b i{font-size:11px}.r124tag span{font-size:10.5px}}
@@ -167,6 +173,7 @@ html.noir:not(#_a):not(#_b) li.galrow .line>.r15th.none+span{grid-area:nm!import
   <div id="r124out" style="display:flex;flex-direction:column;gap:26px"></div>
   <p class="r124f" id="r124f"></p>
 </section><!--/r124-->
+
 
 
 
@@ -969,8 +976,22 @@ function show(v){var p=v.split('|')[0],bs,w;
   var miss=g.label.split('、').filter(function(x){var k=x.toLowerCase().replace(/[^a-z]/g,'');return k&&!bs.some(function(b){return dn(b).toLowerCase().replace(/[^a-z]/g,'').indexOf(k.slice(0,5))>=0;});});
   w='<b>'+e(g.names.join('・'))+'</b><span>負責：'+e(g.label)+'</span>'+(bs.length&&miss.length?'<span class="w">'+e(miss.join('、'))+' 11 月沒有在促銷表上</span>':'');}
  who.innerHTML=w;
- out.innerHTML=bs.length?bs.map(function(b){var u=D.poster[b];return u?'<figure class="r124pf"><a href="'+u+'" target="_blank" rel="noopener"><img src="'+u+'" alt="'+e(dn(b))+' 11 月折扣海報" loading="lazy" decoding="async"></a><figcaption>'+e(dn(b))+'・'+D.brands[b]+' 項</figcaption></figure>':'';}).join(''):'<div class="r124e">11 月巧克力促銷表沒有這些品牌的折扣品或滿額贈。</div>';}
+ out.innerHTML=bs.length?bs.map(function(b){var u=D.poster[b];return u?'<figure class="r124pf"><a href="'+u+'" target="_blank" rel="noopener"><img src="'+u+'" alt="'+e(dn(b))+' 11 月折扣圖" loading="lazy" decoding="async"></a><figcaption>'+e(dn(b))+'・'+D.brands[b]+' 項</figcaption><div class="r124pb"><button type="button" data-cp="'+u+'">複製圖片</button><button type="button" class="g" data-sh="'+u+'" data-nm="'+e(dn(b))+'">分享／存圖</button></div></figure>':'';}).join(''):'<div class="r124e">11 月巧克力促銷表沒有這些品牌的折扣品或滿額贈。</div>';}
 sel.addEventListener('change',function(){show(sel.value);});
+function png(url){return fetch(url).then(function(r){return r.blob();}).then(function(bl){return new Promise(function(ok,no){var im=new Image();im.onload=function(){var c=document.createElement('canvas');c.width=im.naturalWidth;c.height=im.naturalHeight;c.getContext('2d').drawImage(im,0,0);c.toBlob(function(x){x?ok(x):no(new Error('png'));},'image/png');URL.revokeObjectURL(im.src);};im.onerror=no;im.src=URL.createObjectURL(bl);});});}
+function flash(btn,t){var o=btn.getAttribute('data-t')||btn.textContent;btn.setAttribute('data-t',o);btn.textContent=t;setTimeout(function(){btn.textContent=o;},1800);}
+out.addEventListener('click',function(ev){var b=ev.target.closest('button[data-cp],button[data-sh]');if(!b)return;
+ if(b.hasAttribute('data-cp')){var u=b.getAttribute('data-cp');
+  try{if(!window.ClipboardItem||!navigator.clipboard||!navigator.clipboard.write)throw 0;
+   navigator.clipboard.write([new ClipboardItem({'image/png':png(u)})]).then(function(){flash(b,'已複製');},function(){flash(b,'無法複製，請長按圖片');});
+  }catch(_){flash(b,'無法複製，請長按圖片');}
+ }else{var u2=b.getAttribute('data-sh'),nm=b.getAttribute('data-nm')||'折扣圖';
+  png(u2).then(function(x){var f=new File([x],nm+'_11月折扣.png',{type:'image/png'});
+   if(navigator.canShare&&navigator.canShare({files:[f]}))return navigator.share({files:[f],title:nm+' 11 月折扣'});
+   window.open(u2,'_blank');}).catch(function(err){if(!err||err.name!=='AbortError')window.open(u2,'_blank');});}
+});
+(function(){var cc=document.querySelector('#view-cal .cal-cat');if(cc&&!cc.querySelector('.r124jump')){var a=document.createElement('a');a.className='r124jump';a.href='#r124';a.textContent='負責人折扣圖 ↓';
+ a.addEventListener('click',function(ev){ev.preventDefault();document.getElementById('r124').scrollIntoView({behavior:'smooth',block:'start'});});cc.appendChild(a);}})();
 document.getElementById('r124f').innerHTML=D.notes.map(function(n){return '・'+e(n);}).join('<br>')+'<br>・2 件／3 件價是原價乘折扣後四捨五入的參考值，實際以 POS 為準。';
 var v=null;try{v=localStorage.getItem('r124who');}catch(_){}
 if(!v||![].some.call(sel.options,function(o){return o.value===v;}))v=[].filter.call(sel.options,function(o){return o.value.split('|')[1]==='朱韋任';})[0].value;
