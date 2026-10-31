@@ -26,7 +26,56 @@ body{margin:0;background:var(--bg);color:var(--ink);
 @media(min-width:720px){.wrap{padding:8px 24px 72px}}
 </style>
 <script defer src="https://xsos32-design.github.io/dutyliquorwiki/nav.js"></script>
-<style id="r32">/* r32 質感層：AI 生成材質（皮革底紋、絲絨、拉絲香檳金）套用到全站按鈕與區塊 */
+<style id="r124css">
+:root{--r124-t0:#C8102E;--r124-t1:#C94F00;--r124-a2:#6A3FB5;--r124-t3:#0B7A55;--r124-fix:#B0006D;--r124-gwp:#1F5FA8}
+.r124{margin:22px 0 0;padding:18px 16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg,14px);display:flex;flex-direction:column;gap:14px;color:var(--ink)}
+.r124 h2{margin:0;font-size:20px;line-height:1.3;text-wrap:balance}
+.r124 .r124p{margin:4px 0 0;font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.r124sel{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px;font-weight:700}
+.r124sel select{font:inherit;font-size:16px;font-weight:500;padding:8px 12px;border-radius:10px;border:1px solid var(--line-strong);background:var(--surface-2);color:var(--ink);max-width:100%}
+.r124sel select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#r124who{display:flex;flex-direction:column;gap:2px;font-size:14px;color:var(--ink-2)}
+#r124who b{font-size:17px;color:var(--ink)}
+#r124who .w{color:var(--r124-t1);font-weight:500}
+.r124lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:14px;font-weight:800}
+.r124lg span{display:inline-flex;align-items:center;gap:5px}.r124lg i{width:9px;height:9px;border-radius:50%;background:currentColor}
+.r124b{display:flex;flex-direction:column;gap:12px;padding-top:10px;border-top:2px solid var(--ink)}
+.r124b>h3{margin:0;font-size:19px;font-weight:900;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.r124b>h3 small{font-size:13px;font-weight:500;color:var(--ink-3)}
+.r124n{margin:0;font-size:13.5px;color:var(--r124-gwp);font-weight:600;line-height:1.6}
+.r124t{display:flex;flex-direction:column;gap:8px}
+.r124t>h4{margin:0;font-size:23px;line-height:1.15;font-weight:900}
+.r124t>h4 small{font-size:12.5px;font-weight:500;color:var(--ink-3);margin-left:6px}
+.r124sh{background:linear-gradient(180deg,#EFE5D6,#E2D2BA);border-radius:12px;padding:14px 10px 16px;display:flex;flex-direction:column;gap:12px}
+.r124sign{align-self:center;background:#FFFFFF;border-radius:12px;padding:6px 20px 7px;font-size:28px;line-height:1.2;font-weight:900;letter-spacing:.02em;text-align:center;box-shadow:0 2px 8px rgba(60,40,20,.25)}
+.r124sign small{display:block;font-size:13px;font-weight:600;color:#6B5A48;letter-spacing:0}
+.r124g{display:grid;grid-template-columns:repeat(auto-fill,minmax(122px,1fr));column-gap:0;row-gap:20px}
+.r124i{display:flex;flex-direction:column;min-width:0}
+.r124ph{height:150px;display:flex;align-items:flex-end;justify-content:center;padding:0 6px}
+.r124ph img{max-height:150px;max-width:100%;width:auto;height:auto;display:block;filter:drop-shadow(0 4px 4px rgba(40,25,10,.3))}
+.r124ph .no{width:80%;height:100px;border:1px dashed #A8916F;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#7A6650;font-size:11px}
+.r124pl{height:12px;background:linear-gradient(180deg,#F7EFE2 0,#DCC9AB 50%,#B59B76 100%);box-shadow:0 4px 5px -2px rgba(40,25,10,.35)}
+.r124tag{margin:7px 5px 0;background:#232323;border:2px solid #4B4B4B;border-radius:5px;padding:4px 6px 5px;color:#EDEDED;display:flex;flex-direction:column;gap:1px;min-width:0}
+.r124tag span{font-size:11px;line-height:1.35;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.r124tag b{font-size:16px;line-height:1.2;font-weight:900;display:flex;flex-wrap:wrap;align-items:baseline;column-gap:5px}
+.r124tag b i{font-style:normal;font-size:12px;font-weight:700}
+.r124tag .k-T0{color:#FF6B7D}.r124tag .k-T1{color:#FFA05A}.r124tag .k-A2{color:#C3A8FF}.r124tag .k-T3{color:#4CE0A6}.r124tag .k-FIX{color:#FFE14D}.r124tag .k-GWP{color:#8CC4FF}
+.r124 .c-T0{color:var(--r124-t0)}.r124 .c-T1{color:var(--r124-t1)}.r124 .c-A2{color:var(--r124-a2)}.r124 .c-T3{color:var(--r124-t3)}.r124 .c-FIX{color:var(--r124-fix)}.r124 .c-GWP{color:var(--r124-gwp)}
+.r124pf{margin:0;display:flex;flex-direction:column;gap:6px}
+.r124pf a{display:block;border-radius:12px;overflow:hidden;box-shadow:0 10px 28px -14px rgba(0,0,0,.55);max-width:640px;width:100%;margin:0 auto}
+.r124pf img{display:block;width:100%;height:auto}
+.r124pf figcaption{text-align:center;font-size:12.5px;color:var(--ink-3)}
+.r124pb{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.r124pb button{font:inherit;font-size:14px;font-weight:700;height:38px;padding:0 16px;border-radius:999px;border:1px solid #C9A45C;background:#C9A45C;color:#14120F;cursor:pointer}
+.r124pb button.g{background:transparent;color:var(--ink)}
+.r124pb button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#r124{scroll-margin-top:84px}
+.cal-cat a.r124jump{display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 14px;border-radius:999px;border:1px solid #C9A45C;background:rgba(201,164,92,.18);color:#F3D896;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap}
+.r124e{padding:14px;border:1px dashed var(--line-strong);border-radius:10px;color:var(--ink-2);font-size:14px}
+.r124f{margin:0;font-size:12px;color:var(--ink-3);line-height:1.7}
+@media (max-width:480px){.r124g{grid-template-columns:repeat(3,minmax(0,1fr))}.r124ph{height:118px;padding:0 4px}.r124ph img{max-height:118px}.r124sign{font-size:23px}.r124tag b{font-size:14.5px}.r124tag b i{font-size:11px}.r124tag span{font-size:10.5px}}
+@media print{.r124{display:none}}
+</style><style id="r32">/* r32 質感層：AI 生成材質（皮革底紋、絲絨、拉絲香檳金）套用到全站按鈕與區塊 */
 html.noir{--r32g:url(img/brand/tex_gold.webp);--r32v:url(img/brand/tex_velvet.webp);--r32l:url(img/brand/tex_leather.webp)}
 html.noir body{background-color:#0B0A09;background-image:linear-gradient(rgba(11,10,9,.62),rgba(11,10,9,.62)),var(--r32l);background-size:auto,256px 256px;background-attachment:scroll}
 
@@ -98,56 +147,7 @@ html.noir :is(p,li,.ld,.d){text-wrap:pretty}
 @media (max-width:600px){html.noir .ban{letter-spacing:3px!important;font-size:14px!important;text-wrap:balance}}
 html.noir:not(#_a):not(#_b) li.galrow .line>.r15th.none{grid-area:th!important;border-radius:10px;background:#1A1712 url(https://xsos32-design.github.io/dutyliquorwiki/img/brand/ph_liq.webp) center/62% auto no-repeat!important;border:1px solid rgba(201,164,92,.32)!important}
 html.noir:not(#_a):not(#_b) li.galrow .line>.r15th.none+span{grid-area:nm!important}
-</style><style id="r107promo">html:not(#_a):not(#_b):not(#_c) body{background-color:#261F19!important;background-image:linear-gradient(#F4F1EA,#F4F1EA)!important}@media (prefers-color-scheme:dark){html:not(#_a):not(#_b):not(#_c) body{background-image:linear-gradient(#14120F,#14120F)!important}}</style><style id="r98tb">html:not(#_a):not(#_b):not(#_c) #xwbar button,html:not(#_a):not(#_b):not(#_c) #xwbar a,html:not(#_a):not(#_b):not(#_c) #xwbar .xwsite{box-shadow:inset 0 1px 0 rgba(255,232,180,.14)!important;filter:none!important}html:not(#_a):not(#_b):not(#_c) #xwbar button:active,html:not(#_a):not(#_b):not(#_c) #xwbar a:active{box-shadow:inset 0 2px 5px rgba(0,0,0,.45)!important}html:not(#_a):not(#_b):not(#_c) #xwbar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background-color:#261F19!important}</style><style id="r124css">
-:root{--r124-t0:#C8102E;--r124-t1:#C94F00;--r124-a2:#6A3FB5;--r124-t3:#0B7A55;--r124-fix:#B0006D;--r124-gwp:#1F5FA8}
-.r124{margin:22px 0 0;padding:18px 16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg,14px);display:flex;flex-direction:column;gap:14px;color:var(--ink)}
-.r124 h2{margin:0;font-size:20px;line-height:1.3;text-wrap:balance}
-.r124 .r124p{margin:4px 0 0;font-size:13.5px;color:var(--ink-2);line-height:1.6}
-.r124sel{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:14px;font-weight:700}
-.r124sel select{font:inherit;font-size:16px;font-weight:500;padding:8px 12px;border-radius:10px;border:1px solid var(--line-strong);background:var(--surface-2);color:var(--ink);max-width:100%}
-.r124sel select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-#r124who{display:flex;flex-direction:column;gap:2px;font-size:14px;color:var(--ink-2)}
-#r124who b{font-size:17px;color:var(--ink)}
-#r124who .w{color:var(--r124-t1);font-weight:500}
-.r124lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:14px;font-weight:800}
-.r124lg span{display:inline-flex;align-items:center;gap:5px}.r124lg i{width:9px;height:9px;border-radius:50%;background:currentColor}
-.r124b{display:flex;flex-direction:column;gap:12px;padding-top:10px;border-top:2px solid var(--ink)}
-.r124b>h3{margin:0;font-size:19px;font-weight:900;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
-.r124b>h3 small{font-size:13px;font-weight:500;color:var(--ink-3)}
-.r124n{margin:0;font-size:13.5px;color:var(--r124-gwp);font-weight:600;line-height:1.6}
-.r124t{display:flex;flex-direction:column;gap:8px}
-.r124t>h4{margin:0;font-size:23px;line-height:1.15;font-weight:900}
-.r124t>h4 small{font-size:12.5px;font-weight:500;color:var(--ink-3);margin-left:6px}
-.r124sh{background:linear-gradient(180deg,#EFE5D6,#E2D2BA);border-radius:12px;padding:14px 10px 16px;display:flex;flex-direction:column;gap:12px}
-.r124sign{align-self:center;background:#FFFFFF;border-radius:12px;padding:6px 20px 7px;font-size:28px;line-height:1.2;font-weight:900;letter-spacing:.02em;text-align:center;box-shadow:0 2px 8px rgba(60,40,20,.25)}
-.r124sign small{display:block;font-size:13px;font-weight:600;color:#6B5A48;letter-spacing:0}
-.r124g{display:grid;grid-template-columns:repeat(auto-fill,minmax(122px,1fr));column-gap:0;row-gap:20px}
-.r124i{display:flex;flex-direction:column;min-width:0}
-.r124ph{height:150px;display:flex;align-items:flex-end;justify-content:center;padding:0 6px}
-.r124ph img{max-height:150px;max-width:100%;width:auto;height:auto;display:block;filter:drop-shadow(0 4px 4px rgba(40,25,10,.3))}
-.r124ph .no{width:80%;height:100px;border:1px dashed #A8916F;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#7A6650;font-size:11px}
-.r124pl{height:12px;background:linear-gradient(180deg,#F7EFE2 0,#DCC9AB 50%,#B59B76 100%);box-shadow:0 4px 5px -2px rgba(40,25,10,.35)}
-.r124tag{margin:7px 5px 0;background:#232323;border:2px solid #4B4B4B;border-radius:5px;padding:4px 6px 5px;color:#EDEDED;display:flex;flex-direction:column;gap:1px;min-width:0}
-.r124tag span{font-size:11px;line-height:1.35;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.r124tag b{font-size:16px;line-height:1.2;font-weight:900;display:flex;flex-wrap:wrap;align-items:baseline;column-gap:5px}
-.r124tag b i{font-style:normal;font-size:12px;font-weight:700}
-.r124tag .k-T0{color:#FF6B7D}.r124tag .k-T1{color:#FFA05A}.r124tag .k-A2{color:#C3A8FF}.r124tag .k-T3{color:#4CE0A6}.r124tag .k-FIX{color:#FFE14D}.r124tag .k-GWP{color:#8CC4FF}
-.r124 .c-T0{color:var(--r124-t0)}.r124 .c-T1{color:var(--r124-t1)}.r124 .c-A2{color:var(--r124-a2)}.r124 .c-T3{color:var(--r124-t3)}.r124 .c-FIX{color:var(--r124-fix)}.r124 .c-GWP{color:var(--r124-gwp)}
-.r124pf{margin:0;display:flex;flex-direction:column;gap:6px}
-.r124pf a{display:block;border-radius:12px;overflow:hidden;box-shadow:0 10px 28px -14px rgba(0,0,0,.55);max-width:640px;width:100%;margin:0 auto}
-.r124pf img{display:block;width:100%;height:auto}
-.r124pf figcaption{text-align:center;font-size:12.5px;color:var(--ink-3)}
-.r124pb{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
-.r124pb button{font:inherit;font-size:14px;font-weight:700;height:38px;padding:0 16px;border-radius:999px;border:1px solid #C9A45C;background:#C9A45C;color:#14120F;cursor:pointer}
-.r124pb button.g{background:transparent;color:var(--ink)}
-.r124pb button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-#r124{scroll-margin-top:84px}
-.cal-cat a.r124jump{display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 14px;border-radius:999px;border:1px solid #C9A45C;background:rgba(201,164,92,.18);color:#F3D896;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap}
-.r124e{padding:14px;border:1px dashed var(--line-strong);border-radius:10px;color:var(--ink-2);font-size:14px}
-.r124f{margin:0;font-size:12px;color:var(--ink-3);line-height:1.7}
-@media (max-width:480px){.r124g{grid-template-columns:repeat(3,minmax(0,1fr))}.r124ph{height:118px;padding:0 4px}.r124ph img{max-height:118px}.r124sign{font-size:23px}.r124tag b{font-size:14.5px}.r124tag b i{font-size:11px}.r124tag span{font-size:10.5px}}
-@media print{.r124{display:none}}
-</style></head>
+</style><style id="r107promo">html:not(#_a):not(#_b):not(#_c) body{background-color:#261F19!important;background-image:linear-gradient(#F4F1EA,#F4F1EA)!important}@media (prefers-color-scheme:dark){html:not(#_a):not(#_b):not(#_c) body{background-image:linear-gradient(#14120F,#14120F)!important}}</style><style id="r98tb">html:not(#_a):not(#_b):not(#_c) #xwbar button,html:not(#_a):not(#_b):not(#_c) #xwbar a,html:not(#_a):not(#_b):not(#_c) #xwbar .xwsite{box-shadow:inset 0 1px 0 rgba(255,232,180,.14)!important;filter:none!important}html:not(#_a):not(#_b):not(#_c) #xwbar button:active,html:not(#_a):not(#_b):not(#_c) #xwbar a:active{box-shadow:inset 0 2px 5px rgba(0,0,0,.45)!important}html:not(#_a):not(#_b):not(#_c) #xwbar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important;background-color:#261F19!important}</style></head>
 <body>
 <div class="wrap">
 
@@ -173,6 +173,9 @@ html.noir:not(#_a):not(#_b) li.galrow .line>.r15th.none+span{grid-area:nm!import
   <div id="r124out" style="display:flex;flex-direction:column;gap:26px"></div>
   <p class="r124f" id="r124f"></p>
 </section><!--/r124-->
+
+
+
 
 
 
