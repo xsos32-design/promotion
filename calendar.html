@@ -70,7 +70,6 @@ body{margin:0;background:var(--bg);color:var(--ink);
 .r124pb button.g{background:transparent;color:var(--ink)}
 .r124pb button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #r124{scroll-margin-top:84px}
-.cal-cat a.r124jump{display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 14px;border-radius:999px;border:1px solid #C9A45C;background:rgba(201,164,92,.18);color:#F3D896;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap}
 .r124e{padding:14px;border:1px dashed var(--line-strong);border-radius:10px;color:var(--ink-2);font-size:14px}
 .r124f{margin:0;font-size:12px;color:var(--ink-3);line-height:1.7}
 @media (max-width:480px){.r124g{grid-template-columns:repeat(3,minmax(0,1fr))}.r124ph{height:118px;padding:0 4px}.r124ph img{max-height:118px}.r124sign{font-size:23px}.r124tag b{font-size:14.5px}.r124tag b i{font-size:11px}.r124tag span{font-size:10.5px}}
@@ -173,6 +172,10 @@ html.noir:not(#_a):not(#_b) li.galrow .line>.r15th.none+span{grid-area:nm!import
   <div id="r124out" style="display:flex;flex-direction:column;gap:26px"></div>
   <p class="r124f" id="r124f"></p>
 </section><!--/r124-->
+
+
+
+
 
 
 
@@ -1015,8 +1018,7 @@ out.addEventListener('click',function(ev){var b=ev.target.closest('button[data-c
    if(navigator.canShare&&navigator.canShare({files:[f]}))return navigator.share({files:[f],title:nm+' 11 月折扣'});
    window.open(u2,'_blank');}).catch(function(err){if(!err||err.name!=='AbortError')window.open(u2,'_blank');});}
 });
-(function(){var cc=document.querySelector('#view-cal .cal-cat');if(cc&&!cc.querySelector('.r124jump')){var a=document.createElement('a');a.className='r124jump';a.href='#r124';a.textContent='負責人折扣圖 ↓';
- a.addEventListener('click',function(ev){ev.preventDefault();document.getElementById('r124').scrollIntoView({behavior:'smooth',block:'start'});});cc.appendChild(a);}})();
+if(location.hash==='#r124'){[400,1200].forEach(function(ms){setTimeout(function(){document.getElementById('r124').scrollIntoView({block:'start'});},ms);});}
 document.getElementById('r124f').innerHTML=D.notes.map(function(n){return '・'+e(n);}).join('<br>')+'<br>・2 件／3 件價是原價乘折扣後四捨五入的參考值，實際以 POS 為準。';
 var v=null;try{v=localStorage.getItem('r124who');}catch(_){}
 if(!v||![].some.call(sel.options,function(o){return o.value===v;}))v=[].filter.call(sel.options,function(o){return o.value.split('|')[1]==='朱韋任';})[0].value;
