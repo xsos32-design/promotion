@@ -1004,6 +1004,7 @@ function setupTools(){
     });
   });
   // 搜尋
+  function _xm(q,t){t=String(t||'');return (window.XS&&XS.match)?XS.match(q,XS.key(t)):t.toLowerCase().indexOf(q)>=0;}
   function wire(inputId, host){
     const inp=document.getElementById(inputId); if(!inp) return;
     inp.addEventListener('input',function(){
@@ -1011,10 +1012,10 @@ function setupTools(){
       document.querySelectorAll(host+' .tile').forEach(function(t){
         let hit=0;
         t.querySelectorAll('ol > li').forEach(function(li){
-          const m = !q || li.textContent.toLowerCase().indexOf(q)>=0;
+          const m = !q || _xm(q,li.textContent);
           li.classList.toggle('hide',!m); if(m) hit++;
         });
-        const titleHit = q && (t.querySelector('.tile-h')||{textContent:''}).textContent.toLowerCase().indexOf(q)>=0;
+        const titleHit = q && _xm(q,(t.querySelector('.tile-h')||{textContent:''}).textContent);
         if(titleHit){ t.querySelectorAll('ol > li').forEach(li=>li.classList.remove('hide')); hit=t.querySelectorAll('ol > li').length; }
         t.classList.toggle('hide', q && hit===0);
         if(q) t.classList.remove('folded');
