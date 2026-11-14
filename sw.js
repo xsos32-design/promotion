@@ -1,5 +1,5 @@
 /* r56→r229：頁面先抓網路最新版（3 秒沒回應才用手機存的版本）；圖片字型快取跨版本保留 */
-const V = 'v2026-10-15-r243';
+const V = 'v2026-10-15-r244';
 const P = self.registration.scope + '|';
 const CORE = ['./', './index.html', './img/brand/hero.webp', './icon-192.png'];
 self.addEventListener('install', e => {
